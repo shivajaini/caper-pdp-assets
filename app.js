@@ -14,7 +14,7 @@ const chevron = `<svg class="acc-chevron" viewBox="0 0 24 24" width="22" height=
 
 const IMG = {
   product: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ecdb7b10-9d71-47cc-8d8d-06ae92a4f24b.jpg",
-  map: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/map.png",
+  map: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/storemap-v3.png",
   aisle: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/aisle-v2.png",
   shelf: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/shelf.png",
 };
@@ -273,8 +273,18 @@ function availableMedia() {
 
 function mediaStageHTML() {
   const isProduct = currentMedia === "product";
-  return `<div class="media-stage ${isProduct ? "contain" : ""}">
-      <img src="${currentMedia === 'product' ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />
+  const isMap = currentMedia === "map";
+  // On the store map, overlay an opaque "item" marker (the aisle bubble) that
+  // shows the *current* product's jar, pops in on open, and blinks slowly to
+  // draw attention. It sits over the baked-in bubble in the map artwork; the
+  // blue beacon in the artwork is the shopping cart's location and stays put.
+  const mapOverlay = isMap ? `
+      <div class="map-marker" aria-hidden="true">
+        <img src="${heroSrc(currentProduct.img)}" alt="" />
+      </div>` : "";
+  return `<div class="media-stage ${isProduct ? "contain" : ""} ${isMap ? "is-map" : ""}">
+      <img src="${isProduct ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />
+      ${mapOverlay}
       ${!isProduct ? `<button class="media-expand" type="button" aria-label="Expand view">${expandIcon}</button>` : ""}
     </div>`;
 }
@@ -283,7 +293,7 @@ function thumbRailHTML() {
   const thumbs = [
     `<button class="thumb thumb--product" role="tab" data-media="product" ${sel("product")} aria-label="Product photo"><img src="${currentProduct.img}" alt="" /></button>`,
   ];
-  if (FLAGS.map) thumbs.push(`<button class="thumb" role="tab" data-media="map" ${sel("map")} aria-label="Store map">${mapIcon}</button>`);
+  if (FLAGS.map) thumbs.push(`<button class="thumb thumb--map" role="tab" data-media="map" ${sel("map")} aria-label="Store map">${pinSVG}</button>`);
   if (FLAGS.imagery) {
     thumbs.push(`<button class="thumb" role="tab" data-media="aisle" ${sel("aisle")}>Aisle</button>`);
     thumbs.push(`<button class="thumb" role="tab" data-media="shelf" ${sel("shelf")}>Shelf</button>`);
@@ -370,7 +380,9 @@ function renderPDP() {
 
 function openPDP(id) {
   currentProduct = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
-  currentMedia = "product";
+  // When the product has location info, open on the store-map view so the
+  // aisle marker pops into view; otherwise fall back to the product photo.
+  currentMedia = (FLAGS.location && FLAGS.map) ? "map" : "product";
   pdpBody.innerHTML = pdpHTML();
   scrim.hidden = false;
   sheet.hidden = false;

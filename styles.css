@@ -305,6 +305,57 @@ button { font-family: inherit; cursor: pointer; }
 .thumb svg { width: 28px; height: 28px; }
 .thumb--product { padding: 0; }
 .thumb--product img { width: 100%; height: 100%; object-fit: cover; }
+.thumb--map svg { fill: var(--ink); stroke: none; width: 26px; height: 26px; }
+
+/* ---- Store-map item marker (aisle bubble) ----
+   Overlays the baked-in bubble in the map artwork so it can (a) show the
+   currently-selected product's jar and (b) animate. It pops on open and its
+   ring blinks slowly to draw attention. The blue beacon in the artwork is the
+   cart's location and is left alone. Positions are % of the media stage, which
+   the map image fills edge-to-edge (matching aspect ratios). */
+.media-stage.is-map img { object-fit: cover; }
+.map-marker {
+  position: absolute;
+  left: 42.3%; top: 39.2%;
+  width: 20.2%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #1b1b1b;
+  display: grid; place-items: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,.20);
+  z-index: 3;
+  transform-origin: center center;
+  animation: mapMarkerPop .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+.map-marker img { width: 76%; height: 76%; object-fit: contain; display: block; }
+/* left-pointing notch toward the baked "8" aisle label */
+.map-marker::before {
+  content: ""; position: absolute; left: -13px; top: 50%;
+  transform: translateY(-50%);
+  border: 10px solid transparent; border-right-color: #1b1b1b;
+}
+/* slow attention blink: a ring that pulses around the marker */
+.map-marker::after {
+  content: ""; position: absolute; inset: -7px;
+  border-radius: 50%;
+  border: 3px solid var(--green, #0aad0a);
+  animation: mapMarkerBlink 1.9s ease-in-out infinite;
+}
+@keyframes mapMarkerPop {
+  0%   { transform: translate(-50%, -50%) scale(1.45); }
+  60%  { transform: translate(-50%, -50%) scale(.93); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes mapMarkerBlink {
+  0%, 100% { opacity: .1; }
+  50%      { opacity: .95; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-marker { animation: none; }
+  .map-marker::after { animation: none; opacity: .6; }
+}
 
 /* Right info column */
 .pdp-info { display: flex; flex-direction: column; }
