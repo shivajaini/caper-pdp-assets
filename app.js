@@ -15,7 +15,7 @@ const chevron = `<svg class="acc-chevron" viewBox="0 0 24 24" width="22" height=
 const IMG = {
   product: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ecdb7b10-9d71-47cc-8d8d-06ae92a4f24b.jpg",
   map: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/map.png",
-  aisle: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/aisle.png",
+  aisle: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/aisle-v2.png",
   shelf: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/shelf.png",
 };
 
