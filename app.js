@@ -22,6 +22,10 @@ const IMG = {
 /* ---------- Data-availability flags (driven by the control panel) ----------
    Toggling these simulates products whose backend data is incomplete, so we
    can preview how the PDP + search cards degrade when fields are missing. */
+// Catalog gives thumb_ URLs (small). For the large PDP media stage, swap in the
+// sharper large_ variant; cards/thumbnails keep the lightweight thumb_.
+const heroSrc = (u) => (u || "").replace("/thumb_", "/large_");
+
 const FLAGS = {
   location: true, // aisle/shelf labels + "Light up in aisle" + loc pills
   map: true,      // store-map view & thumbnail
@@ -270,7 +274,7 @@ function availableMedia() {
 function mediaStageHTML() {
   const isProduct = currentMedia === "product";
   return `<div class="media-stage ${isProduct ? "contain" : ""}">
-      <img src="${currentMedia === 'product' ? currentProduct.img : IMG[currentMedia]}" alt="${currentMedia} view" />
+      <img src="${currentMedia === 'product' ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />
       ${!isProduct ? `<button class="media-expand" type="button" aria-label="Expand view">${expandIcon}</button>` : ""}
     </div>`;
 }
