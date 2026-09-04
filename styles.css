@@ -369,9 +369,10 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 3;
   animation: mapAisleBlink 1.9s ease-in-out infinite;
 }
-/* Static "you are here" cart beacon — a blue dot with a white ring and a soft
-   glow, matching the marker that used to be baked into the map artwork. Does
-   not animate; only the product pin does. */
+/* "You are here" cart beacon — a blue dot with a white ring that emits a slow,
+   GPS-style pulse ring so it reads as a live location. Its position is driven by
+   JS (arrow keys) to simulate the cart moving through the store; left/top glide
+   so each step looks like motion. */
 .map-beacon {
   position: absolute;
   left: 56.6%; top: 55.4%;
@@ -382,6 +383,37 @@ button { font-family: inherit; cursor: pointer; }
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgba(31,143,219,.25), 0 2px 6px rgba(0,0,0,.25);
   z-index: 3;
+  transition: left .18s ease, top .18s ease;
+}
+/* the pulse: a ring that expands out from behind the dot and fades, like a
+   location beacon breathing on a map. Sits behind the dot (z-index -1) so the
+   solid dot always caps the center. */
+.map-beacon::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: rgba(31,143,219,.45);
+  transform: translate(-50%, -50%) scale(1);
+  animation: mapBeaconPulse 2.4s ease-out infinite;
+  z-index: -1;
+}
+@keyframes mapBeaconPulse {
+  0%   { transform: translate(-50%,-50%) scale(1);   opacity: .7; }
+  70%  { transform: translate(-50%,-50%) scale(5);   opacity: 0; }
+  100% { transform: translate(-50%,-50%) scale(5);   opacity: 0; }
+}
+/* Subtle demo hint so presenters know the cart is drivable */
+.map-hint {
+  position: absolute;
+  left: 3%; bottom: 4%;
+  display: inline-flex; align-items: center;
+  background: rgba(27,27,27,.72); color: #fff;
+  font-size: 12px; font-weight: 600; letter-spacing: .01em;
+  padding: 5px 10px; border-radius: 999px;
+  z-index: 5; pointer-events: none;
+  backdrop-filter: blur(2px);
 }
 @keyframes mapPinSpring {
   0%   { transform: translate(-50%, -50%) scale(.5); }    /* start at half */
@@ -396,6 +428,8 @@ button { font-family: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   .map-pin { animation: none; }
   .map-aisle-bar { animation: none; opacity: .9; }
+  .map-beacon::before { animation: none; opacity: 0; }
+  .map-beacon { transition: none; }
 }
 
 /* Right info column */

@@ -263,6 +263,13 @@ function renderGrid() {
 let currentMedia = "product";
 let currentProduct = PRODUCTS[0];
 
+// Cart location on the store map, as % of the map image. Movable with the arrow
+// keys to simulate the cart moving through the store during a demo. Resets to
+// CART_HOME each time a PDP opens so every walkthrough starts in the same spot.
+const CART_HOME = { x: 56.6, y: 55.4 };
+let cartPos = { ...CART_HOME };
+const CART_STEP = 2; // % of the map moved per arrow-key press
+
 /* Which media views are available given the current flags. */
 function availableMedia() {
   const list = ["product"];
@@ -281,11 +288,12 @@ function mediaStageHTML() {
   // static — only the product pin animates.
   const mapOverlay = isMap ? `
       <div class="map-aisle-bar" aria-hidden="true"></div>
-      <div class="map-beacon" aria-hidden="true"></div>
+      <div class="map-beacon" style="left:${cartPos.x}%; top:${cartPos.y}%" aria-hidden="true"></div>
       <div class="map-pin" aria-hidden="true">
         <span class="map-pin-tail"></span>
         <span class="map-marker"><img src="${currentProduct.img}" alt="" /></span>
-      </div>` : "";
+      </div>
+      <div class="map-hint" aria-hidden="true">Use arrow keys to move cart</div>` : "";
   return `<div class="media-stage ${isProduct ? "contain" : ""} ${isMap ? "is-map" : ""}">
       <img src="${isProduct ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />
       ${mapOverlay}
@@ -384,6 +392,7 @@ function renderPDP() {
 
 function openPDP(id) {
   currentProduct = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
+  cartPos = { ...CART_HOME }; // fresh cart position for each walkthrough
   // When the product has location info, open on the store-map view so the
   // aisle marker pops into view; otherwise fall back to the product photo.
   currentMedia = (FLAGS.location && FLAGS.map) ? "map" : "product";
@@ -428,7 +437,27 @@ document.getElementById("resultsGrid").addEventListener("click", (e) => {
 document.getElementById("pdpClose").addEventListener("click", closePDP);
 scrim.addEventListener("click", closePDP);
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !sheet.hidden) closePDP();
+  if (e.key === "Escape" && !sheet.hidden) { closePDP(); return; }
+
+  // Arrow keys drive the cart beacon around the store map to simulate the cart
+  // moving; only active while the map view is showing.
+  if (sheet.hidden || currentMedia !== "map") return;
+  const moves = {
+    ArrowUp:    [0, -CART_STEP],
+    ArrowDown:  [0,  CART_STEP],
+    ArrowLeft:  [-CART_STEP, 0],
+    ArrowRight: [ CART_STEP, 0],
+  };
+  const d = moves[e.key];
+  if (!d) return;
+  e.preventDefault();
+  cartPos.x = Math.min(95, Math.max(5, cartPos.x + d[0]));
+  cartPos.y = Math.min(95, Math.max(5, cartPos.y + d[1]));
+  const beacon = pdpBody.querySelector(".map-beacon");
+  if (beacon) {
+    beacon.style.left = cartPos.x + "%";
+    beacon.style.top = cartPos.y + "%";
+  }
 });
 
 pdpBody.addEventListener("click", (e) => {
