@@ -68,7 +68,9 @@ const REC_ITEMS = {
   "ragu-chunky": { img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ac0af865-2d84-4076-a732-a9bbb5e3422a.jpg", name: "Ragu Chunky Sauteed Onion and Garlic Pasta Sauce with Diced Tomatoes, 24 oz", price: "3.69", was: "5.17", off: "30% off" },
   "barilla-marinara": { img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_11f259ed-a53f-44b3-b0ef-24506a8e0c30.png", name: "Barilla Marinara Basil & Simmered Onion Pasta Sauce", price: "3.99", was: "5.59" },
 };
-const section = (title, icon, keys) => ({ title, icon, items: keys.map((k) => REC_ITEMS[k]) });
+// Carry each item's catalog key onto the card data so a tap can reopen the PDP
+// for that recommended product.
+const section = (title, icon, keys) => ({ title, icon, items: keys.map((k) => ({ key: k, ...REC_ITEMS[k] })) });
 const REC_SECTIONS = [
   section("Often bought with", cartIcon, ["barilla-spaghetti", "cooked-perfect-meatballs", "kraft-parmesan", "pepperidge-garlic-bread", "ragu-chunky", "classico-four-cheese", "ronzoni-spaghetti", "carando-meatballs"]),
   section("Customers also considered", considerIcon, ["classico-four-cheese", "ragu-chunky", "barilla-marinara", "belgioioso-parmesan", "kraft-parmesan", "carando-meatballs", "barilla-spaghetti", "cooked-perfect-meatballs"]),
@@ -81,7 +83,7 @@ function recCardHTML(it) {
     ? `<span class="rec-price rec-price--sale">$${it.price}</span><span class="rec-was">$${it.was}</span>`
     : `<span class="rec-price">$${it.price}</span>`;
   return `
-    <div class="rec-card">
+    <div class="rec-card" role="button" tabindex="0" data-rec="${it.key}" aria-label="${it.name}, $${it.price}. View details.">
       <span class="rec-marker">${markerIcon}Aisle 10</span>
       <button class="rec-add" type="button" aria-label="Add ${it.name} to list">${listAddIcon}</button>
       <span class="rec-media"><img src="${it.img}" alt="${it.name}" /></span>
@@ -445,8 +447,16 @@ function renderPDP() {
   if (body) body.scrollTop = st;
 }
 
-function openPDP(id) {
-  currentProduct = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
+// Products visited within a single sheet session, so the header "Back" button
+// can return to the PDP you came from (e.g. after tapping a recommendation).
+let pdpHistory = [];
+function updateBackBtn() {
+  const back = document.getElementById("pdpBack");
+  if (back) back.hidden = pdpHistory.length === 0;
+}
+
+function openProduct(product) {
+  currentProduct = product;
   cartPos = { ...CART_HOME }; // fresh cart position for each walkthrough
   navZone = zoneForDistance(cartDistance()); // sync handoff state to the start spot
   // When the product has location info, open on the store-map view so the
@@ -461,9 +471,35 @@ function openPDP(id) {
     scrim.classList.add("open");
     sheet.classList.add("open");
   });
+  updateBackBtn();
   // preventScroll: the sheet starts off-screen (translateY 100%); a plain
   // focus() would scroll the container to reveal it — motion behind the sheet.
   document.getElementById("pdpClose").focus({ preventScroll: true });
+}
+function openPDP(id) {
+  pdpHistory = []; // opening from search results starts a fresh trail
+  openProduct(PRODUCTS.find((p) => p.id === id) || PRODUCTS[0]);
+}
+function goBack() {
+  if (!pdpHistory.length) return;
+  openProduct(pdpHistory.pop());
+}
+// Reopen the sheet for a tapped recommendation. Rec items are a lighter catalog
+// (bare price/was, no size), so normalize them into the shape the PDP expects.
+function openRec(key) {
+  const it = REC_ITEMS[key];
+  if (!it) return;
+  pdpHistory.push(currentProduct); // remember where we came from
+  openProduct({
+    name: it.name,
+    size: "16 oz",
+    price: "$" + it.price,
+    was: it.was ? "$" + it.was : undefined,
+    img: it.img,
+    onSale: !!it.was,
+    offer: it.off || false,
+    clip: false,
+  });
 }
 function closePDP() {
   scrim.classList.remove("open");
@@ -492,6 +528,7 @@ document.getElementById("resultsGrid").addEventListener("click", (e) => {
 });
 
 document.getElementById("pdpClose").addEventListener("click", closePDP);
+document.getElementById("pdpBack").addEventListener("click", goBack);
 scrim.addEventListener("click", closePDP);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !sheet.hidden) { closePDP(); return; }
@@ -548,6 +585,18 @@ pdpBody.addEventListener("click", (e) => {
   const thumb = e.target.closest(".thumb");
   if (thumb) { switchMedia(thumb.dataset.media); return; }
 
+  // "Add to list" on a rec card: quick confirmation, without opening the PDP.
+  const recAdd = e.target.closest(".rec-add");
+  if (recAdd) {
+    recAdd.classList.add("rec-add--done");
+    setTimeout(() => recAdd.classList.remove("rec-add--done"), 1200);
+    return;
+  }
+
+  // Tapping the rec card itself opens that product's PDP.
+  const recCard = e.target.closest(".rec-card");
+  if (recCard) { openRec(recCard.dataset.rec); return; }
+
   const acc = e.target.closest(".acc-head");
   if (acc) {
     acc.setAttribute("aria-expanded", acc.getAttribute("aria-expanded") === "true" ? "false" : "true");
@@ -567,6 +616,15 @@ pdpBody.addEventListener("click", (e) => {
     lightBtn.innerHTML = `${bulbIcon} Lighting up…`;
     setTimeout(() => { lightBtn.innerHTML = `${bulbIcon} Light up in aisle`; }, 1600);
   }
+});
+
+// Keyboard activation for the rec cards (role="button"): Enter or Space opens it.
+pdpBody.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const recCard = e.target.closest(".rec-card");
+  if (!recCard || e.target.closest(".rec-add")) return;
+  e.preventDefault();
+  openRec(recCard.dataset.rec);
 });
 
 document.querySelector(".clear-btn").addEventListener("click", () => {

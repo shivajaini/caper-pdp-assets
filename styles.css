@@ -258,6 +258,15 @@ button { font-family: inherit; cursor: pointer; }
   display: grid; place-items: center; color: var(--ink); z-index: 5;
 }
 .sheet-close:hover { background: rgba(0,0,0,.06); }
+.sheet-back {
+  position: absolute; top: 8px; left: 16px; z-index: 5;
+  height: 44px; padding: 0 14px 0 8px; border-radius: 22px;
+  border: none; background: transparent; color: var(--ink);
+  display: inline-flex; align-items: center; gap: 4px;
+  font: inherit; font-size: 16px; font-weight: 700; cursor: pointer;
+}
+.sheet-back:hover { background: rgba(0,0,0,.06); }
+.sheet-back[hidden] { display: none; }
 .pdp-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 10px; }
 .pdp-title-row .pdp-title { margin: 0; }
 .listbtn--sheet { position: static; flex: 0 0 auto; }
@@ -563,6 +572,24 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px solid #c7c8cd; border-radius: 20px;
   padding: 18px;
   display: flex; flex-direction: column;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.rec-card:hover {
+  border-color: #a9abb2;
+  box-shadow: 0 6px 18px rgba(0,0,0,.10);
+  transform: translateY(-2px);
+}
+.rec-card:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(0,0,0,.10); }
+.rec-card:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+/* the add button keeps its own hover/press feel above the card */
+.rec-card .rec-add { transition: background .15s ease, transform .12s ease; }
+.rec-add--done { background: var(--green-dark); transform: scale(.9); }
+@media (prefers-reduced-motion: reduce) {
+  .rec-card, .rec-card:hover, .rec-card:active { transition: none; transform: none; }
 }
 .rec-media {
   height: 128px; margin: 0 auto 12px; width: 100%;
