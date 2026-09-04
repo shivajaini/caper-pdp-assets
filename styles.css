@@ -323,25 +323,31 @@ button { font-family: inherit; cursor: pointer; }
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   border-radius: 50%;
-  overflow: hidden;
   background: #fff;
   border: 3px solid #1b1b1b;
   display: grid; place-items: center;
   box-shadow: 0 8px 20px rgba(0,0,0,.20);
   z-index: 4;
   transform-origin: center center;
-  animation: mapMarkerPop .6s cubic-bezier(.34,1.56,.64,1) both;
+  /* rest at scale 1, then pop ~1.4s after the PDP opens to draw attention */
+  animation: mapMarkerPop .55s cubic-bezier(.34,1.56,.64,1) 1.4s both;
 }
+/* clip only the photo (not the marker) to the circle so the pointer can sit
+   outside the circle */
 .map-marker img {
   width: 84%; height: 84%;
   object-fit: contain; display: block;
+  border-radius: 50%;
 }
-/* left-pointing notch toward the baked "8" aisle label */
+/* left-pointing tail toward the "8" aisle label, attached to the circle edge
+   at its vertical center (matches Figma) */
 .map-marker::before {
-  content: ""; position: absolute; left: -13px; top: 50%;
-  transform: translateY(-50%);
-  border: 10px solid transparent; border-right-color: #1b1b1b;
-  z-index: 4;
+  content: ""; position: absolute;
+  right: 100%; top: 50%;
+  transform: translate(9px, -50%);
+  border-style: solid;
+  border-width: 19px 26px 19px 0;
+  border-color: transparent #1b1b1b transparent transparent;
 }
 /* The highlighted area: the shelf-side bar in Aisle 8. Blinks slowly to draw
    attention while the map is the selected view. */
@@ -356,8 +362,9 @@ button { font-family: inherit; cursor: pointer; }
   animation: mapAisleBlink 1.9s ease-in-out infinite;
 }
 @keyframes mapMarkerPop {
-  0%   { transform: translate(-50%, -50%) scale(1.45); }
-  60%  { transform: translate(-50%, -50%) scale(.93); }
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  35%  { transform: translate(-50%, -50%) scale(1.28); }
+  70%  { transform: translate(-50%, -50%) scale(.94); }
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 @keyframes mapAisleBlink {
