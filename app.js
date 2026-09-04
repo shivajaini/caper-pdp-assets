@@ -603,6 +603,9 @@ function mediaStageHTML() {
     </div>`;
 }
 function thumbRailHTML() {
+  // With only the hero image left (e.g. location info off -> no map/aisle/shelf),
+  // there's nothing to switch between, so drop the thumbnail tray entirely.
+  if (availableMedia().length <= 1) return "";
   const sel = (k) => (currentMedia === k ? 'aria-selected="true"' : 'aria-selected="false"');
   const thumbs = [
     `<button class="thumb thumb--product" role="tab" data-media="product" ${sel("product")} aria-label="Product photo"><img src="${currentProduct.img}" alt="" /></button>`,
