@@ -319,7 +319,7 @@ button { font-family: inherit; cursor: pointer; }
    above the tail so only the tail's tip protrudes, pointing at the "8". */
 .map-pin {
   position: absolute;
-  left: 39.3%; top: 52%;
+  left: 39.3%; top: 43%;
   width: 16.6%; aspect-ratio: 1;
   transform: translate(-50%, -50%);
   /* scale pivots on the pointer TIP (16px left of the circle, at the tail apex)
