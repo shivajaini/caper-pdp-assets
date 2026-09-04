@@ -280,8 +280,9 @@ function mediaStageHTML() {
   // blue beacon in the artwork is the shopping cart's location and stays put.
   const mapOverlay = isMap ? `
       <div class="map-aisle-bar" aria-hidden="true"></div>
-      <div class="map-marker" aria-hidden="true">
-        <img src="${currentProduct.img}" alt="" />
+      <div class="map-pin" aria-hidden="true">
+        <span class="map-pin-tail"></span>
+        <span class="map-marker"><img src="${currentProduct.img}" alt="" /></span>
       </div>` : "";
   return `<div class="media-stage ${isProduct ? "contain" : ""} ${isMap ? "is-map" : ""}">
       <img src="${isProduct ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />

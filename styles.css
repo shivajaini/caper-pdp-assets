@@ -313,41 +313,45 @@ button { font-family: inherit; cursor: pointer; }
    ring blinks slowly to draw attention. The blue beacon in the artwork is the
    cart's location and is left alone. Positions are % of the media stage, which
    the map image fills edge-to-edge (matching aspect ratios). */
-.media-stage.is-map img { object-fit: cover; }
-/* The item pin: overlays the (erased) baked bubble so it shows the currently
-   selected product's jar and pops on open. Image is clipped to the circle. */
-.map-marker {
+.media-stage.is-map > img { object-fit: cover; }
+/* The item pin = a tail (behind) + a circular marker (in front) that masks the
+   product photo. The wrapper is positioned and animated; the opaque circle sits
+   above the tail so only the tail's tip protrudes, pointing at the "8". */
+.map-pin {
   position: absolute;
   left: 42.29%; top: 38.8%;
   width: 23.7%; aspect-ratio: 1;
   transform: translate(-50%, -50%);
+  transform-origin: center center;
+  z-index: 4;
+  /* rest at scale 1, then pop ~1.4s after the PDP opens to draw attention */
+  animation: mapMarkerPop .55s cubic-bezier(.34,1.56,.64,1) 1.4s both;
+}
+/* left-pointing tail toward the "8" aisle label; its base is tucked behind the
+   circle so it reads as attached, with only the tip showing (matches Figma) */
+.map-pin-tail {
+  position: absolute;
+  right: 100%; top: 50%;
+  transform: translate(10px, -50%);
+  border-style: solid;
+  border-width: 19px 26px 19px 0;
+  border-color: transparent #1b1b1b transparent transparent;
+  z-index: 1;
+}
+.map-marker {
+  position: absolute; inset: 0;
   box-sizing: border-box;
   border-radius: 50%;
+  overflow: hidden;
   background: #fff;
   border: 3px solid #1b1b1b;
   display: grid; place-items: center;
   box-shadow: 0 8px 20px rgba(0,0,0,.20);
-  z-index: 4;
-  transform-origin: center center;
-  /* rest at scale 1, then pop ~1.4s after the PDP opens to draw attention */
-  animation: mapMarkerPop .55s cubic-bezier(.34,1.56,.64,1) 1.4s both;
+  z-index: 2;
 }
-/* clip only the photo (not the marker) to the circle so the pointer can sit
-   outside the circle */
 .map-marker img {
   width: 84%; height: 84%;
   object-fit: contain; display: block;
-  border-radius: 50%;
-}
-/* left-pointing tail toward the "8" aisle label, attached to the circle edge
-   at its vertical center (matches Figma) */
-.map-marker::before {
-  content: ""; position: absolute;
-  right: 100%; top: 50%;
-  transform: translate(9px, -50%);
-  border-style: solid;
-  border-width: 19px 26px 19px 0;
-  border-color: transparent #1b1b1b transparent transparent;
 }
 /* The highlighted area: the shelf-side bar in Aisle 8. Blinks slowly to draw
    attention while the map is the selected view. */
@@ -372,7 +376,7 @@ button { font-family: inherit; cursor: pointer; }
   50%      { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .map-marker { animation: none; }
+  .map-pin { animation: none; }
   .map-aisle-bar { animation: none; opacity: .9; }
 }
 
