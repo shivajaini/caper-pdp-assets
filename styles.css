@@ -148,6 +148,13 @@ button { font-family: inherit; cursor: pointer; }
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(12px, 1.4vw, 20px);
 }
+.results-empty {
+  grid-column: 1 / -1;
+  margin: 40px 0;
+  text-align: center;
+  color: var(--ink-soft, #6b6f76);
+  font-size: 18px;
+}
 
 .card {
   position: relative;
