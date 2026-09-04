@@ -366,6 +366,20 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 3;
   animation: mapAisleBlink 1.9s ease-in-out infinite;
 }
+/* Static "you are here" cart beacon — a blue dot with a white ring and a soft
+   glow, matching the marker that used to be baked into the map artwork. Does
+   not animate; only the product pin does. */
+.map-beacon {
+  position: absolute;
+  left: 56.6%; top: 55.4%;
+  width: 3.1%; aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: #1f8fdb;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(31,143,219,.25), 0 2px 6px rgba(0,0,0,.25);
+  z-index: 3;
+}
 @keyframes mapPinSpring {
   0%   { transform: translate(-50%, -50%) scale(.5); }
   55%  { transform: translate(-50%, -50%) scale(1.06); }
