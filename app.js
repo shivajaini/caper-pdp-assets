@@ -270,6 +270,50 @@ const CART_HOME = { x: 56.6, y: 55.4 };
 let cartPos = { ...CART_HOME };
 const CART_STEP = 2; // % of the map moved per arrow-key press
 
+// "Last meter" navigation: as the cart nears the item, the view auto-advances
+// map -> aisle -> shelf, with a distance nudge, so the shopper is handed off to
+// the close-up views right when they need them.
+const PIN_TARGET = { x: 39.3, y: 43 }; // item pin circle center (mirrors .map-pin left/top in CSS)
+const MAP_ASPECT = 990 / 658;          // weight x-distance by the map's aspect so "feet" feel physical
+const NAV_AISLE_AT = 17;               // aspect-weighted % distance to hand off map -> aisle
+const NAV_SHELF_AT = 6;                // ...and aisle -> shelf
+let navZone = "far";                   // last zone crossed; lets a manual view choice stick within a zone
+
+function cartDistance() {
+  const dx = (cartPos.x - PIN_TARGET.x) * MAP_ASPECT;
+  const dy = cartPos.y - PIN_TARGET.y;
+  return Math.hypot(dx, dy);
+}
+function zoneForDistance(d) {
+  if (d <= NAV_SHELF_AT) return "arrived";
+  if (d <= NAV_AISLE_AT) return "near";
+  return "far";
+}
+function mediaForZone(z) {
+  if (!FLAGS.imagery) return "map"; // no aisle/shelf photos to hand off to
+  if (z === "arrived") return "shelf";
+  if (z === "near") return "aisle";
+  return "map";
+}
+function navToastText(d, z) {
+  const feet = Math.max(1, Math.round(d * 1.4));
+  if (z === "arrived") return "You're here · Middle shelf";
+  if (z === "near") return "Almost there · ~" + feet + " ft";
+  return AISLE + " · ~" + feet + " ft away";
+}
+function updateNavToast() {
+  const el = pdpBody.querySelector(".nav-toast");
+  if (!el) return;
+  const d = cartDistance();
+  el.textContent = navToastText(d, zoneForDistance(d));
+}
+function playStageEnter() {
+  const stage = pdpBody.querySelector(".media-stage");
+  if (!stage) return;
+  stage.classList.add("media-enter");
+  stage.addEventListener("animationend", () => stage.classList.remove("media-enter"), { once: true });
+}
+
 /* Which media views are available given the current flags. */
 function availableMedia() {
   const list = ["product"];
@@ -294,9 +338,16 @@ function mediaStageHTML() {
         <span class="map-marker"><img src="${currentProduct.img}" alt="" /></span>
       </div>
       <div class="map-hint" aria-hidden="true">Use arrow keys to move cart</div>` : "";
+  // Distance nudge shown across the map/aisle/shelf "navigation" views while the
+  // shopper walks toward the item (arrow keys). It also cues the auto handoff.
+  const isNav = isMap || currentMedia === "aisle" || currentMedia === "shelf";
+  const navToast = (isNav && FLAGS.location)
+    ? `<div class="nav-toast" aria-hidden="true">${navToastText(cartDistance(), zoneForDistance(cartDistance()))}</div>`
+    : "";
   return `<div class="media-stage ${isProduct ? "contain" : ""} ${isMap ? "is-map" : ""}">
       <img src="${isProduct ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />
       ${mapOverlay}
+      ${navToast}
       ${!isProduct ? `<button class="media-expand" type="button" aria-label="Expand view">${expandIcon}</button>` : ""}
     </div>`;
 }
@@ -393,6 +444,7 @@ function renderPDP() {
 function openPDP(id) {
   currentProduct = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
   cartPos = { ...CART_HOME }; // fresh cart position for each walkthrough
+  navZone = zoneForDistance(cartDistance()); // sync handoff state to the start spot
   // When the product has location info, open on the store-map view so the
   // aisle marker pops into view; otherwise fall back to the product photo.
   currentMedia = (FLAGS.location && FLAGS.map) ? "map" : "product";
@@ -424,6 +476,7 @@ function switchMedia(key) {
   if (!IMG[key] || key === currentMedia) return;
   currentMedia = key;
   renderPDP();
+  playStageEnter(); // "dive into the location" zoom + fade on every view change
 }
 
 /* ---------- Events ---------- */
@@ -439,9 +492,10 @@ scrim.addEventListener("click", closePDP);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !sheet.hidden) { closePDP(); return; }
 
-  // Arrow keys drive the cart beacon around the store map to simulate the cart
-  // moving; only active while the map view is showing.
-  if (sheet.hidden || currentMedia !== "map") return;
+  // Arrow keys drive the cart around the store to simulate walking toward the
+  // item. Active across the map/aisle/shelf navigation views (not the product
+  // photo) so the shopper can keep approaching after the view hands off.
+  if (sheet.hidden || currentMedia === "product") return;
   const moves = {
     ArrowUp:    [0, -CART_STEP],
     ArrowDown:  [0,  CART_STEP],
@@ -453,10 +507,24 @@ document.addEventListener("keydown", (e) => {
   e.preventDefault();
   cartPos.x = Math.min(95, Math.max(5, cartPos.x + d[0]));
   cartPos.y = Math.min(95, Math.max(5, cartPos.y + d[1]));
+  // Move the beacon if it's on screen (map view only)...
   const beacon = pdpBody.querySelector(".map-beacon");
   if (beacon) {
     beacon.style.left = cartPos.x + "%";
     beacon.style.top = cartPos.y + "%";
+  }
+  updateNavToast(); // ...and keep the distance nudge ticking on every view
+
+  // Proximity handoff: when the cart crosses into a new zone, advance (or fall
+  // back) to the matching view. Only fires on a zone change, so a manual view
+  // choice sticks while walking within the same zone.
+  const zone = zoneForDistance(cartDistance());
+  if (zone !== navZone) {
+    navZone = zone;
+    const desired = mediaForZone(zone);
+    if (desired !== currentMedia && availableMedia().includes(desired)) {
+      switchMedia(desired);
+    }
   }
 });
 

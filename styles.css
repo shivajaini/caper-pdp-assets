@@ -415,6 +415,30 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 5; pointer-events: none;
   backdrop-filter: blur(2px);
 }
+/* Live distance nudge, shown top-center across the map/aisle/shelf views. Cues
+   the "last meter" handoff as the cart approaches the item. */
+.nav-toast {
+  position: absolute;
+  left: 50%; top: 3.5%;
+  transform: translateX(-50%);
+  display: inline-flex; align-items: center;
+  background: rgba(27,27,27,.82); color: #fff;
+  font-size: 13px; font-weight: 700; letter-spacing: .01em;
+  padding: 6px 12px; border-radius: 999px;
+  z-index: 6; pointer-events: none; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  backdrop-filter: blur(2px);
+}
+/* View handoff: the incoming view zooms in slightly and fades, so switching
+   map -> aisle -> shelf reads as diving into the location, not a tab swap. */
+.media-stage.media-enter { animation: mediaZoomIn .42s ease-out both; }
+@keyframes mediaZoomIn {
+  0%   { opacity: .25; transform: scale(1.06); }
+  100% { opacity: 1;   transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .media-stage.media-enter { animation: none; }
+}
 @keyframes mapPinSpring {
   0%   { transform: translate(-50%, -50%) scale(.5); }    /* start at half */
   35%  { transform: translate(-50%, -50%) scale(1); }     /* spring up to full */
