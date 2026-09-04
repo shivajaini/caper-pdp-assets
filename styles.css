@@ -319,7 +319,7 @@ button { font-family: inherit; cursor: pointer; }
    above the tail so only the tail's tip protrudes, pointing at the "8". */
 .map-pin {
   position: absolute;
-  left: 42.29%; top: 38.8%;
+  left: 39.3%; top: 38.8%;
   width: 16.6%; aspect-ratio: 1;
   transform: translate(-50%, -50%);
   /* scale pivots on the pointer TIP (16px left of the circle, at the tail apex)
@@ -327,9 +327,9 @@ button { font-family: inherit; cursor: pointer; }
      Pivoting at the circle's own left edge would let the protruding tip drift. */
   transform-origin: -16px center;
   z-index: 4;
-  /* ~1.4s after the PDP opens: spring up from half size to full, hold briefly,
-     then scale back down to half size */
-  animation: mapPinSpring 1.9s cubic-bezier(.34,1.56,.64,1) 1.4s both;
+  /* ~0.5s after the PDP opens: spring up from half size to full, hold briefly,
+     then ease back down to three-quarter size */
+  animation: mapPinSpring 1.9s cubic-bezier(.34,1.56,.64,1) 0.5s both;
 }
 /* left-pointing tail toward the "8" aisle label; its base is tucked behind the
    circle so it reads as attached, with only the tip showing (matches Figma) */
@@ -384,10 +384,10 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 3;
 }
 @keyframes mapPinSpring {
-  0%   { transform: translate(-50%, -50%) scale(.5); }   /* start at half */
-  35%  { transform: translate(-50%, -50%) scale(1); }    /* spring up to full */
-  60%  { transform: translate(-50%, -50%) scale(1); }    /* hold at full */
-  100% { transform: translate(-50%, -50%) scale(.5); }   /* scale back down to half */
+  0%   { transform: translate(-50%, -50%) scale(.5); }    /* start at half */
+  35%  { transform: translate(-50%, -50%) scale(1); }     /* spring up to full */
+  60%  { transform: translate(-50%, -50%) scale(1); }     /* hold at full */
+  100% { transform: translate(-50%, -50%) scale(.75); }   /* ease down to 3/4 */
 }
 @keyframes mapAisleBlink {
   0%, 100% { opacity: .12; }
