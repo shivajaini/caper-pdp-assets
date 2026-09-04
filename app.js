@@ -14,7 +14,7 @@ const chevron = `<svg class="acc-chevron" viewBox="0 0 24 24" width="22" height=
 
 const IMG = {
   product: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ecdb7b10-9d71-47cc-8d8d-06ae92a4f24b.jpg",
-  map: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/storemap-v3.png",
+  map: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/storemap-v4.png",
   aisle: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/aisle-v2.png",
   shelf: "https://raw.githubusercontent.com/shivajaini/caper-pdp-assets/main/shelf.png",
 };
@@ -279,8 +279,9 @@ function mediaStageHTML() {
   // draw attention. It sits over the baked-in bubble in the map artwork; the
   // blue beacon in the artwork is the shopping cart's location and stays put.
   const mapOverlay = isMap ? `
+      <div class="map-aisle-bar" aria-hidden="true"></div>
       <div class="map-marker" aria-hidden="true">
-        <img src="${heroSrc(currentProduct.img)}" alt="" />
+        <img src="${currentProduct.img}" alt="" />
       </div>` : "";
   return `<div class="media-stage ${isProduct ? "contain" : ""} ${isMap ? "is-map" : ""}">
       <img src="${isProduct ? heroSrc(currentProduct.img) : IMG[currentMedia]}" alt="${currentMedia} view" />

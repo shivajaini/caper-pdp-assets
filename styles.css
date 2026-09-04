@@ -314,47 +314,59 @@ button { font-family: inherit; cursor: pointer; }
    cart's location and is left alone. Positions are % of the media stage, which
    the map image fills edge-to-edge (matching aspect ratios). */
 .media-stage.is-map img { object-fit: cover; }
+/* The item pin: overlays the (erased) baked bubble so it shows the currently
+   selected product's jar and pops on open. Image is clipped to the circle. */
 .map-marker {
   position: absolute;
-  left: 42.3%; top: 39.2%;
-  width: 20.2%; aspect-ratio: 1;
+  left: 42.29%; top: 38.8%;
+  width: 23.7%; aspect-ratio: 1;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   border-radius: 50%;
+  overflow: hidden;
   background: #fff;
   border: 3px solid #1b1b1b;
   display: grid; place-items: center;
   box-shadow: 0 8px 20px rgba(0,0,0,.20);
-  z-index: 3;
+  z-index: 4;
   transform-origin: center center;
   animation: mapMarkerPop .6s cubic-bezier(.34,1.56,.64,1) both;
 }
-.map-marker img { width: 76%; height: 76%; object-fit: contain; display: block; }
+.map-marker img {
+  width: 84%; height: 84%;
+  object-fit: contain; display: block;
+}
 /* left-pointing notch toward the baked "8" aisle label */
 .map-marker::before {
   content: ""; position: absolute; left: -13px; top: 50%;
   transform: translateY(-50%);
   border: 10px solid transparent; border-right-color: #1b1b1b;
+  z-index: 4;
 }
-/* slow attention blink: a ring that pulses around the marker */
-.map-marker::after {
-  content: ""; position: absolute; inset: -7px;
-  border-radius: 50%;
-  border: 3px solid var(--green, #0aad0a);
-  animation: mapMarkerBlink 1.9s ease-in-out infinite;
+/* The highlighted area: the shelf-side bar in Aisle 8. Blinks slowly to draw
+   attention while the map is the selected view. */
+.map-aisle-bar {
+  position: absolute;
+  left: 26.67%; top: 19.15%;
+  width: 0.9%; height: 40%;
+  transform: translateX(-50%);
+  background: #3eaddf;
+  border-radius: 999px;
+  z-index: 3;
+  animation: mapAisleBlink 1.9s ease-in-out infinite;
 }
 @keyframes mapMarkerPop {
   0%   { transform: translate(-50%, -50%) scale(1.45); }
   60%  { transform: translate(-50%, -50%) scale(.93); }
   100% { transform: translate(-50%, -50%) scale(1); }
 }
-@keyframes mapMarkerBlink {
-  0%, 100% { opacity: .1; }
-  50%      { opacity: .95; }
+@keyframes mapAisleBlink {
+  0%, 100% { opacity: .12; }
+  50%      { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .map-marker { animation: none; }
-  .map-marker::after { animation: none; opacity: .6; }
+  .map-aisle-bar { animation: none; opacity: .9; }
 }
 
 /* Right info column */
