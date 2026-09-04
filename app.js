@@ -436,6 +436,20 @@ function pdpHTML() {
 const scrim = document.getElementById("pdpScrim");
 const sheet = document.getElementById("pdpSheet");
 const pdpBody = document.getElementById("pdpBody");
+const sheetBody = sheet.querySelector(".sheet-body");
+
+// Reveal the item name in the header once the PDP's own title has scrolled up
+// out of the viewport, so the shopper always knows what they're looking at.
+function updateSheetTitle() {
+  const sheetTitle = document.getElementById("sheetTitle");
+  if (!sheetTitle) return;
+  sheetTitle.textContent = currentProduct ? currentProduct.name : "";
+  const titleEl = pdpBody.querySelector(".pdp-title");
+  const headerBottom = sheetBody.getBoundingClientRect().top;
+  const show = !!titleEl && titleEl.getBoundingClientRect().bottom <= headerBottom + 4;
+  sheetTitle.classList.toggle("is-visible", show);
+}
+sheetBody.addEventListener("scroll", updateSheetTitle, { passive: true });
 
 // Re-render the sheet body, keeping the current scroll position, and falling
 // back to the product view if the active media was just toggled off.
@@ -445,6 +459,7 @@ function renderPDP() {
   const st = body ? body.scrollTop : 0;
   pdpBody.innerHTML = pdpHTML();
   if (body) body.scrollTop = st;
+  updateSheetTitle();
 }
 
 // Products visited within a single sheet session, so the header "Back" button
@@ -466,6 +481,7 @@ function openProduct(product) {
   scrim.hidden = false;
   sheet.hidden = false;
   sheet.querySelector(".sheet-body").scrollTop = 0;
+  updateSheetTitle(); // reset: at top, so the header title starts hidden
   // next frame so the transition runs
   requestAnimationFrame(() => {
     scrim.classList.add("open");

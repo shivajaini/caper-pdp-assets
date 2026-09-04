@@ -267,6 +267,23 @@ button { font-family: inherit; cursor: pointer; }
 }
 .sheet-back:hover { background: rgba(0,0,0,.06); }
 .sheet-back[hidden] { display: none; }
+/* Sticky item name: centered in the header, revealed once the PDP title scrolls
+   out of view. Sits between the back/close controls with room to truncate. */
+.sheet-title {
+  position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+  max-width: min(60%, 520px);
+  display: flex; align-items: center;
+  font-size: 17px; font-weight: 700; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0; transition: opacity .18s ease, transform .18s ease;
+  transform: translate(-50%, 6px);
+}
+.sheet-title.is-visible { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) {
+  .sheet-title { transition: opacity .18s ease; transform: translateX(-50%); }
+  .sheet-title.is-visible { transform: translateX(-50%); }
+}
 .pdp-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 10px; }
 .pdp-title-row .pdp-title { margin: 0; }
 .listbtn--sheet { position: static; flex: 0 0 auto; }
