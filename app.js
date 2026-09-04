@@ -336,8 +336,7 @@ function mediaStageHTML() {
       <div class="map-pin" aria-hidden="true">
         <span class="map-pin-tail"></span>
         <span class="map-marker"><img src="${currentProduct.img}" alt="" /></span>
-      </div>
-      <div class="map-hint" aria-hidden="true">Use arrow keys to move cart</div>` : "";
+      </div>` : "";
   // Distance nudge shown across the map/aisle/shelf "navigation" views while the
   // shopper walks toward the item (arrow keys). It also cues the auto handoff.
   const isNav = isMap || currentMedia === "aisle" || currentMedia === "shelf";
