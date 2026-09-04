@@ -30,6 +30,7 @@ const FLAGS = {
   location: true, // aisle/shelf labels + "Light up in aisle" + loc pills
   map: true,      // store-map view & thumbnail
   imagery: true,  // aisle & shelf in-store photo views + thumbnails
+  autonav: true,  // distance-based auto handoff map -> aisle -> shelf
   reviews: true,  // ratings & reviews row
   sale: true,     // was-price / discount pricing
   coupon: true,   // Caper exclusive offer + clip offer
@@ -39,6 +40,7 @@ const FLAG_CONFIG = [
   { key: "location", label: "Location info", desc: "Aisle & shelf labels" },
   { key: "map", label: "Store map", desc: "Map view & thumbnail" },
   { key: "imagery", label: "Aisle & shelf imagery", desc: "In-store photo views" },
+  { key: "autonav", label: "Auto view switching", desc: "Switch to aisle/shelf by distance" },
   { key: "reviews", label: "Ratings & reviews", desc: "Star rating row" },
   { key: "sale", label: "Sale pricing", desc: "Was price & discount" },
   { key: "coupon", label: "Coupons & offers", desc: "Exclusive offer card" },
@@ -519,13 +521,17 @@ document.addEventListener("keydown", (e) => {
 
   // Proximity handoff: when the cart crosses into a new zone, advance (or fall
   // back) to the matching view. Only fires on a zone change, so a manual view
-  // choice sticks while walking within the same zone.
-  const zone = zoneForDistance(cartDistance());
-  if (zone !== navZone) {
-    navZone = zone;
-    const desired = mediaForZone(zone);
-    if (desired !== currentMedia && availableMedia().includes(desired)) {
-      switchMedia(desired);
+  // choice sticks while walking within the same zone. Gated by the "Auto view
+  // switching" toggle — with it off, the cart still moves and the distance nudge
+  // still updates, but the view never auto-switches to aisle/shelf.
+  if (FLAGS.autonav) {
+    const zone = zoneForDistance(cartDistance());
+    if (zone !== navZone) {
+      navZone = zone;
+      const desired = mediaForZone(zone);
+      if (desired !== currentMedia && availableMedia().includes(desired)) {
+        switchMedia(desired);
+      }
     }
   }
 });
@@ -571,14 +577,26 @@ document.querySelector(".clear-btn").addEventListener("click", () => {
 
 /* ---------- Data-field control panel (outside the device frame) ----------
    Store map + aisle/shelf imagery require location data, so those toggles are
-   disabled (and forced off) whenever "Location info" is turned off. */
+   disabled (and forced off) whenever "Location info" is turned off. Auto view
+   switching in turn needs the aisle/shelf imagery to hand off to, so it locks
+   (and forces off) whenever "Aisle & shelf imagery" is off. */
 const LOCATION_DEPENDENT = ["map", "imagery"];
+const IMAGERY_DEPENDENT = ["autonav"];
+
+// Force any dependent toggle off when its prerequisite is off (cascades, since
+// imagery is itself location-dependent).
+function normalizeFlagDeps() {
+  if (!FLAGS.location) LOCATION_DEPENDENT.forEach((k) => (FLAGS[k] = false));
+  if (!FLAGS.imagery) IMAGERY_DEPENDENT.forEach((k) => (FLAGS[k] = false));
+}
 
 function renderControlPanel() {
   const list = document.getElementById("cpList");
   if (!list) return;
   list.innerHTML = FLAG_CONFIG.map((f) => {
-    const locked = LOCATION_DEPENDENT.includes(f.key) && !FLAGS.location;
+    const locked =
+      (LOCATION_DEPENDENT.includes(f.key) && !FLAGS.location) ||
+      (IMAGERY_DEPENDENT.includes(f.key) && !FLAGS.imagery);
     return `
     <label class="cp-item ${locked ? "cp-item--locked" : ""}">
       <span class="cp-text">
@@ -630,10 +648,11 @@ document.getElementById("cpList").addEventListener("change", (e) => {
   const input = e.target.closest("input[data-flag]");
   if (!input) return;
   FLAGS[input.dataset.flag] = input.checked;
-  // Turning off location cascades to its dependent views.
-  if (input.dataset.flag === "location" && !input.checked) {
-    LOCATION_DEPENDENT.forEach((k) => (FLAGS[k] = false));
-  }
+  // Turning off a prerequisite cascades to its dependent views.
+  normalizeFlagDeps();
+  // Re-enabling auto-nav should re-evaluate from the next step, not snap the
+  // current view; clearing navZone forces a fresh handoff on the next move.
+  if (input.dataset.flag === "autonav" && input.checked) navZone = "";
   renderControlPanel(); // reflect any newly locked/unlocked toggles
   renderGrid();
   if (!sheet.hidden) renderPDP();
