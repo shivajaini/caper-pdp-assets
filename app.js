@@ -35,6 +35,7 @@ const FLAGS = {
   sale: true,     // was-price / discount pricing
   coupon: true,   // Caper exclusive offer + clip offer
   recs: true,     // recommendation sections
+  cart: true,     // primary CTA is "Add to Cart"; off -> "Add to list" (hides inline list btn)
 };
 const FLAG_CONFIG = [
   { key: "location", label: "Location info", desc: "Aisle & shelf labels" },
@@ -45,6 +46,7 @@ const FLAG_CONFIG = [
   { key: "sale", label: "Sale pricing", desc: "Was price & discount" },
   { key: "coupon", label: "Coupons & offers", desc: "Exclusive offer card" },
   { key: "recs", label: "Recommendations", desc: "“Bought with” sections" },
+  { key: "cart", label: "Add to Cart CTA", desc: "Off switches primary to Add to list" },
 ];
 
 /* list-add icon used inside the green circular button on recommendation cards */
@@ -624,7 +626,7 @@ function pdpHTML() {
       ${FLAGS.location ? `<span class="pdp-loc">${pinSVG}${AISLE} • Middle Shelf</span>` : ""}
       <div class="pdp-title-row">
         <h2 class="pdp-title" id="pdpTitle">${currentProduct.name}</h2>
-        <button class="listbtn listbtn--sheet" type="button" aria-label="Add to list" id="pdpListBtn"></button>
+        ${FLAGS.cart ? `<button class="listbtn listbtn--sheet" type="button" aria-label="Add to list" id="pdpListBtn"></button>` : ""}
       </div>
 
       ${FLAGS.reviews ? `<div class="rating">
@@ -639,7 +641,7 @@ function pdpHTML() {
       <div class="pdp-unit">${currentProduct.size}</div>
 
       <div class="pdp-actions">
-        <button class="btn btn--primary" id="addCartBtn">${cartIcon} Add to Cart</button>
+        <button class="btn btn--primary" id="addCartBtn">${FLAGS.cart ? `${cartIcon} Add to Cart` : `${listAddIcon} Add to list`}</button>
         ${FLAGS.location ? `<button class="btn btn--ghost" id="lightBtn">${bulbIcon} Light up in aisle</button>` : ""}
       </div>
 
@@ -876,9 +878,11 @@ pdpBody.addEventListener("click", (e) => {
 
   const addBtn = e.target.closest("#addCartBtn");
   if (addBtn) {
+    const icon = FLAGS.cart ? cartIcon : listAddIcon;
+    const label = FLAGS.cart ? "Add to Cart" : "Add to list";
     addBtn.classList.add("btn--added");
-    addBtn.innerHTML = `${cartIcon} Added ✓`;
-    setTimeout(() => { addBtn.classList.remove("btn--added"); addBtn.innerHTML = `${cartIcon} Add to Cart`; }, 1400);
+    addBtn.innerHTML = `${icon} Added ✓`;
+    setTimeout(() => { addBtn.classList.remove("btn--added"); addBtn.innerHTML = `${icon} ${label}`; }, 1400);
     return;
   }
 
