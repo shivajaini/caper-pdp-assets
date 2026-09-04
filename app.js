@@ -273,7 +273,10 @@ const CART_STEP = 2; // % of the map moved per arrow-key press
 // "Last meter" navigation: as the cart nears the item, the view auto-advances
 // map -> aisle -> shelf, with a distance nudge, so the shopper is handed off to
 // the close-up views right when they need them.
-const PIN_TARGET = { x: 39.3, y: 43 }; // item pin circle center (mirrors .map-pin left/top in CSS)
+// Item position = the pin's LEFT edge (the side the pointer tail points from,
+// toward the "8" aisle), not the circle center. The .map-pin circle is 16.6% wide
+// centered at left 39.3%, so its left edge is 39.3 - 16.6/2 = 31.0%; y unchanged.
+const PIN_TARGET = { x: 31.0, y: 43 };
 const MAP_ASPECT = 990 / 658;          // weight x-distance by the map's aspect so "feet" feel physical
 const NAV_AISLE_AT = 17;               // aspect-weighted % distance to hand off map -> aisle
 const NAV_SHELF_AT = 6;                // ...and aisle -> shelf
