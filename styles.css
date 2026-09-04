@@ -322,9 +322,10 @@ button { font-family: inherit; cursor: pointer; }
   left: 42.29%; top: 38.8%;
   width: 16.6%; aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  /* scale pivots on the left edge (where the pointer is) so the pin grows out
-     from the point it marks, rather than ballooning from its own center */
-  transform-origin: left center;
+  /* scale pivots on the pointer TIP (16px left of the circle, at the tail apex)
+     so the tip stays planted on the aisle while the pin grows/shrinks around it.
+     Pivoting at the circle's own left edge would let the protruding tip drift. */
+  transform-origin: -16px center;
   z-index: 4;
   /* ~1.4s after the PDP opens: spring up from half size to full, hold briefly,
      then scale back down to half size */
