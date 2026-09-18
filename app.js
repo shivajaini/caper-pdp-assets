@@ -27,7 +27,7 @@ const IMG = {
 const heroSrc = (u) => (u || "").replace("/thumb_", "/large_");
 
 const FLAGS = {
-  location: true, // aisle/shelf labels + "Light up in aisle" + loc pills
+  location: true, // aisle/shelf labels + loc pills (also gates "Light up in aisle")
   map: true,      // store-map view & thumbnail
   imagery: true,  // aisle & shelf in-store photo views + thumbnails
   autonav: true,  // distance-based auto handoff map -> aisle -> shelf
@@ -36,6 +36,7 @@ const FLAGS = {
   coupon: true,   // Caper exclusive offer + clip offer
   recs: true,     // recommendation sections
   cart: true,     // primary CTA is "Add to Cart"; off -> "Add to list" (hides inline list btn)
+  lightup: false, // secondary CTA is "Light up in aisle"; off (default) -> "Add to list"
 };
 const FLAG_CONFIG = [
   { key: "location", label: "Location info", desc: "Aisle & shelf labels" },
@@ -47,6 +48,7 @@ const FLAG_CONFIG = [
   { key: "coupon", label: "Coupons & offers", desc: "Exclusive offer card" },
   { key: "recs", label: "Recommendations", desc: "“Bought with” sections" },
   { key: "cart", label: "Add to Cart CTA", desc: "Off switches primary to Add to list" },
+  { key: "lightup", label: "Light up in aisle", desc: "Off makes Add to list the secondary button" },
 ];
 
 /* list-add icon used inside the green circular button on recommendation cards */
@@ -629,7 +631,7 @@ function pdpHTML() {
       ${FLAGS.location ? `<span class="pdp-loc">${pinSVG}${AISLE} • Middle Shelf</span>` : ""}
       <div class="pdp-title-row">
         <h2 class="pdp-title" id="pdpTitle">${currentProduct.name}</h2>
-        ${FLAGS.cart ? `<button class="listbtn listbtn--sheet" type="button" aria-label="Add to list" id="pdpListBtn"></button>` : ""}
+        ${FLAGS.cart && FLAGS.lightup ? `<button class="listbtn listbtn--sheet" type="button" aria-label="Add to list" id="pdpListBtn"></button>` : ""}
       </div>
 
       ${FLAGS.reviews ? `<div class="rating">
@@ -645,7 +647,11 @@ function pdpHTML() {
 
       <div class="pdp-actions">
         <button class="btn btn--primary" id="addCartBtn">${FLAGS.cart ? `${cartIcon} Add to Cart` : `${listAddIcon} Add to list`}</button>
-        ${FLAGS.location ? `<button class="btn btn--ghost" id="lightBtn">${bulbIcon} Light up in aisle</button>` : ""}
+        ${FLAGS.lightup
+          ? `<button class="btn btn--ghost" id="lightBtn">${bulbIcon} Light up in aisle</button>`
+          : FLAGS.cart
+            ? `<button class="btn btn--ghost" id="addListBtn">${listAddIcon} Add to list</button>`
+            : ""}
       </div>
 
       ${FLAGS.coupon ? `<div class="offer-card">
@@ -893,6 +899,14 @@ pdpBody.addEventListener("click", (e) => {
   if (lightBtn) {
     lightBtn.innerHTML = `${bulbIcon} Lighting up…`;
     setTimeout(() => { lightBtn.innerHTML = `${bulbIcon} Light up in aisle`; }, 1600);
+    return;
+  }
+
+  // Secondary "Add to list" button (shown when "Light up in aisle" is off).
+  const listBtn = e.target.closest("#addListBtn");
+  if (listBtn) {
+    listBtn.innerHTML = `${listAddIcon} Added to list ✓`;
+    setTimeout(() => { listBtn.innerHTML = `${listAddIcon} Add to list`; }, 1400);
   }
 });
 
@@ -917,7 +931,7 @@ document.querySelector(".clear-btn").addEventListener("click", () => {
    disabled (and forced off) whenever "Location info" is turned off. Auto view
    switching in turn needs the aisle/shelf imagery to hand off to, so it locks
    (and forces off) whenever "Aisle & shelf imagery" is off. */
-const LOCATION_DEPENDENT = ["map", "imagery"];
+const LOCATION_DEPENDENT = ["map", "imagery", "lightup"];
 const IMAGERY_DEPENDENT = ["autonav"];
 
 // Force any dependent toggle off when its prerequisite is off (cascades, since
