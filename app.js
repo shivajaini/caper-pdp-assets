@@ -920,9 +920,9 @@ const kbDownIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 const backArrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>`;
 
 /* ---------- Home screen markup ---------- */
-function dealCardHTML(d) {
+function dealCardHTML(d, i) {
   return `
-    <button class="card deal-card" type="button" data-q="${d.q}" aria-label="${d.name}, $2.99">
+    <button class="card deal-card" type="button" data-i="${i}" aria-label="${d.name}, $2.99">
       ${d.exclusive ? `<span class="deal-flag">Caper exclusive</span>` : ""}
       <span class="listbtn" role="presentation" aria-hidden="true"></span>
       <span class="card-media">
@@ -979,7 +979,7 @@ function homeHTML() {
 
         <section class="deals">
           <h2 class="deals-title">Shop today’s best deals</h2>
-          <div class="deals-grid">${HOME_DEALS.map(dealCardHTML).join("")}</div>
+          <div class="deals-grid">${HOME_DEALS.map((d, i) => dealCardHTML(d, i)).join("")}</div>
         </section>
       </div>
 
@@ -1081,6 +1081,22 @@ function goToResults(query) {
   const grid = document.querySelector("#searchScreen");
   if (grid) grid.scrollTop = 0;
 }
+// A home deal opens the PDP directly for that product (not the results list).
+function openDeal(i) {
+  const d = HOME_DEALS[i];
+  if (!d) return;
+  pdpHistory = []; // opening from a home deal starts a fresh trail
+  openProduct({
+    name: d.name,
+    size: "",
+    price: "$2.99",
+    was: "$4.99",
+    img: d.img,
+    onSale: true,
+    offer: d.reward,
+    clip: d.exclusive,
+  });
+}
 
 function initHomeScreens() {
   homeScreenEl.innerHTML = homeHTML();
@@ -1098,7 +1114,7 @@ function initHomeScreens() {
       return;
     }
     const deal = e.target.closest(".deal-card");
-    if (deal) { goToResults(deal.dataset.q); return; }
+    if (deal) { openDeal(Number(deal.dataset.i)); return; }
   });
 
   // Search-landing interactions

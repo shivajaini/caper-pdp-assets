@@ -857,7 +857,9 @@ button { font-family: inherit; cursor: pointer; }
 .deals-title { font-size: 24px; font-weight: 800; margin: 2px 0 14px; }
 .deals-grid { flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: start; padding-bottom: 8px; }
 
-.deal-card { min-height: 0; }
+/* Explicit height so the flex-column card doesn't collapse under grid
+   auto-row sizing (which was chopping the eligible/clip rows). */
+.deal-card { min-height: 344px; }
 .deal-card .card-media { flex: 0 0 132px; }
 .deal-flag {
   position: absolute; top: -12px; left: 14px; z-index: 4;
