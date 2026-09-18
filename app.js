@@ -466,6 +466,79 @@ const PRODUCTS = [
   { id: 230, name: "Ruffles Original Potato Chips, Party Size", size: "", price: "$5.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_5ac93286-a5c0-416a-b70d-f893ce8a34f0.png", aisle: "Aisle 8" },
   { id: 231, name: "Sun Chips Flavored Whole Grain Snacks, Harvest Cheddar", size: "", price: "$4.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_6feae9f4-080a-4b9f-aa8b-f743b86bdcbb.png", aisle: "Aisle 8" },
   { id: 232, name: "Lay's Wavy Lightly Salted Potato Chips Original 7 1/2 Oz", size: "", price: "$3.79", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_84e2315f-4ab3-4909-991b-9a18d58a5edd.png", aisle: "Aisle 8" },
+  { id: 233, name: "Goya Capers", size: "", price: "$3.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_85762d9c-3f8d-485d-8ae2-402626514fb0.png", aisle: "Aisle 8", kw: "capers" },
+  { id: 234, name: "Reese's Salted Capers", size: "", price: "$4.59", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_e0a6c4d5-b5ea-40cf-8c5a-755226a53ef9.png", aisle: "Aisle 8", kw: "capers" },
+  { id: 235, name: "Reese's Non Pareil Capers", size: "", price: "$3.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_a070b335-9b0b-4804-8842-5a50320e1c98.png", aisle: "Aisle 8", kw: "capers" },
+  { id: 236, name: "Goya Olives, Manzanilla, Pimientos & Capers, Alcaparrado", size: "", price: "$2.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_65dc4e17-36b1-4110-b662-d10167cdc372.png", aisle: "Aisle 8", kw: "capers" },
+  { id: 237, name: "Pastene Non-Pareil Capers", size: "", price: "$4.59", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_69d17c7d-7d45-419c-b373-0d5dd85f505d.jpg", aisle: "Aisle 8", kw: "capers" },
+  { id: 238, name: "Food Club Large Ripe Pitted Olives", size: "", price: "$2.59", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_df596c88-5ed3-4ddf-920b-0868550fa48d.png", aisle: "Aisle 8", kw: "olives" },
+  { id: 239, name: "Mezzetta Pitted Greek Kalamata Olives", size: "", price: "$6.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_f152ebb7-16c0-421f-a74a-6676a5ac4eb4.jpg", aisle: "Aisle 8", kw: "olives" },
+  { id: 240, name: "DeLallo Pitted Olives Jubilee", size: "", price: "$8.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_0933b563-653a-4fe6-8e99-077e539a50f3.png", aisle: "Aisle 8", kw: "olives" },
+  { id: 241, name: "Food Club Manzanilla Olives Pimiento Stuffed", size: "", price: "$2.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_8f96328c-804e-4e37-b019-84433a303e31.png", aisle: "Aisle 8", kw: "olives" },
+  { id: 242, name: "Lindsay Olives, Black Ripe Pitted, Medium", size: "", price: "$2.50", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_a92fb5aa-7827-4056-ba40-9faddb164610.png", aisle: "Aisle 8", kw: "olives" },
+  { id: 243, name: "Pearls Kalamata Pitted Greek Olives", size: "", price: "$4.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_4d9dd57d-6c44-440a-916b-dfb22a859e87.jpg", aisle: "Aisle 8", kw: "olives" },
+  { id: 244, name: "Botticelli Vinegar, of Modena, Balsamic", size: "", price: "$3.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_6798fcf2-c1b5-41e9-8b6d-b0b5d18359ec.png", aisle: "Aisle 8", kw: "vinegar balsamic" },
+  { id: 245, name: "Bertolli Sauce, Balsamic Vinegar & Caramelized Onions", size: "", price: "$5.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_b7d11d1e-bb38-4aea-bc6b-18d64e919061.png", aisle: "Aisle 8", kw: "vinegar balsamic" },
+  { id: 246, name: "Colavita Balsamic Vinegar of Modena IGP", size: "", price: "$6.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_f1fbf8c0-0fc9-4717-be0e-ea77062f1525.jpg", aisle: "Aisle 8", kw: "vinegar balsamic" },
+  { id: 247, name: "Monari Federzoni Balsamic Vinegar of Modena", size: "", price: "$5.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_380236df-66c2-4088-a323-2c69a1d442ac.png", aisle: "Aisle 8", kw: "vinegar balsamic" },
+  { id: 248, name: "Regina Red Wine Vinegar", size: "", price: "$3.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_1f9e8b74-6dd7-44d9-9683-f52179615317.png", aisle: "Aisle 8", kw: "vinegar" },
+  { id: 249, name: "Heinz Red Wine Vinegar", size: "", price: "$5.89", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ee4bfb2b-acd9-4c77-9576-d7343ce85dc6.jpg", aisle: "Aisle 8", kw: "vinegar" },
+  { id: 250, name: "Progresso Italian Style Bread Crumbs", size: "", price: "$2.33", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ae966a10-0857-4870-8a06-744917d90371.png", aisle: "Aisle 8", kw: "breadcrumbs" },
+  { id: 251, name: "Progresso Plain Style Bread Crumbs", size: "", price: "$2.33", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_099e4ef3-7432-4677-b8f7-7ee4822127bf.png", aisle: "Aisle 8", kw: "breadcrumbs" },
+  { id: 252, name: "Progresso Quality Foods Plain Breadcrumbs", size: "", price: "$4.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_3f79a82a-f095-44c7-b14d-3a7ab13a72fc.png", aisle: "Aisle 8", kw: "breadcrumbs" },
+  { id: 253, name: "4C Foods Bread Crumbs, Seasoned", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_95572fe7-cf68-4786-9978-b01f3c863978.png", aisle: "Aisle 8", kw: "breadcrumbs" },
+  { id: 254, name: "4C Foods Bread Crumbs, Seasoned, Panko", size: "", price: "$3.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_3a1b2e16-c536-45f8-9d47-3826bbd0e9f5.png", aisle: "Aisle 8", kw: "breadcrumbs" },
+  { id: 255, name: "Alexia Onion Rings, with Panko Breading & Sea Salt, Crispy", size: "", price: "$6.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_c6ff26dd-0d45-4bff-9cc3-ab362f383723.png", aisle: "Aisle 8", kw: "breadcrumbs" },
+  { id: 256, name: "BelGioioso Freshly Shredded Cheese, Parmesan", size: "", price: "$4.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_359e64b5-4237-49c4-8129-19f650f3515f.png", aisle: "Dairy", kw: "parmesan cheese" },
+  { id: 257, name: "Food Club Cheese, Parmesan, Grated", size: "", price: "$3.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_98de8669-f0f9-47ff-8cd4-be49cae5c67b.png", aisle: "Dairy", kw: "parmesan cheese" },
+  { id: 258, name: "Chicken Parmesan", size: "", price: "$12.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_6b276deb-7cd7-43d5-a584-7652f14d2357.png", aisle: "Dairy", kw: "parmesan cheese" },
+  { id: 259, name: "Rao's Chicken Parmesan", size: "", price: "$3.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_52882ac3-6963-48b1-9b20-4e2b2c2c8cfc.jpg", aisle: "Dairy", kw: "parmesan cheese" },
+  { id: 260, name: "Knorr Rice Sides Garlic Parmesan", size: "", price: "$1.33", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_3173c4aa-6713-485e-a81c-dfe92d77493f.jpg", aisle: "Dairy", kw: "parmesan cheese" },
+  { id: 261, name: "Food Club Parmesan & Romano Grated Cheese", size: "", price: "$3.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_b95d38ff-0398-4ba5-bec6-8dff82c7a58b.png", aisle: "Dairy", kw: "parmesan cheese" },
+  { id: 262, name: "Tuttorosso Basil, Garlic & Oregano Diced Tomatoes", size: "", price: "$1.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_8577a36c-056c-49d2-94f0-3e7b48a00fff.jpg", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 263, name: "Ragu Chunky Sauteed Onion and Garlic Pasta Sauce with Diced Tomatoes, 24 oz", size: "", price: "$3.69", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_ac0af865-2d84-4076-a732-a9bbb5e3422a.jpg", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 264, name: "Food Club Petite Diced Tomatoes In Juice", size: "", price: "$1.59", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_6c746448-fd94-4981-ad7e-247fe9d6de0d.png", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 265, name: "Redpack Petite Diced Tomatoes", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_51027400-c139-4f4f-811d-0f333cff78fb.jpg", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 266, name: "Colavita Crushed Tomatoes", size: "", price: "$2.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_6d0ac6ea-3e2b-450c-a12d-c6f8fa62bca8.jpg", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 267, name: "Tuttorosso No Salt Added Crushed Tomatoes with Basil", size: "", price: "$1.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_aa9882a1-733d-49c1-b68d-bf33d8579b3d.png", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 268, name: "Redpack Crushed Tomatoes in Puree", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_5528f21f-94a9-4d68-b4b6-23dc90e19b7d.jpg", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 269, name: "Redpack Whole Peeled Plum Tomatoes in Puree", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_d9d03e26-1d87-4f71-8706-02f2e3f63778.jpg", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 270, name: "Muir Glen Organic Whole Peeled Tomatoes", size: "", price: "$6.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_40203efc-76de-4a46-b935-b967539ce88c.png", aisle: "Aisle 8", kw: "canned tomatoes" },
+  { id: 271, name: "Tostitos Chunky Salsa, Mild", size: "", price: "$4.09", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_87adaf99-2595-4990-aca1-5918062a68d2.png", aisle: "Aisle 8", kw: "salsa" },
+  { id: 272, name: "Chi-Chi's Thick & Chunky Salsa Medium", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_222cb420-ea9a-4303-9e51-90e17d9b47a4.jpg", aisle: "Aisle 8", kw: "salsa" },
+  { id: 273, name: "Tostitos Mild Chunky Salsa Dip", size: "", price: "$4.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_f47543cc-c94d-43f5-a4d1-3d7fa90e4d6d.png", aisle: "Aisle 8", kw: "salsa" },
+  { id: 274, name: "Tostitos Chunky Salsa, Medium", size: "", price: "$4.09", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_83b089ef-b0eb-4fae-a5a8-12da08443691.png", aisle: "Aisle 8", kw: "salsa" },
+  { id: 275, name: "Tostitos Restaurant Style Salsa, Medium", size: "", price: "$4.09", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_6433326c-edc5-47ea-93d7-01a63209f389.png", aisle: "Aisle 8", kw: "salsa" },
+  { id: 276, name: "Sun Chips Flavored Whole Grain Snacks, Garden Salsa", size: "", price: "$4.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_4a4396ae-7199-496d-a73f-a74746077e20.png", aisle: "Aisle 8", kw: "salsa" },
+  { id: 277, name: "Mrs. Renfro's Salsa, Peach, Mild", size: "", price: "$5.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_be6a6284-2b91-43ae-9687-2e8c6afed822.png", aisle: "Aisle 8", kw: "salsa" },
+  { id: 278, name: "Heinz Tomato Ketchup", size: "", price: "$5.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_e6117fd5-08b4-493d-983f-93a4f10a2602.jpg", aisle: "Aisle 8", kw: "ketchup" },
+  { id: 279, name: "Full Circle Ketchup, Tomato", size: "", price: "$2.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_d65b7099-2cc9-4b59-af17-cba89d92d4cc.png", aisle: "Aisle 8", kw: "ketchup" },
+  { id: 280, name: "Heinz Organic Tomato Ketchup", size: "", price: "$6.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_b976007b-1a23-4709-abfc-c1115f3a4f93.jpg", aisle: "Aisle 8", kw: "ketchup" },
+  { id: 281, name: "SIMPLY HEINZ Simply Tomato Ketchup with No Artificial Sweeteners", size: "", price: "$5.79", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_79594b8b-872e-43a7-bc34-89a32625cddb.jpg", aisle: "Aisle 8", kw: "ketchup" },
+  { id: 282, name: "Ronzoni Penne Rigate, 16 oz, Ridged Non-GMO Pasta for Chunky Sauces", size: "", price: "$1.59", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_07581ab1-460f-4a17-b958-3ffa9832c6fd.png", aisle: "Aisle 8", kw: "penne pasta" },
+  { id: 283, name: "Barilla Penne - Non-GMO Pasta Made with Durum Wheat Semolina & Kosher Certified", size: "", price: "$1.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_a135a200-f506-4c0a-877e-042f9a995b6c.png", aisle: "Aisle 8", kw: "penne pasta" },
+  { id: 284, name: "Barilla Protein+ (Plus) Penne Pasta - Plant Based Pasta - Made from Lentils, Chickpeas & Peas", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_f864952e-9f3a-4a72-8a46-ee172da93fb3.png", aisle: "Aisle 8", kw: "penne pasta" },
+  { id: 285, name: "Bertolli Chicken Parmigiana & Penne, Frozen Meal", size: "", price: "$11.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_075b09a3-2d28-4fd1-80aa-fe5655c3dfed.jpg", aisle: "Aisle 8", kw: "penne pasta" },
+  { id: 286, name: "Rustichella D'abruzzo Bronze Dies Penne Rigate", size: "", price: "$7.29", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_72381a75-01f1-4ff3-a549-a35562067aaf.png", aisle: "Aisle 8", kw: "penne pasta" },
+  { id: 287, name: "Stouffer's Rigatoni with Chicken & Pesto", size: "", price: "$4.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_3d60dae7-7da3-4fbc-ac60-208c6efbb9c8.jpg", aisle: "Aisle 8", kw: "pasta" },
+  { id: 288, name: "Pasta Zara Rigatoni", size: "", price: "$1.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_3046ee1e-2fe2-471f-8c55-0b1d2143a296.png", aisle: "Aisle 8", kw: "pasta" },
+  { id: 289, name: "Rao's Marinara Sauce", size: "", price: "$10.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_88fc4430-a70a-42dd-a7c8-00ec18f4544a.jpg", aisle: "Aisle 8", kw: "pasta sauce" },
+  { id: 290, name: "Bertolli Traditional Marinara Sauce with Italian Herbs and Fresh Garlic, Made with Vine-Ripened Tomatoes, 24 oz", size: "", price: "$4.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_bb437336-0470-44ee-a158-6af58dfa9e6f.jpg", aisle: "Aisle 8", kw: "pasta sauce" },
+  { id: 291, name: "Francesco Rinaldi Marinara Sauce", size: "", price: "$3.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_3ac8e52c-c9d0-40cf-99ee-1a577b5c307e.png", aisle: "Aisle 8", kw: "pasta sauce" },
+  { id: 292, name: "Rao's Sensitive Formula Marinara Sauce", size: "", price: "$10.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_d0cad3ea-92e5-47be-a5d5-0fa45eb08b34.jpg", aisle: "Aisle 8", kw: "pasta sauce" },
+  { id: 293, name: "Filippo Berio Extra Virgin Olive Oil", size: "", price: "$15.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_8569ef53-f468-476c-a8a4-e01a62d011d6.png", aisle: "Aisle 8", kw: "olive oil" },
+  { id: 294, name: "Full Circle Olive Oil, 100% Extra Virgin", size: "", price: "$6.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_7d1464c8-5059-4ee2-9d21-765e08a66dc2.png", aisle: "Aisle 8", kw: "olive oil" },
+  { id: 295, name: "Food Club Olive Oil, Extra Virgin", size: "", price: "$6.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_79e61f0c-3e8d-450a-8251-2ce813c9297a.png", aisle: "Aisle 8", kw: "olive oil" },
+  { id: 296, name: "Graza Drizzle, Extra Virgin Olive Oil for Finishing", size: "", price: "$19.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_780195c6-4539-4545-b949-4bddc06c8cc8.jpg", aisle: "Aisle 8", kw: "olive oil" },
+  { id: 297, name: "Maxwell House French Roast Dark Roast Ground Coffee", size: "", price: "$11.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_2de89eaf-5cee-40a9-bdc9-c3b224f942f6.jpg", aisle: "Beverages", kw: "coffee" },
+  { id: 298, name: "Cafe Caribe Dark Roast Espresso Coffee, Brick Pack", size: "", price: "$4.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_a6fc7d5e-162d-4912-8cd1-8007895c50eb.png", aisle: "Beverages", kw: "coffee" },
+  { id: 299, name: "Starbucks French Roast Dark Roast Ground Coffee", size: "", price: "$16.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_e8ad472c-c998-4747-8ac3-6c3131a1de78.jpg", aisle: "Beverages", kw: "coffee" },
+  { id: 300, name: "MARTINSON Coffee, Ground, Dark Roast, Battery Park, Capsules", size: "", price: "$10.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_f1a8de51-e1d1-472c-a276-132e9677c70c.png", aisle: "Beverages", kw: "coffee" },
+  { id: 301, name: "Kodiak Granola Bars, Peanut Butter, Crunchy", size: "", price: "$5.49", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_276a81fd-a608-4fff-94c1-0585dad70e9d.png", aisle: "Aisle 8", kw: "peanut butter" },
+  { id: 302, name: "Nature Valley Peanut Butter Crunchy Granola Bars", size: "", price: "$4.39", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_e8860733-1bf1-4274-af73-a2d3afcdeec4.png", aisle: "Aisle 8", kw: "peanut butter" },
+  { id: 303, name: "SNICKERS Crunchy Peanut Butter Squared Fun Size Chocolate Candy Bars", size: "", price: "$4.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_00ba2593-6870-4cee-b477-54284699e56d.jpg", aisle: "Aisle 8", kw: "peanut butter" },
+  { id: 304, name: "Horizon Organic 2% Reduced Fat Milk, 128 fl oz Gallon Jug", size: "", price: "$13.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_84a76279-ce3f-4324-957c-6047b94d8324.jpg", aisle: "Dairy", kw: "milk" },
+  { id: 305, name: "Horizon Organic Lactose-Free 2% Reduced Fat Milk", size: "", price: "$6.99", img: "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/thumb_a7192154-017e-4f78-9cb3-b3ce97dba50f.jpg", aisle: "Dairy", kw: "milk" },
 ];
 const AISLE = "Aisle 8";
 
@@ -789,9 +862,280 @@ function switchMedia(key) {
   playStageEnter(); // "dive into the location" zoom + fade on every view change
 }
 
+/* ============================================================
+   Home screen + Search landing — the two screens shown BEFORE
+   search results. Flow:
+     Home --tap search bar--> Search landing (popular + keyboard)
+          --tap popular / type + Search--> Search results (existing)
+          --tap card--> PDP (existing)
+   ============================================================ */
+const CDN = "https://d2lnr5mha7bycj.cloudfront.net/product-image/file/";
+// "Fresh Grocery" wordmark, inlined so it renders everywhere (raw.githubusercontent
+// serves SVG as text/plain, which browsers ORB-block when loaded via <img>).
+const FRESH_LOGO_SVG = `<svg viewBox="0 0 70 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.288216 16.8343L2.27389 16.4401V2.70716L0.288216 2.31291V0H15.136V5.24347H12.2663L12.0998 2.95685H6.01466V8.2266H12.5482V11.1834H6.01466V16.4401L8.01315 16.8343V19.1341H0.288216V16.8343ZM16.5207 16.8371L18.3142 16.4429V7.62489L16.3286 7.23064V4.91773H21.7988L21.9653 6.99409C22.2899 6.25817 22.7083 5.68432 23.2208 5.27255C23.7332 4.86078 24.3268 4.6549 25.0015 4.6549C25.1979 4.6549 25.405 4.67023 25.6228 4.7009C25.8406 4.73156 26.0221 4.76879 26.1673 4.8126L25.7701 8.30825L24.2328 8.26882C23.6862 8.26882 23.2336 8.37834 22.8749 8.59736C22.5162 8.81639 22.2429 9.1274 22.055 9.53041V16.4429L23.8485 16.8371V19.1369H16.5207V16.8371ZM33.6753 19.4055C31.6768 19.4055 30.0797 18.7484 28.884 17.4343C27.6883 16.1201 27.0905 14.4511 27.0905 12.4273V11.9017C27.0905 9.79026 27.6563 8.05121 28.7879 6.68448C29.9195 5.31776 31.4376 4.63878 33.3422 4.64754C35.2126 4.64754 36.6644 5.22577 37.6979 6.38223C38.7313 7.53869 39.248 9.10252 39.248 11.0738V13.1633H30.9722L30.9465 13.2421C31.0149 14.1795 31.3202 14.9505 31.8625 15.555C32.4048 16.1595 33.1415 16.4618 34.0724 16.4618C34.9008 16.4618 35.5883 16.3764 36.1349 16.2055C36.6815 16.0347 37.2794 15.7653 37.9284 15.3973L38.9405 17.7628C38.3683 18.2271 37.6274 18.617 36.7178 18.9324C35.8082 19.2478 34.7941 19.4055 33.6753 19.4055ZM33.3402 7.6106C32.6484 7.6106 32.1018 7.88219 31.7004 8.42538C31.299 8.96856 31.0513 9.68258 30.9574 10.5674L30.9958 10.6332H35.5821V10.2915C35.5821 9.4767 35.3963 8.8262 35.0248 8.33996C34.6533 7.85372 34.0918 7.6106 33.3402 7.6106ZM52.3315 9.8026H49.8206L49.4235 8.02849C49.1673 7.81822 48.8448 7.64301 48.4563 7.50283C48.0677 7.36265 47.6385 7.29256 47.1688 7.29256C46.5111 7.29256 45.9902 7.44369 45.6058 7.74595C45.2215 8.0482 45.0294 8.42711 45.0294 8.88269C45.0294 9.31198 45.213 9.66899 45.5802 9.95373C45.9475 10.2385 46.6819 10.4903 47.7837 10.7094C49.5003 11.0598 50.7729 11.5745 51.6013 12.2535C52.4297 12.9325 52.844 13.8677 52.844 15.0592C52.844 16.3383 52.308 17.3831 51.2362 18.1935C50.1644 19.0039 48.753 19.4091 47.0022 19.4091C45.9346 19.4091 44.9546 19.2492 44.0621 18.9294C43.1696 18.6096 42.3775 18.1519 41.6857 17.5561L41.6473 14.3627H44.2607L44.7731 16.2157C44.9952 16.4084 45.2984 16.5508 45.6827 16.6428C46.067 16.7348 46.4684 16.7808 46.8869 16.7808C47.647 16.7808 48.2257 16.6406 48.6228 16.3602C49.0199 16.0799 49.2185 15.6988 49.2185 15.2169C49.2185 14.7964 49.0178 14.4328 48.6164 14.1262C48.215 13.8195 47.4762 13.5479 46.4001 13.3114C44.7689 12.9697 43.5369 12.4638 42.7042 11.7935C41.8715 11.1233 41.4551 10.21 41.4551 9.05353C41.4551 7.86202 41.9334 6.8348 42.8899 5.97184C43.8465 5.10887 45.2087 4.6774 46.9766 4.6774C48.0527 4.6774 49.0712 4.82633 50.032 5.12421C50.9928 5.42209 51.7465 5.80319 52.2931 6.26752L52.3315 9.8026ZM54.3195 16.8312L56.1259 16.437V3.19347L54.1274 1.87116V0.486312H59.8538V6.72537C60.2894 6.06829 60.8232 5.55796 61.4552 5.19438C62.0872 4.8308 62.7875 4.64901 63.5562 4.64901C65.0081 4.64901 66.1461 5.14181 66.9702 6.12743C67.7944 7.11305 68.2065 8.63526 68.2065 10.6941V16.437L70 16.8312V19.131H62.8516V16.8312L64.4657 16.437V10.6678C64.4657 9.56394 64.2757 8.78202 63.8956 8.32207C63.5156 7.86211 62.9498 7.63214 62.1982 7.63214C61.6772 7.63214 61.2224 7.72851 60.8339 7.92125C60.4453 8.11399 60.1186 8.38558 59.8538 8.73602V16.437L61.468 16.8312V19.131H54.3195V16.8312ZM11.2806 34.3014C10.8415 34.7455 10.2014 35.1468 9.3603 35.5052C8.5192 35.8637 7.45547 36.0429 6.16908 36.0429C4.34463 36.0429 2.86035 35.4164 1.71621 34.1634C0.572064 32.9105 0 31.2816 0 29.2768V28.801C0 26.7265 0.564333 25.0389 1.69302 23.7383C2.8217 22.4378 4.29515 21.7875 6.11342 21.7875C7.17098 21.7875 8.1373 21.9604 9.01242 22.3061C9.88753 22.6519 10.6158 23.1198 11.1971 23.7098V26.4981H9.19331L8.81297 24.6424C8.56558 24.4267 8.23935 24.2538 7.83426 24.1238C7.42917 23.9937 6.96379 23.9287 6.4381 23.9287C5.25685 23.9287 4.33846 24.3759 3.68289 25.2705C3.02733 26.165 2.69955 27.3355 2.69955 28.782V29.2768C2.69955 30.6852 3.02114 31.8097 3.66434 32.6504C4.30753 33.491 5.2352 33.9113 6.44738 33.9113C6.99162 33.9113 7.43227 33.8637 7.76933 33.7685C8.10638 33.6734 8.37077 33.5623 8.56249 33.4354V31.0849L6.63292 30.9327V28.9818H11.2806V34.3014ZM12.9038 34.1766L14.2026 33.8911V27.5057L12.7647 27.2202V25.5454H16.7259L16.8464 27.0489C17.0815 26.516 17.3845 26.1005 17.7556 25.8023C18.1267 25.5041 18.5565 25.355 19.0451 25.355C19.1873 25.355 19.3373 25.3661 19.495 25.3883C19.6527 25.4105 19.7841 25.4375 19.8892 25.4692L19.6017 28.0006L18.4884 27.972C18.0926 27.972 17.7649 28.0513 17.5051 28.2099C17.2454 28.3685 17.0474 28.5937 16.9114 28.8856V33.8911L18.2101 34.1766V35.842H12.9038V34.1766ZM20.5114 30.5985C20.5114 29.0632 20.9304 27.8055 21.7684 26.8253C22.6064 25.8451 23.7645 25.355 25.2426 25.355C26.7269 25.355 27.888 25.8435 28.726 26.8205C29.564 27.7976 29.983 29.0569 29.983 30.5985V30.7983C29.983 32.3463 29.564 33.6072 28.726 34.5811C27.888 35.5549 26.733 36.0418 25.2611 36.0418C23.7706 36.0418 22.6064 35.5549 21.7684 34.5811C20.9304 33.6072 20.5114 32.3463 20.5114 30.7983V30.5985ZM23.2199 30.7992C23.2199 31.7381 23.3807 32.4915 23.7023 33.0593C24.0239 33.6271 24.5434 33.911 25.2608 33.911C25.9596 33.911 26.4714 33.6255 26.7961 33.0545C27.1208 32.4836 27.2831 31.7318 27.2831 30.7992V30.5993C27.2831 29.6858 27.1192 28.9403 26.7915 28.363C26.4637 27.7857 25.9473 27.497 25.2422 27.497C24.5372 27.497 24.0239 27.7857 23.7023 28.363C23.3807 28.9403 23.2199 29.6858 23.2199 30.5993V30.7992ZM35.8805 33.9102C36.3629 33.9102 36.7494 33.7658 37.0401 33.4772C37.3307 33.1885 37.4761 32.8031 37.4761 32.321H39.9252L39.953 32.3781C39.9777 33.4185 39.5974 34.2892 38.8119 34.9903C38.0265 35.6913 37.0493 36.0418 35.8805 36.0418C34.3838 36.0418 33.2304 35.5565 32.4202 34.5858C31.61 33.6152 31.205 32.3685 31.205 30.8459V30.5604C31.205 29.0442 31.6209 27.7976 32.4527 26.8205C33.2845 25.8435 34.4704 25.355 36.0103 25.355C36.8205 25.355 37.5472 25.4787 38.1904 25.7262C38.8336 25.9736 39.3685 26.3225 39.7953 26.773L39.8324 29.5232H37.6338L37.1885 27.9149C37.0524 27.7944 36.8855 27.6945 36.6875 27.6152C36.4896 27.5358 36.2639 27.4962 36.0103 27.4962C35.2435 27.4962 34.7023 27.7817 34.3869 28.3527C34.0715 28.9236 33.9138 29.6596 33.9138 30.5604V30.8459C33.9138 31.7658 34.0591 32.5065 34.3498 33.068C34.6405 33.6294 35.1507 33.9102 35.8805 33.9102ZM45.9814 36.0419C44.5342 36.0419 43.3777 35.5661 42.5118 34.6144C41.646 33.6628 41.2131 32.4543 41.2131 30.9887V30.6081C41.2131 29.0791 41.6228 27.8198 42.4423 26.8301C43.2617 25.8404 44.361 25.3487 45.7402 25.3551C47.0946 25.3551 48.1459 25.7738 48.8943 26.6112C49.6426 27.4487 50.0168 28.5811 50.0168 30.0086V31.5216H44.0239L44.0054 31.5787C44.0549 32.2576 44.276 32.8159 44.6687 33.2536C45.0614 33.6914 45.5948 33.9102 46.2689 33.9102C46.8688 33.9102 47.3667 33.8484 47.7625 33.7247C48.1583 33.601 48.5912 33.4059 49.0613 33.1394L49.7941 34.8523C49.3798 35.1886 48.8433 35.4709 48.1846 35.6993C47.5259 35.9277 46.7915 36.0419 45.9814 36.0419ZM45.7376 27.497C45.2366 27.497 44.8408 27.6937 44.5502 28.087C44.2595 28.4804 44.0801 28.9974 44.0121 29.6382L44.0399 29.6858H47.361V29.4384C47.361 28.8483 47.2265 28.3773 46.9575 28.0252C46.6885 27.6731 46.2818 27.497 45.7376 27.497ZM51.4934 34.1766L52.7921 33.8911V27.5057L51.3542 27.2202V25.5454H55.3154L55.436 27.0489C55.671 26.516 55.9741 26.1005 56.3451 25.8023C56.7162 25.5041 57.146 25.355 57.6346 25.355C57.7769 25.355 57.9268 25.3661 58.0845 25.3883C58.2423 25.4105 58.3737 25.4375 58.4788 25.4692L58.1912 28.0006L57.078 27.972C56.6822 27.972 56.3544 28.0513 56.0947 28.2099C55.8349 28.3685 55.637 28.5937 55.501 28.8856V33.8911L56.7997 34.1766V35.842H51.4934V34.1766ZM69.8472 27.2196L68.9102 27.3624L65.218 37.383C64.9274 38.1253 64.5393 38.747 64.0538 39.2482C63.5683 39.7494 62.837 40 61.8598 40C61.631 40 61.4161 39.981 61.2151 39.9429C61.0141 39.9048 60.7775 39.8509 60.5054 39.7811L60.8208 37.7542C60.9074 37.7668 60.9971 37.7795 61.0899 37.7922C61.1826 37.8049 61.263 37.8113 61.3311 37.8113C61.7825 37.8113 62.1289 37.6986 62.3701 37.4734C62.6113 37.2482 62.7968 36.9675 62.9267 36.6312L63.2328 35.8509L60.0509 27.3719L59.1139 27.2196V25.5448H64.0306V27.2196L62.9081 27.41L64.2811 31.521L64.4202 32.2633L64.4759 32.2728L66.0622 27.41L64.9305 27.2196V25.5448H69.8472V27.2196Z" fill="#242529"/></svg>`;
+const BANANA_IMG = CDN + "thumb_17b704c5-b4df-4831-ac14-6260baa59a13.jpg";
+
+// "Shop today's best deals": every deal is Aisle 7, $2.99 (was $4.99) per the design.
+const HOME_DEALS = [
+  { name: "Natural Crunchy Peanut Butter", q: "peanut butter", img: CDN + "thumb_92e761e1-d3b4-4bd8-82f6-f03dd5569f9e.jpg", reward: "$1 Cart Cash", exclusive: true },
+  { name: "Dark Roast Coffee",             q: "coffee",        img: CDN + "thumb_5f0ff86c-977b-42bb-b278-b3bd75283751.png", reward: "$1 off",       exclusive: false },
+  { name: "Chunky Salsa, Mild",            q: "salsa",         img: CDN + "thumb_d104e4da-0f8c-4f79-bf83-25fbfa3c62c3.jpg", reward: "$1 Cart Cash", exclusive: true },
+  { name: "Tomato Ketchup",                q: "ketchup",       img: CDN + "thumb_416e856e-2b07-4da5-9849-0a442f4d1006.jpg", reward: "$1 off",       exclusive: false },
+  { name: "Penne Pasta",                   q: "penne pasta",   img: CDN + "thumb_4a804b96-1adf-4048-8adc-e9a45946a051.png", reward: "$1 Cart Cash", exclusive: true },
+  { name: "Organic 2% Milk, Half Gallon",  q: "milk",          img: CDN + "thumb_603c8641-1fea-40f8-a026-b50011cbbbf6.jpg", reward: "$1 Cart Cash", exclusive: true },
+];
+
+const POPULAR = [
+  { term: "olive oil",       img: CDN + "thumb_d4ad71aa-3097-476f-b6c6-aa651ea69cb5.jpg" },
+  { term: "pasta sauce",     img: CDN + "thumb_048f5b55-62a4-4b54-a06b-9a0b8a334716.jpg" },
+  { term: "pasta",           img: CDN + "thumb_76713a89-8503-46ef-a6ab-0a08a68818cd.png" },
+  { term: "canned tomatoes", img: CDN + "thumb_0859fa89-ac72-474e-9b76-0341d6b30a66.jpg" },
+  { term: "capers",          img: CDN + "thumb_c3515d08-3fe9-43ed-acf1-f748be85b61f.jpg" },
+  { term: "olives",          img: CDN + "thumb_932ef3c4-7ce3-447e-aab0-81b25a6ddb6e.jpg" },
+  { term: "vinegar",         img: CDN + "thumb_959dcc4a-7007-4d55-80fb-6fcb5dc4d9fe.png" },
+  { term: "breadcrumbs",     img: CDN + "thumb_bc0f604f-21a8-489d-ad67-1c19ad49c8bc.png" },
+  { term: "parmesan cheese", img: CDN + "thumb_4151353b-3586-42ff-aee9-6d1892fa23fa.png" },
+];
+
+// past-purchase mini thumbnails for the empty-list card
+const PAST_THUMBS = [
+  CDN + "thumb_92e761e1-d3b4-4bd8-82f6-f03dd5569f9e.jpg",
+  CDN + "thumb_76713a89-8503-46ef-a6ab-0a08a68818cd.png",
+  CDN + "thumb_bc0f604f-21a8-489d-ad67-1c19ad49c8bc.png",
+];
+
+// rotating suffix for the search placeholder ("Search for… ___")
+const SEARCH_HINTS = ["item location", "dinner ideas", "this week’s deals"];
+
+/* ---------- Icons used only by the home / search-landing screens ---------- */
+const menuIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`;
+const couponIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 12.6 12 21l-8.6-8.6a1.4 1.4 0 0 1-.4-1V4h7.4a1.4 1.4 0 0 1 1 .4L20.6 13a1.1 1.1 0 0 1 0-.4z"/><path d="M8 8l8 8" stroke-width="1.5"/><circle cx="7.4" cy="7.4" r="1.1" fill="currentColor" stroke="none"/></svg>`;
+const searchIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2" stroke-linecap="round"/></svg>`;
+const cameraIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h3l1.6-2.2h8.8L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.2"/></svg>`;
+const closeIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+const plusCircleIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M12 6.5v11M6.5 12h11" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+const scaleGlyph = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3.5" opacity=".55"/><circle cx="7" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="17" cy="12" r="1.3"/></svg>`;
+const bkspIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M9 5h11a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H9L2 12z"/><path d="M17 9l-5 6M12 9l5 6"/></svg>`;
+const kbDownIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>`;
+const backArrowIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>`;
+
+/* ---------- Home screen markup ---------- */
+function dealCardHTML(d) {
+  return `
+    <button class="card deal-card" type="button" data-q="${d.q}" aria-label="${d.name}, $2.99">
+      ${d.exclusive ? `<span class="deal-flag">Caper exclusive</span>` : ""}
+      <span class="listbtn" role="presentation" aria-hidden="true"></span>
+      <span class="card-media">
+        <img src="${d.img}" alt="${d.name}" />
+        <span class="loc-pill">${pinSVG}Aisle 7</span>
+      </span>
+      <span class="price-row"><span class="price price--sale">$2.99</span><span class="price-was">$4.99</span></span>
+      <span class="offer-pill">${d.reward}</span>
+      <span class="card-title">${d.name}</span>
+      <span class="deal-eligible">See eligible items</span>
+      <span class="clip-btn">${scissorsIcon} ${d.exclusive ? "Clip offer" : "Clip coupon"}</span>
+    </button>`;
+}
+function homeHTML() {
+  return `
+    <div class="home-main">
+      <header class="home-topbar">
+        <button class="brand-btn" type="button" aria-label="Menu">
+          <span class="brand-menu">${menuIcon}</span>
+          <span class="brand-logo" role="img" aria-label="Fresh Grocery">${FRESH_LOGO_SVG}</span>
+        </button>
+        <button class="coupons-btn" type="button">
+          <span class="coupons-ic">${couponIcon}</span>
+          <span>Coupons</span>
+        </button>
+        <button class="home-search" id="homeSearchBar" type="button" aria-label="Search for items">
+          <span class="hs-icon">${searchIconSvg}</span>
+          <span class="hs-text">Search for… <span class="hs-rot" id="homeHint">item location</span></span>
+        </button>
+        <div class="savings">
+          <div class="sv"><span class="sv-amt sv-amt--save">$0.00</span><span class="sv-lbl">Savings</span></div>
+          <div class="sv-div" aria-hidden="true"></div>
+          <div class="sv"><span class="sv-amt">$7.49</span><span class="sv-lbl">Subtotal</span></div>
+        </div>
+      </header>
+
+      <div class="home-body">
+        <aside class="list-card">
+          <div class="lc-head">
+            <span class="lc-title">Your list is empty</span>
+            <button class="lc-close" type="button" aria-label="Dismiss">${closeIconSvg}</button>
+          </div>
+          <div class="lc-empty">
+            <div class="lc-empty-title">Add your past purchases</div>
+            <div class="lc-empty-sub">Kickstart your list by browsing items you’ve bought before.</div>
+            <div class="lc-thumbs">
+              ${PAST_THUMBS.map((u) => `<span class="lc-thumb"><img src="${u}" alt="" /></span>`).join("")}
+              <span class="lc-thumb lc-thumb--more">+10</span>
+            </div>
+            <button class="lc-viewall" type="button">View all</button>
+          </div>
+          <button class="lc-scan" type="button">${cameraIcon} Scan my list</button>
+        </aside>
+
+        <section class="deals">
+          <h2 class="deals-title">Shop today’s best deals</h2>
+          <div class="deals-grid">${HOME_DEALS.map(dealCardHTML).join("")}</div>
+        </section>
+      </div>
+
+      <footer class="scale-specs">${scaleGlyph}<span>Scale specs: 80 x 0.01 lb &nbsp;•&nbsp; Weight : 1.79 lb</span></footer>
+    </div>
+
+    <aside class="cart-rail">
+      <button class="checkout-btn" type="button">
+        <span class="co-badge">2</span>
+        <span class="co-cart">${cartIcon}</span>
+        <span class="co-label">Checkout</span>
+      </button>
+      <div class="cart-items">
+        <div class="cart-item">
+          <span class="ci-badge">x2</span>
+          <img src="${BANANA_IMG}" alt="Bananas" />
+          <span class="ci-price">$7.49</span>
+        </div>
+      </div>
+      <button class="add-item" type="button">${plusCircleIcon}<span>Add item</span></button>
+    </aside>`;
+}
+
+/* ---------- Search landing markup ---------- */
+function keyboardHTML() {
+  const K = (ch) => `<button class="key" type="button" data-k="${ch}">${ch}</button>`;
+  const N = (n) => `<button class="key key--num" type="button" data-k="${n}">${n}</button>`;
+  const row = (s) => s.split("").map(K).join("");
+  return `
+    <div class="kb-left">
+      <div class="kb-row">${row("qwertyuiop")}<button class="key key--fn" type="button" data-act="back" aria-label="Backspace">${bkspIcon}</button></div>
+      <div class="kb-row kb-row--indent">${row("asdfghjkl")}</div>
+      <div class="kb-row kb-row--indent">${row("zxcvbnm")}</div>
+      <div class="kb-row kb-row--bottom">
+        <button class="key key--space" type="button" data-k=" ">&nbsp;</button>
+        <button class="key key--search" type="button" data-act="search">Search</button>
+      </div>
+    </div>
+    <div class="kb-right">
+      <button class="key key--fn key--down" type="button" data-act="down" aria-label="Hide keyboard">${kbDownIcon}</button>
+      <div class="kb-num">
+        ${[1,2,3,4,5,6,7,8,9].map(N).join("")}
+        <button class="key key--num key--zero" type="button" data-k="0">0</button>
+      </div>
+    </div>`;
+}
+function landingHTML() {
+  return `
+    <header class="sl-topbar">
+      <button class="back-btn" id="slExit" type="button"><span class="sl-exit-ic">${backArrowIcon}</span><span>Exit</span></button>
+      <div class="sl-searchbar">
+        <span class="hs-icon">${searchIconSvg}</span>
+        <input id="slInput" type="text" placeholder="Search for… item location" autocomplete="off" aria-label="Search for items" />
+      </div>
+    </header>
+    <section class="sl-popular">
+      <h2 class="sl-h2">Popular searches</h2>
+      <div class="popular-grid">
+        ${POPULAR.map((p) => `<button class="popular-item" type="button" data-term="${p.term}"><span class="pi-thumb"><img src="${p.img}" alt="" /></span><span class="pi-term">${p.term}</span></button>`).join("")}
+      </div>
+    </section>
+    <div class="keyboard">${keyboardHTML()}</div>`;
+}
+
+/* ---------- Screen switching + navigation ---------- */
+const homeScreenEl = document.getElementById("homeScreen");
+const landingScreenEl = document.getElementById("searchLanding");
+const resultsScreenEl = document.getElementById("searchScreen");
+
+let hintTimer = null, hintIdx = 0;
+function startHintRotator() {
+  const el = document.getElementById("homeHint");
+  if (!el) return;
+  clearInterval(hintTimer);
+  hintTimer = setInterval(() => {
+    hintIdx = (hintIdx + 1) % SEARCH_HINTS.length;
+    el.style.opacity = "0";
+    setTimeout(() => { el.textContent = SEARCH_HINTS[hintIdx]; el.style.opacity = "1"; }, 220);
+  }, 2600);
+}
+
+function showScreen(name) {
+  homeScreenEl.hidden = name !== "home";
+  landingScreenEl.hidden = name !== "landing";
+  resultsScreenEl.hidden = name !== "results";
+  if (name === "home") startHintRotator(); else clearInterval(hintTimer);
+}
+function openLanding() {
+  showScreen("landing");
+  const inp = document.getElementById("slInput");
+  if (inp) { inp.value = ""; inp.focus({ preventScroll: true }); }
+}
+function goToResults(query) {
+  const q = (query || "").trim();
+  const input = document.getElementById("searchInput");
+  if (input) input.value = q;
+  renderGrid(q);
+  showScreen("results");
+  const grid = document.querySelector("#searchScreen");
+  if (grid) grid.scrollTop = 0;
+}
+
+function initHomeScreens() {
+  homeScreenEl.innerHTML = homeHTML();
+  landingScreenEl.innerHTML = landingHTML();
+
+  // Home interactions
+  homeScreenEl.addEventListener("click", (e) => {
+    if (e.target.closest("#homeSearchBar")) { openLanding(); return; }
+    const clip = e.target.closest(".clip-btn");
+    if (clip) {
+      clip.classList.add("clip-btn--done");
+      const orig = clip.innerHTML;
+      clip.innerHTML = `${scissorsIcon} Clipped ✓`;
+      setTimeout(() => { clip.classList.remove("clip-btn--done"); clip.innerHTML = orig; }, 1400);
+      return;
+    }
+    const deal = e.target.closest(".deal-card");
+    if (deal) { goToResults(deal.dataset.q); return; }
+  });
+
+  // Search-landing interactions
+  landingScreenEl.addEventListener("click", (e) => {
+    if (e.target.closest("#slExit")) { showScreen("home"); return; }
+    const pop = e.target.closest(".popular-item");
+    if (pop) { goToResults(pop.dataset.term); return; }
+    const key = e.target.closest(".key");
+    if (key) { handleKey(key); return; }
+  });
+  landingScreenEl.addEventListener("keydown", (e) => {
+    if (e.target.id === "slInput" && e.key === "Enter") {
+      e.preventDefault();
+      goToResults(e.target.value);
+    }
+  });
+
+  // Results "Back" returns to the home screen
+  const resultsBack = document.querySelector("#searchScreen .back-btn");
+  if (resultsBack) resultsBack.addEventListener("click", () => showScreen("home"));
+
+  showScreen("home");
+}
+function handleKey(key) {
+  const inp = document.getElementById("slInput");
+  if (!inp) return;
+  const act = key.dataset.act;
+  if (act === "search") { goToResults(inp.value); return; }
+  if (act === "down") { showScreen("home"); return; }
+  if (act === "back") { inp.value = inp.value.slice(0, -1); inp.focus({ preventScroll: true }); return; }
+  if (key.dataset.k != null) { inp.value += key.dataset.k; inp.focus({ preventScroll: true }); }
+}
+
 /* ---------- Events ---------- */
 const searchInput = document.getElementById("searchInput");
 renderGrid(searchInput.value); // honor the pre-filled query on first paint
+initHomeScreens(); // build the home + search-landing screens and open on Home
 
 // Live-filter the grid as the shopper types (debounced so we don't rebuild the
 // DOM on every keystroke).
