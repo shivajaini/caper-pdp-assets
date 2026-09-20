@@ -1132,9 +1132,11 @@ function initHomeScreens() {
     }
   });
 
-  // Results "Back" returns to the home screen
+  // Results "Back" and the top-right close (X) both exit search to the home screen
   const resultsBack = document.querySelector("#searchScreen .back-btn");
   if (resultsBack) resultsBack.addEventListener("click", () => showScreen("home"));
+  const resultsClose = document.getElementById("resultsClose");
+  if (resultsClose) resultsClose.addEventListener("click", () => showScreen("home"));
 
   showScreen("home");
 }

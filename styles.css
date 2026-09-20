@@ -265,6 +265,14 @@ button { font-family: inherit; cursor: pointer; }
   display: grid; place-items: center; color: var(--ink); z-index: 5;
 }
 .sheet-close:hover { background: rgba(0,0,0,.06); }
+
+/* Results topbar close (replaces the old Help button) — matches the PDP close */
+.results-close {
+  flex: none; width: 48px; height: 48px; border-radius: 50%;
+  border: none; background: transparent;
+  display: grid; place-items: center; color: var(--ink);
+}
+.results-close:hover { background: rgba(0,0,0,.06); }
 .sheet-back {
   position: absolute; top: 8px; left: 16px; z-index: 5;
   height: 44px; padding: 0 14px 0 8px; border-radius: 22px;
