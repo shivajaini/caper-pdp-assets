@@ -1098,6 +1098,26 @@ function openDeal(i) {
   });
 }
 
+// Ensure the results topbar has a PDP-style X close (replacing the old Help
+// button). Done in JS so it works whether the page markup ships the new close
+// button or the legacy .help-btn. The X exits search back to Home.
+function setupResultsClose() {
+  const topbar = document.querySelector("#searchScreen .topbar");
+  if (!topbar) return;
+  let closeBtn = document.getElementById("resultsClose");
+  if (!closeBtn) {
+    closeBtn = document.createElement("button");
+    closeBtn.className = "results-close";
+    closeBtn.id = "resultsClose";
+    closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close search");
+    closeBtn.innerHTML = `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+    const help = topbar.querySelector(".help-btn");
+    if (help) help.replaceWith(closeBtn); else topbar.appendChild(closeBtn);
+  }
+  closeBtn.addEventListener("click", () => showScreen("home"));
+}
+
 function initHomeScreens() {
   homeScreenEl.innerHTML = homeHTML();
   landingScreenEl.innerHTML = landingHTML();
@@ -1135,8 +1155,7 @@ function initHomeScreens() {
   // Results "Back" and the top-right close (X) both exit search to the home screen
   const resultsBack = document.querySelector("#searchScreen .back-btn");
   if (resultsBack) resultsBack.addEventListener("click", () => showScreen("home"));
-  const resultsClose = document.getElementById("resultsClose");
-  if (resultsClose) resultsClose.addEventListener("click", () => showScreen("home"));
+  setupResultsClose();
 
   showScreen("home");
 }
