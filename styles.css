@@ -951,13 +951,16 @@ button { font-family: inherit; cursor: pointer; }
    device, no scrim, no grip, slides in from the right.
    ============================================================ */
 .pdp-full .sheet-scrim { display: none; }
+/* Peer screen (not an overlay): cross-fade with the screen it replaces. */
 .pdp-full .sheet {
   top: 0; height: 100%;
   border-radius: 0;
   box-shadow: none;
-  transform: translateX(100%);
+  transform: none;
+  opacity: 0;
+  transition: opacity .3s ease;
 }
-.pdp-full .sheet.open { transform: translateX(0); }
+.pdp-full .sheet.open { opacity: 1; }
 .pdp-full .sheet-grip { display: none; }
 .pdp-full .sheet-header {
   min-height: 60px; padding-top: 8px;

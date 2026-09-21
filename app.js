@@ -812,7 +812,14 @@ function updateBackBtn() {
   if (back) back.hidden = pdpHistory.length === 0;
 }
 
+// Full-screen fork: the PDP is a peer screen. When it opens fresh, it displaces
+// the screen it came from; on close we restore that screen. (Sheet fork keeps
+// the PDP as an overlay above the current screen.)
+let PDP_FULL = false;
+let pdpReturnScreen = null;
+
 function openProduct(product) {
+  const wasClosed = sheet.hidden; // fresh open vs. navigating rec->rec inside the PDP
   currentProduct = product;
   cartPos = { ...CART_HOME }; // fresh cart position for each walkthrough
   navZone = zoneForDistance(cartDistance()); // sync handoff state to the start spot
@@ -833,6 +840,13 @@ function openProduct(product) {
   // preventScroll: the sheet starts off-screen (translateY 100%); a plain
   // focus() would scroll the container to reveal it — motion behind the sheet.
   document.getElementById("pdpClose").focus({ preventScroll: true });
+
+  // Full-screen fork: displace the originating screen. Keep it visible for the
+  // cross-fade, then hide it once the PDP has faded in so the two are peers.
+  if (PDP_FULL && wasClosed) {
+    pdpReturnScreen = visibleScreenEl();
+    setTimeout(() => { if (!sheet.hidden && pdpReturnScreen) pdpReturnScreen.hidden = true; }, 340);
+  }
 }
 function openPDP(id) {
   pdpHistory = []; // opening from search results starts a fresh trail
@@ -860,14 +874,24 @@ function openRec(key) {
   });
 }
 function closePDP() {
+  // Full-screen fork: bring the originating screen back first so it's revealed
+  // as the PDP fades out, then it becomes the active peer screen again.
+  if (PDP_FULL && pdpReturnScreen) {
+    pdpReturnScreen.hidden = false;
+    pdpReturnScreen = null;
+  }
   scrim.classList.remove("open");
   sheet.classList.remove("open");
-  const done = () => {
+  let done = () => {
+    if (!done) return;
+    done = null;
     scrim.hidden = true;
     sheet.hidden = true;
-    sheet.removeEventListener("transitionend", done);
   };
-  sheet.addEventListener("transitionend", done);
+  sheet.addEventListener("transitionend", () => done && done(), { once: true });
+  // Fallback: guarantee the sheet hides even if transitionend never fires
+  // (prefers-reduced-motion, or an interrupted transition).
+  setTimeout(() => done && done(), 420);
 }
 
 function switchMedia(key) {
@@ -1064,6 +1088,15 @@ const homeScreenEl = document.getElementById("homeScreen");
 const landingScreenEl = document.getElementById("searchLanding");
 const resultsScreenEl = document.getElementById("searchScreen");
 
+// The screen currently on view (used by the full-screen PDP fork to know which
+// screen to displace on open and restore on close).
+function visibleScreenEl() {
+  if (!resultsScreenEl.hidden) return resultsScreenEl;
+  if (!homeScreenEl.hidden) return homeScreenEl;
+  if (!landingScreenEl.hidden) return landingScreenEl;
+  return null;
+}
+
 let hintTimer = null, hintIdx = 0;
 function startHintRotator() {
   const el = document.getElementById("homeHint");
@@ -1168,6 +1201,7 @@ function initHomeScreens() {
   // PDP presentation fork: default is the bottom sheet; <html data-pdp-mode="full">
   // switches the PDP to a full-screen page (see .pdp-full styles).
   if (document.documentElement.dataset.pdpMode === "full") {
+    PDP_FULL = true;
     const ds = document.getElementById("deviceScreen");
     if (ds) ds.classList.add("pdp-full");
   }
