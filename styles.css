@@ -587,9 +587,19 @@ button { font-family: inherit; cursor: pointer; }
 .rec-head { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 700; margin-bottom: 16px; }
 .rec-head svg { width: 26px; height: 26px; color: var(--ink); }
 .rec-head-note { font-size: 15px; font-weight: 600; color: var(--green); }
-/* "Clip offer" inline at the right edge of the Eligible items header row */
-.rec-head-clip { margin-left: auto; }
-.rec-head .rec-head-clip svg { width: 20px; height: 20px; }
+/* "Clip offer" inline at the right edge of the Eligible items header row —
+   dashed-border pill matching the search-results clip button. */
+.rec-head-clip {
+  margin-left: auto;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+}
+.rec-head-clip:hover { border-color: var(--green); color: var(--green); }
+.rec-head .rec-head-clip svg { width: 18px; height: 18px; }
 
 .rec-row {
   display: flex; gap: 16px;
