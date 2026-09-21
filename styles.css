@@ -265,6 +265,13 @@ button { font-family: inherit; cursor: pointer; }
   display: grid; place-items: center; color: var(--ink); z-index: 5;
 }
 .sheet-close:hover { background: rgba(0,0,0,.06); }
+/* Full-screen fork: X labeled "Exit" — a pill instead of a round icon button. */
+.sheet-close--labeled {
+  width: auto; border-radius: 22px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 14px;
+}
+.sheet-exit-label { font-size: 16px; font-weight: 700; color: var(--ink); }
 
 /* Results topbar close (replaces the old Help button) — matches the PDP close */
 .results-close {

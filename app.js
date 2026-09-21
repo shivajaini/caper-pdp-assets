@@ -1235,6 +1235,16 @@ function initHomeScreens() {
     PDP_FULL = true;
     const ds = document.getElementById("deviceScreen");
     if (ds) ds.classList.add("pdp-full");
+    // Full-screen fork: the top-right X exits to Home, so label it "Exit".
+    const closeBtn = document.getElementById("pdpClose");
+    if (closeBtn && !closeBtn.querySelector(".sheet-exit-label")) {
+      const label = document.createElement("span");
+      label.className = "sheet-exit-label";
+      label.textContent = "Exit";
+      closeBtn.insertBefore(label, closeBtn.firstChild);
+      closeBtn.classList.add("sheet-close--labeled");
+      closeBtn.setAttribute("aria-label", "Exit to home");
+    }
   }
 
   homeScreenEl.innerHTML = homeHTML();
