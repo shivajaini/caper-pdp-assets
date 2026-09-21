@@ -8,7 +8,9 @@ const pinSVG = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 const mapIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>`;
 const cartIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a1.5 1.5 0 0 0 1.5 1.2h8.2a1.5 1.5 0 0 0 1.5-1.2L22 7H6"/></svg>`;
 const bulbIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2zm-2 19a2 2 0 0 0 4 0h-4z"/></svg>`;
-const scissorsIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8 8l12 8M8 16L20 8"/></svg>`;
+// viewBox padded (-2 -2 28 28) so the blade tips have margin and don't read as
+// cropped on the right when the icon is placed in a tight box.
+const scissorsIcon = `<svg viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8 8l12 8M8 16L20 8"/></svg>`;
 const expandIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>`;
 const chevron = `<svg class="acc-chevron" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>`;
 
@@ -79,7 +81,6 @@ const REC_SECTIONS = [
   section("Often bought with", cartIcon, ["barilla-spaghetti", "cooked-perfect-meatballs", "kraft-parmesan", "pepperidge-garlic-bread", "ragu-chunky", "classico-four-cheese", "ronzoni-spaghetti", "carando-meatballs"]),
   section("Customers also considered", considerIcon, ["classico-four-cheese", "ragu-chunky", "barilla-marinara", "belgioioso-parmesan", "kraft-parmesan", "carando-meatballs", "barilla-spaghetti", "cooked-perfect-meatballs"]),
   section("Items to add next", listIcon, ["kraft-parmesan", "belgioioso-parmesan", "pepperidge-garlic-bread", "barilla-spaghetti", "ronzoni-spaghetti", "cooked-perfect-meatballs", "classico-four-cheese", "ragu-chunky"]),
-  section("Frequently bought together", bundleIcon, ["barilla-spaghetti", "carando-meatballs", "kraft-parmesan", "pepperidge-garlic-bread", "ragu-chunky", "classico-four-cheese", "barilla-marinara", "cooked-perfect-meatballs"]),
 ];
 
 function recCardHTML(it) {
