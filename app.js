@@ -809,7 +809,12 @@ function renderPDP() {
 let pdpHistory = [];
 function updateBackBtn() {
   const back = document.getElementById("pdpBack");
-  if (back) back.hidden = pdpHistory.length === 0;
+  if (!back) return;
+  // Full-screen fork: the PDP is a peer of search results, so Back is always
+  // available — it steps down to the previous product (rec history) or, at the
+  // first product, back to the screen the PDP was opened from.
+  // Sheet fork: Back only appears while navigating between recommendations.
+  back.hidden = PDP_FULL ? false : (pdpHistory.length === 0);
 }
 
 // Full-screen fork: the PDP is a peer screen. When it opens fresh, it displaces
@@ -853,8 +858,11 @@ function openPDP(id) {
   openProduct(PRODUCTS.find((p) => p.id === id) || PRODUCTS[0]);
 }
 function goBack() {
-  if (!pdpHistory.length) return;
-  openProduct(pdpHistory.pop());
+  // Step back through recommendation history first...
+  if (pdpHistory.length) { openProduct(pdpHistory.pop()); return; }
+  // ...then, in the full-screen fork, Back from the first product returns to the
+  // screen the PDP was opened from (e.g. search results).
+  if (PDP_FULL) closePDP();
 }
 // Reopen the sheet for a tapped recommendation. Rec items are a lighter catalog
 // (bare price/was, no size), so normalize them into the shape the PDP expects.
@@ -873,12 +881,18 @@ function openRec(key) {
     clip: false,
   });
 }
-function closePDP() {
-  // Full-screen fork: bring the originating screen back first so it's revealed
-  // as the PDP fades out, then it becomes the active peer screen again.
-  if (PDP_FULL && pdpReturnScreen) {
-    pdpReturnScreen.hidden = false;
-    pdpReturnScreen = null;
+// closePDP() returns to the screen the PDP was opened from (Back behavior).
+// closePDP({ toHome: true }) exits the whole search flow to Home (X behavior).
+function closePDP(opts) {
+  const toHome = !!(opts && opts.toHome);
+  if (PDP_FULL) {
+    if (toHome) {
+      showScreen("home");          // exit to Home, revealed as the PDP fades out
+      pdpReturnScreen = null;
+    } else if (pdpReturnScreen) {
+      pdpReturnScreen.hidden = false; // reveal the originating screen (e.g. results)
+      pdpReturnScreen = null;
+    }
   }
   scrim.classList.remove("open");
   sheet.classList.remove("open");
@@ -1285,9 +1299,11 @@ document.getElementById("resultsGrid").addEventListener("click", (e) => {
   if (_card) openPDP(Number(_card.dataset.id));
 });
 
-document.getElementById("pdpClose").addEventListener("click", closePDP);
+// X (top-right): in the full-screen fork it exits the search flow to Home; in
+// the sheet fork it dismisses the sheet.
+document.getElementById("pdpClose").addEventListener("click", () => closePDP(PDP_FULL ? { toHome: true } : undefined));
 document.getElementById("pdpBack").addEventListener("click", goBack);
-scrim.addEventListener("click", closePDP);
+scrim.addEventListener("click", () => closePDP()); // sheet fork only (scrim hidden when full)
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !sheet.hidden) { closePDP(); return; }
 
