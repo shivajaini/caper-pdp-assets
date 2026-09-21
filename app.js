@@ -1165,6 +1165,13 @@ function setupResultsClose() {
 }
 
 function initHomeScreens() {
+  // PDP presentation fork: default is the bottom sheet; <html data-pdp-mode="full">
+  // switches the PDP to a full-screen page (see .pdp-full styles).
+  if (document.documentElement.dataset.pdpMode === "full") {
+    const ds = document.getElementById("deviceScreen");
+    if (ds) ds.classList.add("pdp-full");
+  }
+
   homeScreenEl.innerHTML = homeHTML();
   landingScreenEl.innerHTML = landingHTML();
 

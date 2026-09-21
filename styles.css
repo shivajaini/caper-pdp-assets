@@ -944,3 +944,22 @@ button { font-family: inherit; cursor: pointer; }
 .kb-num { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .kb-num .key { height: 58px; }
 .key--zero { grid-column: 2; }
+
+/* ============================================================
+   Full-screen PDP variant — opt in with <html data-pdp-mode="full">.
+   Turns the bottom sheet into a full-screen page: covers the whole
+   device, no scrim, no grip, slides in from the right.
+   ============================================================ */
+.pdp-full .sheet-scrim { display: none; }
+.pdp-full .sheet {
+  top: 0; height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  transform: translateX(100%);
+}
+.pdp-full .sheet.open { transform: translateX(0); }
+.pdp-full .sheet-grip { display: none; }
+.pdp-full .sheet-header {
+  min-height: 60px; padding-top: 8px;
+  border-bottom: 1px solid var(--line);
+}
