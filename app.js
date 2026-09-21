@@ -110,9 +110,22 @@ function recSectionsHTML() {
 // Items eligible for the "Caper exclusive offer" — shown inline as a carousel
 // that the offer's "N eligible items" link scrolls to.
 const ELIGIBLE_KEYS = ["classico-four-cheese", "ragu-chunky", "barilla-marinara", "barilla-spaghetti", "ronzoni-spaghetti", "kraft-parmesan"];
+const ELIGIBLE_OFFER = "30% off"; // same offer applied to every eligible item
 function eligibleSectionHTML() {
   if (!FLAGS.coupon) return "";
-  const items = ELIGIBLE_KEYS.map((k) => ({ key: k, ...REC_ITEMS[k] }));
+  // Every eligible item carries the same offer: 30% off its regular price, shown
+  // as a discounted price with the original struck through and a "30% off" badge.
+  const items = ELIGIBLE_KEYS.map((k) => {
+    const base = REC_ITEMS[k];
+    const regular = parseFloat(base.price);
+    return {
+      key: k,
+      ...base,
+      price: (regular * 0.7).toFixed(2),
+      was: regular.toFixed(2),
+      off: ELIGIBLE_OFFER,
+    };
+  });
   return `
     <div class="rec-section rec-section--eligible" id="eligibleSection">
       <div class="rec-head">${scissorsIcon} Eligible items <span class="rec-head-note">Additional 30% off · ${items.length} items</span></div>
