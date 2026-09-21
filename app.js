@@ -106,6 +106,19 @@ function recSectionsHTML() {
     </div>`).join("");
 }
 
+// Items eligible for the "Caper exclusive offer" — shown inline as a carousel
+// that the offer's "N eligible items" link scrolls to.
+const ELIGIBLE_KEYS = ["classico-four-cheese", "ragu-chunky", "barilla-marinara", "barilla-spaghetti", "ronzoni-spaghetti", "kraft-parmesan"];
+function eligibleSectionHTML() {
+  if (!FLAGS.coupon) return "";
+  const items = ELIGIBLE_KEYS.map((k) => ({ key: k, ...REC_ITEMS[k] }));
+  return `
+    <div class="rec-section rec-section--eligible" id="eligibleSection">
+      <div class="rec-head">${scissorsIcon} Eligible items <span class="rec-head-note">Additional 30% off · ${items.length} items</span></div>
+      <div class="rec-row">${items.map(recCardHTML).join("")}</div>
+    </div>`;
+}
+
 /* ---------- Ratings & reviews (real data from Instacart) ---------- */
 const REVIEW_SUMMARY = {
   average: "4.8",
@@ -732,7 +745,7 @@ function pdpHTML() {
         <div class="offer-main">
           <div class="offer-title">Additional 30% off</div>
           <div class="offer-sub">Expires 3/31/2026.</div>
-          <a class="offer-link" href="#">5 eligible items</a>
+          <a class="offer-link" href="#eligibleSection">${ELIGIBLE_KEYS.length} eligible items</a>
         </div>
         <button class="clip-offer" type="button">${scissorsIcon} Clip offer</button>
       </div>` : ""}
@@ -755,6 +768,7 @@ function pdpHTML() {
       </div>
     </div>
 
+    ${eligibleSectionHTML()}
     ${recSectionsHTML()}
     ${reviewsSectionHTML()}`;
 }
@@ -1097,6 +1111,37 @@ function openDeal(i) {
     clip: d.exclusive,
   });
 }
+// Smooth-scroll the open PDP to the inline eligible-items carousel. `delay` lets
+// the sheet finish opening first when we scroll right after launching the PDP.
+// Scrolls the sheet body directly (scrollIntoView's smooth mode no-ops inside
+// the scaled device transform).
+function scrollToEligible(delay = 0) {
+  setTimeout(() => {
+    const target = document.getElementById("eligibleSection");
+    const body = sheet.querySelector(".sheet-body");
+    if (!target || !body) return;
+    // Use offsetTop (layout px, unaffected by the device's CSS scale transform)
+    // — getBoundingClientRect returns scaled px and would mis-compute the offset.
+    // target and body share an offset parent (the sheet), so the difference is
+    // the target's position within the scrolling body content.
+    const to = Math.max(0, target.offsetTop - body.offsetTop - 12);
+    // Animate scrollTop by hand: native smooth scrolling no-ops inside the
+    // scaled device transform, but setting scrollTop directly works.
+    animateScrollTop(body, to, 420);
+  }, delay);
+}
+function animateScrollTop(el, to, duration) {
+  const from = el.scrollTop;
+  const dist = to - from;
+  if (Math.abs(dist) < 2) { el.scrollTop = to; return; }
+  const start = Date.now();
+  const ease = (t) => 1 - Math.pow(1 - t, 3); // easeOutCubic
+  const timer = setInterval(() => {
+    const t = Math.min(1, (Date.now() - start) / duration);
+    el.scrollTop = from + dist * ease(t);
+    if (t >= 1) clearInterval(timer);
+  }, 16);
+}
 
 // Ensure the results topbar has a PDP-style X close (replacing the old Help
 // button). Done in JS so it works whether the page markup ships the new close
@@ -1131,6 +1176,14 @@ function initHomeScreens() {
       const orig = clip.innerHTML;
       clip.innerHTML = `${scissorsIcon} Clipped ✓`;
       setTimeout(() => { clip.classList.remove("clip-btn--done"); clip.innerHTML = orig; }, 1400);
+      return;
+    }
+    // "See eligible items" opens the PDP and scrolls straight to the carousel.
+    const seeElig = e.target.closest(".deal-eligible");
+    if (seeElig) {
+      const card = seeElig.closest(".deal-card");
+      openDeal(Number(card.dataset.i));
+      scrollToEligible(450); // let the sheet finish opening, then scroll
       return;
     }
     const deal = e.target.closest(".deal-card");
@@ -1244,6 +1297,10 @@ pdpBody.addEventListener("click", (e) => {
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     return;
   }
+
+  // "N eligible items" in the offer card scrolls down to the eligible carousel.
+  const offerLink = e.target.closest(".offer-link");
+  if (offerLink) { e.preventDefault(); scrollToEligible(); return; }
 
   const thumb = e.target.closest(".thumb");
   if (thumb) { switchMedia(thumb.dataset.media); return; }
