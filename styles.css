@@ -587,6 +587,9 @@ button { font-family: inherit; cursor: pointer; }
 .rec-head { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 700; margin-bottom: 16px; }
 .rec-head svg { width: 26px; height: 26px; color: var(--ink); }
 .rec-head-note { font-size: 15px; font-weight: 600; color: var(--green); }
+/* "Clip offer" inline at the right edge of the Eligible items header row */
+.rec-head-clip { margin-left: auto; }
+.rec-head .rec-head-clip svg { width: 20px; height: 20px; }
 
 .rec-row {
   display: flex; gap: 16px;

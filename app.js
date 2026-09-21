@@ -128,7 +128,9 @@ function eligibleSectionHTML() {
   });
   return `
     <div class="rec-section rec-section--eligible" id="eligibleSection">
-      <div class="rec-head">${scissorsIcon} Eligible items <span class="rec-head-note">Additional 30% off · ${items.length} items</span></div>
+      <div class="rec-head">${couponIcon} Eligible items <span class="rec-head-note">Additional 30% off · ${items.length} items</span>
+        <button class="clip-offer rec-head-clip" type="button">${scissorsIcon} Clip offer</button>
+      </div>
       <div class="rec-row">${items.map(recCardHTML).join("")}</div>
     </div>`;
 }
@@ -1372,6 +1374,16 @@ pdpBody.addEventListener("click", (e) => {
   // "N eligible items" in the offer card scrolls down to the eligible carousel.
   const offerLink = e.target.closest(".offer-link");
   if (offerLink) { e.preventDefault(); scrollToEligible(); return; }
+
+  // "Clip offer" (offer card + eligible-items header): quick clipped confirmation.
+  const clipOffer = e.target.closest(".clip-offer");
+  if (clipOffer && !clipOffer.classList.contains("clip-offer--done")) {
+    const orig = clipOffer.innerHTML;
+    clipOffer.classList.add("clip-offer--done");
+    clipOffer.innerHTML = `${scissorsIcon} Clipped ✓`;
+    setTimeout(() => { clipOffer.classList.remove("clip-offer--done"); clipOffer.innerHTML = orig; }, 1400);
+    return;
+  }
 
   const thumb = e.target.closest(".thumb");
   if (thumb) { switchMedia(thumb.dataset.media); return; }
