@@ -861,14 +861,24 @@ button { font-family: inherit; cursor: pointer; }
 .lc-scan:hover { background: var(--green-dark); }
 .lc-scan svg { width: 22px; height: 22px; }
 
-.deals { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.deals-title { font-size: 24px; font-weight: 800; margin: 2px 0 14px; }
-.deals-grid { flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: start; padding-bottom: 8px; }
+/* The deals module is a white rounded container (like the list card); the
+   heading sits at the top and the card grid scrolls inside it. */
+.deals {
+  flex: 1; min-width: 0; display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+  padding: 18px;
+}
+.deals-title { font-size: 24px; font-weight: 800; margin: 2px 0 16px; }
+.deals-grid {
+  flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; align-content: start;
+  /* size each row to its cards' full content so nothing is cropped */
+  grid-auto-rows: max-content;
+  padding: 4px 4px 4px;
+}
 
-/* Explicit height so the flex-column card doesn't collapse under grid
-   auto-row sizing (which was chopping the eligible/clip rows). */
-.deal-card { min-height: 344px; }
-.deal-card .card-media { flex: 0 0 132px; }
+.deal-card { min-height: 0; }
+.deal-card .card-media { flex: none; height: 140px; }
 .deal-flag {
   position: absolute; top: -12px; left: 14px; z-index: 4;
   background: #f4d29a; color: #6b501f;
