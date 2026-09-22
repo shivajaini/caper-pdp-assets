@@ -1241,7 +1241,7 @@ function initHomeScreens() {
       const label = document.createElement("span");
       label.className = "sheet-exit-label";
       label.textContent = "Exit";
-      closeBtn.insertBefore(label, closeBtn.firstChild);
+      closeBtn.appendChild(label); // after the X icon, so it reads "✕ Exit"
       closeBtn.classList.add("sheet-close--labeled");
       closeBtn.setAttribute("aria-label", "Exit to home");
     }
