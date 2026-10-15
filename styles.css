@@ -356,8 +356,8 @@ button { font-family: inherit; cursor: pointer; }
 .thumb:hover { border-color: var(--line-strong); }
 .thumb[aria-selected="true"] { border-color: var(--green); box-shadow: 0 0 0 1px var(--green) inset; }
 .thumb svg { width: 28px; height: 28px; }
-.thumb--product { padding: 0; }
-.thumb--product img { width: 100%; height: 100%; object-fit: cover; }
+.thumb--product, .thumb--img { padding: 0; }
+.thumb--product img, .thumb--img img { width: 100%; height: 100%; object-fit: cover; }
 .thumb--map svg { fill: var(--ink); stroke: none; width: 26px; height: 26px; }
 
 /* ---- Store-map item marker (aisle bubble) ----
@@ -522,6 +522,7 @@ button { font-family: inherit; cursor: pointer; }
 .pdp-unit { font-size: 15px; color: var(--ink-soft); margin-bottom: 20px; }
 
 .pdp-actions { display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+.pdp-actions .btn { max-width: 340px; } /* Figma CTA button width; a lone button no longer spans full width */
 .btn {
   flex: 1; min-width: 180px;
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -559,6 +560,7 @@ button { font-family: inherit; cursor: pointer; }
 .offer-card--v2 {
   flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 12px;
   border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px;
+  max-width: 392px; /* Figma "Coupon" module width */
 }
 .offer-badge {
   align-self: flex-start; background: var(--yellow);
@@ -1026,8 +1028,16 @@ button { font-family: inherit; cursor: pointer; }
 }
 .pdp-full .sheet.open { opacity: 1; }
 .pdp-full .sheet-grip { display: none; }
-/* Figma page header: ~128px tall, nav row inset 32px. */
-.pdp-full .sheet-header { min-height: 128px; padding-top: 0; }
-.pdp-full .sheet-back { top: 42px; left: 32px; }
-.pdp-full .sheet-close--exit { top: 34px; right: 32px; }
+/* Figma page header: 128px tall, nav row inset 32px; condenses to 88px on scroll. */
+.pdp-full .sheet-header {
+  min-height: 128px; padding-top: 0;
+  border-bottom: 1px solid transparent;
+  transition: min-height .2s ease, border-color .2s ease;
+}
+.pdp-full .sheet-back { top: 42px; left: 32px; transition: top .2s ease; }
+.pdp-full .sheet-close--exit { top: 34px; right: 32px; transition: top .2s ease; }
 .pdp-full .sheet-title { top: 0; bottom: auto; height: 128px; }
+.pdp-full .sheet-header.is-condensed { min-height: 88px; border-bottom-color: var(--line); }
+.pdp-full .sheet-header.is-condensed .sheet-back { top: 22px; }
+.pdp-full .sheet-header.is-condensed .sheet-close--exit { top: 18px; }
+.pdp-full .sheet-header.is-condensed .sheet-title { height: 88px; }

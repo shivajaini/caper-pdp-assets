@@ -716,10 +716,10 @@ function thumbRailHTML() {
   const thumbs = [
     `<button class="thumb thumb--product" role="tab" data-media="product" ${sel("product")} aria-label="Product photo"><img src="${currentProduct.img}" alt="" /></button>`,
   ];
-  if (FLAGS.map) thumbs.push(`<button class="thumb thumb--map" role="tab" data-media="map" ${sel("map")} aria-label="Store map">${pinSVG}</button>`);
+  if (FLAGS.map) thumbs.push(`<button class="thumb thumb--img" role="tab" data-media="map" ${sel("map")} aria-label="Store map"><img src="${IMG.map}" alt="" /></button>`);
   if (FLAGS.imagery) {
-    thumbs.push(`<button class="thumb" role="tab" data-media="aisle" ${sel("aisle")}>Aisle</button>`);
-    thumbs.push(`<button class="thumb" role="tab" data-media="shelf" ${sel("shelf")}>Shelf</button>`);
+    thumbs.push(`<button class="thumb thumb--img" role="tab" data-media="aisle" ${sel("aisle")} aria-label="Aisle view"><img src="${IMG.aisle}" alt="" /></button>`);
+    thumbs.push(`<button class="thumb thumb--img" role="tab" data-media="shelf" ${sel("shelf")} aria-label="Shelf view"><img src="${IMG.shelf}" alt="" /></button>`);
   }
   // Always keep at least the product thumbnail visible.
   return `<div class="thumb-rail" role="tablist" aria-label="Product views">${thumbs.join("")}</div>`;
@@ -809,6 +809,11 @@ function updateSheetTitle() {
   const headerBottom = sheetBody.getBoundingClientRect().top;
   const show = !!titleEl && titleEl.getBoundingClientRect().bottom <= headerBottom + 4;
   sheetTitle.classList.toggle("is-visible", show);
+  // Full-screen fork: condense the 128px header to 88px (+ bottom border) once scrolled.
+  if (PDP_FULL) {
+    const hdr = sheet.querySelector(".sheet-header");
+    if (hdr) hdr.classList.toggle("is-condensed", sheetBody.scrollTop > 8);
+  }
 }
 sheetBody.addEventListener("scroll", updateSheetTitle, { passive: true });
 
