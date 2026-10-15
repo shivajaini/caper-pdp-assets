@@ -1026,7 +1026,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 .pdp-full .sheet.open { opacity: 1; }
 .pdp-full .sheet-grip { display: none; }
-.pdp-full .sheet-header {
-  min-height: 60px; padding-top: 8px;
-  border-bottom: 1px solid var(--line);
-}
+/* Figma page header: ~128px tall, nav row inset 32px. */
+.pdp-full .sheet-header { min-height: 128px; padding-top: 0; }
+.pdp-full .sheet-back { top: 42px; left: 32px; }
+.pdp-full .sheet-close--exit { top: 34px; right: 32px; }
+.pdp-full .sheet-title { top: 0; bottom: auto; height: 128px; }
