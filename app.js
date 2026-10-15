@@ -732,22 +732,22 @@ function pdpHTML() {
     </div>
 
     <div class="pdp-info">
-      ${FLAGS.location ? `<span class="pdp-loc">${pinSVG}${AISLE} • Middle Shelf</span>` : ""}
+      ${FLAGS.location ? `<span class="pdp-loc">${pinSVG}${AISLE}</span>` : ""}
       <div class="pdp-title-row">
         <h2 class="pdp-title" id="pdpTitle">${currentProduct.name}</h2>
         ${FLAGS.cart && FLAGS.lightup ? `<button class="listbtn listbtn--sheet" type="button" aria-label="Add to list" id="pdpListBtn"></button>` : ""}
       </div>
-
-      ${FLAGS.reviews ? `<div class="rating">
-        ${starRow(4.8)}
-        <span class="rating-text">${REVIEW_SUMMARY.average} (<a href="#reviewsSection" class="reviews-jump">${REVIEW_SUMMARY.total} reviews</a>)</span>
-      </div>` : ""}
 
       <div class="pdp-price-row">
         <span class="pdp-price ${FLAGS.sale && currentProduct.was ? "pdp-price--sale" : ""}">${currentProduct.price}</span>
         ${FLAGS.sale && currentProduct.was ? `<span class="pdp-was">${currentProduct.was}</span>` : ""}
       </div>
       <div class="pdp-unit">${currentProduct.size}</div>
+
+      ${FLAGS.reviews ? `<div class="rating">
+        ${starRow(Number(REVIEW_SUMMARY.average))}
+        <a href="#reviewsSection" class="reviews-jump rating-text">${REVIEW_SUMMARY.average} (${REVIEW_SUMMARY.total})</a>
+      </div>` : ""}
 
       <div class="pdp-actions">
         <button class="btn btn--primary" id="addCartBtn">${FLAGS.cart ? `${cartIcon} Add to Cart` : `${listAddIcon} Add to list`}</button>
@@ -758,31 +758,33 @@ function pdpHTML() {
             : ""}
       </div>
 
-      ${FLAGS.coupon ? `<div class="offer-card">
-        <span class="offer-tag">Caper exclusive offer</span>
-        <div class="offer-main">
-          <div class="offer-title">Additional 30% off</div>
-          <div class="offer-sub">Expires 3/31/2026.</div>
-          <a class="offer-link" href="#eligibleSection">${ELIGIBLE_KEYS.length} eligible items</a>
-        </div>
-        <button class="clip-offer" type="button">${scissorsIcon} Clip offer</button>
+      ${FLAGS.coupon ? `<div class="offer-card offer-card--v2">
+        <span class="offer-badge">Buy 2, save $1</span>
+        <a class="offer-link" href="#eligibleSection">${ELIGIBLE_KEYS.length} eligible items</a>
+        <button class="clip-offer clip-offer--pill" type="button">${scissorsIcon} Clip coupon</button>
       </div>` : ""}
     </div>
 
     <div class="pdp-info-full">
-      <div class="accordion">
-        <button class="acc-head" type="button" aria-expanded="false">
-          <span><span class="acc-title">Ingredients</span><span class="acc-note">1 possible allergen</span></span>
-          ${chevron}
-        </button>
-        <div class="acc-panel">Italian tomatoes, olive oil, fresh basil, onions, garlic, salt, black pepper. <strong>Contains:</strong> may be produced in a facility that also processes tree nuts.</div>
-      </div>
-      <div class="accordion">
-        <button class="acc-head" type="button" aria-expanded="true">
-          <span class="acc-title">Nutrition</span>
-          ${chevron}
-        </button>
-        <div class="acc-panel acc-panel--nutrition">${nutritionHTML()}</div>
+      <div class="pdp-detail">
+        <div class="pdp-detail-left">
+          <h3 class="detail-h">Ingredients</h3>
+          <p class="allergen-note">1 possible allergen: Coconuts</p>
+          <div class="pref-chips">
+            <span class="pref-chip">Organic</span>
+            <span class="pref-chip">Gluten Free</span>
+            <span class="pref-chip">Dairy Free</span>
+          </div>
+        </div>
+        <div class="pdp-detail-right">
+          <p class="ingredient-text">Italian whole peeled tomatoes, olive oil, onions, salt, garlic, basil, black pepper, oregano.</p>
+          <div class="nutri-strip">
+            <div class="nutri-cell"><span class="nutri-label">Protein</span><span class="nutri-val">10g</span></div>
+            <div class="nutri-cell"><span class="nutri-label">Fat</span><span class="nutri-val">10g</span></div>
+            <div class="nutri-cell"><span class="nutri-label">Sugar</span><span class="nutri-val">10g</span></div>
+            <div class="nutri-cell"><span class="nutri-label">Calories</span><span class="nutri-val">10g</span></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1235,14 +1237,16 @@ function initHomeScreens() {
     PDP_FULL = true;
     const ds = document.getElementById("deviceScreen");
     if (ds) ds.classList.add("pdp-full");
-    // Full-screen fork: the top-right X exits to Home, so label it "Exit".
+    // Full-screen fork: the top-right control exits to Home — a white "Exit to
+    // Home" pill (no X icon), matching the Figma.
     const closeBtn = document.getElementById("pdpClose");
     if (closeBtn && !closeBtn.querySelector(".sheet-exit-label")) {
+      closeBtn.innerHTML = "";
       const label = document.createElement("span");
       label.className = "sheet-exit-label";
-      label.textContent = "Exit";
-      closeBtn.appendChild(label); // after the X icon, so it reads "✕ Exit"
-      closeBtn.classList.add("sheet-close--labeled");
+      label.textContent = "Exit to Home";
+      closeBtn.appendChild(label);
+      closeBtn.classList.add("sheet-close--exit");
       closeBtn.setAttribute("aria-label", "Exit to home");
     }
   }

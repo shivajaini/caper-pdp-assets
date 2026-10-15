@@ -265,13 +265,18 @@ button { font-family: inherit; cursor: pointer; }
   display: grid; place-items: center; color: var(--ink); z-index: 5;
 }
 .sheet-close:hover { background: rgba(0,0,0,.06); }
-/* Full-screen fork: X labeled "Exit" — a pill instead of a round icon button. */
-.sheet-close--labeled {
-  width: auto; border-radius: 22px;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 0 14px;
+/* Full-screen fork: "Exit to Home" — a white rounded pill (no X icon). */
+.sheet-close--exit {
+  top: 14px; right: 20px;
+  width: auto; height: auto;
+  padding: 14px 22px; border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  display: inline-flex; align-items: center;
 }
-.sheet-exit-label { font-size: 16px; font-weight: 700; color: var(--ink); }
+.sheet-close--exit:hover { background: #f7f7f7; }
+.sheet-exit-label { font-size: 18px; font-weight: 600; color: var(--ink); white-space: nowrap; }
 
 /* Results topbar close (replaces the old Help button) — matches the PDP close */
 .results-close {
@@ -507,8 +512,8 @@ button { font-family: inherit; cursor: pointer; }
 .rating { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .stars { display: inline-flex; gap: 2px; }
 .stars svg { width: 21px; height: 21px; }
-.rating-text { font-size: 16px; color: var(--ink-soft); font-weight: 600; }
-.rating-text a { color: var(--ink-soft); }
+.rating-text { font-size: 16px; color: var(--ink); font-weight: 700; text-decoration: underline; }
+.rating-text a, .rating-text:hover { color: var(--ink); }
 
 .pdp-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
 .pdp-price { font-size: 29px; font-weight: 800; }
@@ -550,6 +555,24 @@ button { font-family: inherit; cursor: pointer; }
 }
 .clip-offer svg { width: 22px; height: 22px; }
 
+/* Offer card (Figma v2): "Buy 2, save $1" badge, eligible-items link, Clip coupon pill */
+.offer-card--v2 {
+  flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 12px;
+  border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px;
+}
+.offer-badge {
+  align-self: flex-start; background: var(--yellow);
+  border-radius: 6px; padding: 3px 10px; font-size: 18px; font-weight: 800;
+}
+.offer-card--v2 .offer-link { font-size: 15px; color: var(--ink-soft); text-decoration: none; }
+.clip-offer--pill {
+  width: 100%; justify-content: center;
+  border: 1.5px dashed var(--line-strong); border-radius: var(--radius-pill);
+  padding: 12px; color: var(--ink); font-size: 16px; font-weight: 700;
+}
+.clip-offer--pill:hover { border-color: var(--green); color: var(--green); }
+.clip-offer--pill svg { width: 18px; height: 18px; }
+
 .accordion { border-top: 1px solid var(--line); }
 .accordion:last-of-type { border-bottom: 1px solid var(--line); }
 .acc-head {
@@ -588,6 +611,27 @@ button { font-family: inherit; cursor: pointer; }
 .nutri-chip-arrow { color: var(--ink-soft); font-weight: 700; }
 
 .pdp-info-full { grid-column: 1 / -1; }
+
+/* Ingredients + Nutrition (Figma): two columns under a divider */
+.pdp-detail {
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px;
+  border-top: 1px solid var(--line); padding-top: 24px; margin-top: 8px;
+}
+.detail-h { font-size: 24px; font-weight: 800; margin: 0 0 8px; }
+.allergen-note { font-size: 15px; color: var(--red); font-weight: 600; margin: 0 0 14px; }
+.pref-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.pref-chip {
+  border: 1px solid var(--line-strong); border-radius: 10px;
+  padding: 8px 14px; font-size: 15px; font-weight: 600; color: var(--ink);
+}
+.ingredient-text { font-size: 18px; line-height: 1.5; color: var(--ink); margin: 0 0 18px; }
+.nutri-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: #f3f3f5; border-radius: 14px; padding: 18px 10px;
+}
+.nutri-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.nutri-label { font-size: 15px; color: var(--ink-soft); font-weight: 600; }
+.nutri-val { font-size: 18px; font-weight: 800; color: var(--ink); }
 
 /* ============ Recommendation sections ============ */
 .rec-section { grid-column: 1 / -1; margin-top: 32px; }
