@@ -474,12 +474,13 @@ function ddSync(){
   const SPECIAL=d=>d==='Hot & Salad Bar'||d==='Bulk bins';
   const opts=[[null,'All Departments',total]].concat(DEPT_ORDER.filter(d=>SPECIAL(d)?d===S.dd:c[d]>0).map(d=>[d,d,SPECIAL(d)?(c['~'+d]||0):(c[d]||0)]));
   $('#ddLabel').textContent=S.dd||'All Departments';
+  const cur=opts.find(o=>(o[0]||null)===(S.dd||null));$('#ddCt').textContent=q&&cur?cur[2].toLocaleString():'';
   dd.classList.toggle('sel',!!S.dd);
   $('#ddmenu').innerHTML=opts.map(([v,n,k])=>`<button class="ddopt" role="option" data-act="ddpick" data-d="${v==null?'':esc(v)}" aria-selected="${(v||null)===(S.dd||null)}">${DDCK}<span class="nm">${esc(n)}</span><span class="ct">${k.toLocaleString()}</span></button>`).join('');
 }
 function ddClose(){const dd=$('#dd');if(dd)dd.classList.remove('open')}
 (function(){
-  $('#search .frow').insertAdjacentHTML('afterbegin','<div class="dd" id="dd"><button class="ddbtn" data-act="ddtoggle" aria-haspopup="listbox"><span id="ddLabel">All Departments</span><svg class="car" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></button><div class="ddmenu" id="ddmenu" role="listbox"></div></div>');
+  $('#search .frow').insertAdjacentHTML('afterbegin','<div class="dd" id="dd"><button class="ddbtn" data-act="ddtoggle" aria-haspopup="listbox"><span id="ddLabel">All Departments</span><span class="ct" id="ddCt"></span><svg class="car" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></button><div class="ddmenu" id="ddmenu" role="listbox"></div></div>');
   $('#device').addEventListener('click',e=>{if(!e.target.closest('.dd'))ddClose()});
 })();
 function ctabsSync(){const dv=$('#device');dv.dataset.cm=S.cm;const on=S.cm==='tabs'&&((!!S.cat&&(S.screen==='searchhome'||(S.screen==='search'&&S.fromDrill)))||(!!S.icat&&S.screen==='search'));dv.classList.toggle('ct',on);$$('.ctabs .tc').forEach(b=>b.textContent=tcat()||'');$$('.ctabs .tb').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.t===S.tab)));

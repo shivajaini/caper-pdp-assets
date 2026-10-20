@@ -432,3 +432,7 @@ hr{border:0;border-top:1px solid var(--d-line);margin:34px 0 26px}
 .ddopt .ct{padding:0 8px;min-width:28px;height:28px;border-radius:999px;background:#e8e9eb;font:600 16px/28px var(--font);text-align:center}
 .ddopt .ck{flex:none;visibility:hidden}
 .ddopt[aria-selected="true"] .ck{visibility:visible}
+
+.ddbtn .ct{padding:0 8px;min-width:28px;height:28px;border-radius:999px;background:#e8e9eb;color:#242529;font:600 16px/28px var(--font);text-align:center}
+.dd.sel .ddbtn .ct{background:rgba(255,255,255,.22);color:#fff}
+.ddbtn .ct:empty{display:none}
