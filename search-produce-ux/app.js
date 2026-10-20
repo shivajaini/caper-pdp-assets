@@ -101,7 +101,8 @@ function renderResults(q,cat){
   const withA=RS.list.find(i=>i.a);let h=0;for(const c of q)h=(h*31+c.charCodeAt(0))%97;
   const aisle=withA?withA.a:'Aisle '+(h%12+1);
   const title=q.charAt(0).toUpperCase()+q.slice(1)+' - '+aisle;
-  RS.map=S.fromDrill?'':MAPHTML(title);
+  const tabsOn=S.cm==='tabs'&&((!!S.cat&&S.fromDrill)||!!S.icat);
+  RS.map=tabsOn?(S.tab==='all'?MAPHTML(title):''):(S.fromDrill?'':MAPHTML(title));
   resMore(24);
 }
 $('#searchScroll').addEventListener('scroll',e=>{const el=e.target;if(RS.shown<RS.list.length&&el.scrollTop+el.clientHeight>el.scrollHeight-500)resMore(24)});
