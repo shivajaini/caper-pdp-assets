@@ -59,6 +59,7 @@ function catSearch(q,cat,all){
   for(const it of CATI){
     if(!(it.p>0))continue;
     if(cat==='Produce'&&!it.pr)continue;
+    if(cat&&cat[0]==='~'&&!deptOK(it,cat.slice(1)))continue;
     let sc=0;const last=it.hw[it.hw.length-1];let ok=true;
     for(const t of qt){
       if(it.ws.includes(t))sc+=10;
@@ -210,7 +211,7 @@ function go(screen,o={}){
     if(screen==='searchhome'&&S.screen==='home'){morphIn();return}
     if(screen==='home'&&S.screen==='searchhome'){morphOut(o);return}
   }
-  if(screen==='home'){S.cat=null;S.fromDrill=false;S.tab='cat'}
+  if(screen==='home'){S.cat=null;S.icat=null;S.fromDrill=false;S.tab='cat'}
   S.screen=screen; if(o.sub)S.sub=o.sub; if(o.pid){S.pid=o.pid;S.thumb=o.thumb!=null?o.thumb:(o.pid==='rao'||o.pid==='snack'?1:0)}
   S.lightbox=false;$('#lb').classList.remove('on');
   if(screen==='pdp'){renderPdp();show('pdp',!o.silent);$('#pdpScroll').scrollTop=o.scroll||0}
@@ -256,11 +257,11 @@ dev.addEventListener('click',e=>{
   if(k==='cdopen'){S.q='';go('searchhome');shKb(true)}
   if(k==='cat'){S.cat=a.dataset.cat;S.tab='cat';go('catdrill')}
   if(k==='ctab'){S.tab=a.dataset.t;ctabsSync();if(S.screen==='catdrill'){renderDrill();$('#cdBody').scrollTop=0}else if(S.screen==='searchhome')shUpdate();else if(S.screen==='search'){renderResults(S.rq||'pasta sauce',effCat());$('#searchScroll').scrollTop=0}}
-  if(k==='chipx'&&S.screen==='searchhome'){S.cat=null;S.fromDrill=false;shUpdate();shKb(true)}
+  if(k==='chipx'&&S.screen==='searchhome'){S.icat=null;S.cat=null;S.fromDrill=false;shUpdate();shKb(true)}
   else if(k==='chipx'){const onRes=S.screen==='search';S.cat=null;S.fromDrill=false;if(onRes){S.fromSh=true;$('#resChip').hidden=true;renderResults(S.rq);$('#searchScroll').scrollTop=0}else go('searchhome')}
-  if(k==='dcard'){S.fromDrill=true;S.fromSh=false;const n=a.dataset.n;renderResults(n.toLowerCase(),a.dataset.c);$('#search .sfield .qt').textContent=n;$('#resChip').hidden=false;$('#resChip .cn').textContent=S.cat;go('search')}
+  if(k==='dcard'){S.icat=null;S.fromDrill=true;S.fromSh=false;const n=a.dataset.n;renderResults(n.toLowerCase(),a.dataset.c);$('#search .sfield .qt').textContent=n;$('#resChip').hidden=false;$('#resChip .cn').textContent=S.cat;go('search')}
   if(k==='kbopen')shKb(true);
-  if(k==='rclear'){S.fromSh=false;S.fromDrill=false;S.cat=null;S.tab='cat';go('searchhome')}
+  if(k==='rclear'){S.icat=null;S.fromSh=false;S.fromDrill=false;S.cat=null;S.tab='cat';go('searchhome')}
   if(k==='sugg'){S.q=a.dataset.q;shUpdate();shSubmit()}
   if(k==='shclear'){S.q='';shUpdate();shKb(true)}
   if(k==='pastsearch'){S.q=a.dataset.q;shUpdate();shSubmit()}
@@ -274,7 +275,7 @@ $('#toast').addEventListener('click',e=>{
   if(e.target.closest('.tx')){hideToast();S.ret=null;log('Toast dismissed with X');return}
   if(!S.ret)return; const r=S.ret; hideToast(); S.ret=null;
   const isCat=r.screen==='searchhome'||r.screen==='catdrill'||r.screen==='search';
-  if(isCat){S.cat=r.cat;S.tab=r.tab;S.fromDrill=r.fromDrill;S.fromSh=r.fromSh}
+  if(isCat){S.cat=r.cat;S.icat=r.icat||null;S.tab=r.tab;S.fromDrill=r.fromDrill;S.fromSh=r.fromSh}
   go(r.screen,{pid:r.pid,thumb:r.thumb,sub:r.sub,scroll:r.scroll});
   if(r.screen==='searchhome'){S.q=r.q||'';shUpdate()}
   log('Toast tapped: returned to '+label());
@@ -300,7 +301,7 @@ const xp=$('#xpill');
 function clearPill(){xp.classList.remove('alert','gone')}
 async function autoExit(){
   const run=++S.run;
-  S.phase='alert';S.ret={screen:S.screen,cat:S.cat,tab:S.tab,fromDrill:S.fromDrill,fromSh:S.fromSh,q:S.q,pid:S.pid,thumb:S.thumb,sub:S.sub,scroll:(S.screen==='search'?$('#searchScroll'):$('#pdpScroll')).scrollTop};
+  S.phase='alert';S.ret={screen:S.screen,icat:S.icat,cat:S.cat,tab:S.tab,fromDrill:S.fromDrill,fromSh:S.fromSh,q:S.q,pid:S.pid,thumb:S.thumb,sub:S.sub,scroll:(S.screen==='search'?$('#searchScroll'):$('#pdpScroll')).scrollTop};
   log('Conditions met: alert banner slides in');
   bn.className='show';void bn.offsetWidth;bn.classList.add('in');dev.classList.add('push');setCount(10);
   await wait(250);if(run!==S.run)return;
@@ -353,7 +354,7 @@ function tick(){
   if(S.phase==='idle'&&cs.every(c=>c.ok))autoExit();
 }
 setInterval(tick,250);tick();
-$('#cmseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#cmseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.cm=b.dataset.m;S.tab='cat';S.last=Date.now();ctabsSync();
+$('#cmseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#cmseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.cm=b.dataset.m;S.tab=S.icat?'all':'cat';S.last=Date.now();ctabsSync();
   if(S.screen==='catdrill')renderDrill();else if(S.screen==='searchhome')shUpdate();else if(S.screen==='search'&&S.fromDrill){renderResults(S.rq||'pasta sauce',effCat())}
   log('Category filter style: '+S.cm)});
 $('#seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.timeout=+b.dataset.t;S.last=Date.now();log('Idle timeout set to '+S.timeout+'s')});
@@ -418,12 +419,25 @@ const DRILL={
  'Bulk bins':[['Almonds'],['Cashews'],['Walnuts'],['Granola'],['Trail Mix'],['Oats'],['Rice'],['Quinoa'],['Lentils'],['Dried Mango'],['Raisins'],['Pasta']],
  'Bakery':[['Assorted Fresh Rolls','b_i28'],['Bagels','b_i18'],['Baguettes','b_i21'],['Bread','b_pl'],['Cakes','b_i1'],['Challah Bread','b_i8'],['Cheesecake','b_i9'],['Cinnamon Rolls','b_i6'],['Coffee Cake','b_i7'],['Cookies','b_i10'],['Croissants','b_i2'],['Danishes','b_i22'],['Dessert Bread & Loaves','b_i23'],['Donuts','b_i12'],['Dinner Rolls','b_i24'],['Eclairs','b_i25'],['Italian Bread','b_i26'],['Muffins','b_i3'],['Other Bakery Desserts','b_i27'],['Other Buns','b_i19'],['Other Pastries','b_i29'],['Pies','b_i30'],['Sandwich Rolls and Buns','b_i31'],['Scones','b_i32'],['Tarts','b_i33'],['Turnovers','b_i34'],['White Bread','b_i35']],
 };
-S.cat=null;S.fromDrill=false;S.cm='chips';S.tab='cat';
-const effCat=()=>S.tab==='all'?undefined:S.cat;
-function ctabsSync(){const dv=$('#device');dv.dataset.cm=S.cm;const on=S.cm==='tabs'&&!!S.cat&&(S.screen==='searchhome'||(S.screen==='search'&&S.fromDrill));dv.classList.toggle('ct',on);$$('.ctabs .tc').forEach(b=>b.textContent=S.cat||'');$$('.ctabs .tb').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.t===S.tab)));
+S.cat=null;S.icat=null;S.fromDrill=false;S.cm='chips';S.tab='cat';
+const tcat=()=>S.cat||S.icat;
+const effCat=()=>{if(S.tab==='all')return undefined;if(S.cat)return S.cat;return S.icat?(S.icat==='Produce'?'Produce':'~'+S.icat):undefined};
+const DEPT_TOK={};
+function deptToks(c){return DEPT_TOK[c]||(DEPT_TOK[c]=(DRILL[c]||[]).map(([n])=>normS(n).split(' ').map(stemW)))}
+function deptOK(it,c){return deptToks(c).some(ts=>ts.every(t=>it.ws.includes(t)))}
+function inferCat(q){
+  q=(q||'').trim();if(!q)return null;
+  const qt=normS(q).split(' ').filter(Boolean).map(stemW);if(!qt.length)return null;
+  for(const c of ['Produce','Bakery','Hot & Salad Bar','Bulk bins']){
+    if(deptToks(c).some(ts=>qt.every(t=>ts.includes(t))))return c;
+  }
+  try{if(catSearch(q.toLowerCase(),'Produce').length)return 'Produce'}catch(e){}
+  return null;
+}
+function ctabsSync(){const dv=$('#device');dv.dataset.cm=S.cm;const on=S.cm==='tabs'&&((!!S.cat&&(S.screen==='searchhome'||(S.screen==='search'&&S.fromDrill)))||(!!S.icat&&S.screen==='search'));dv.classList.toggle('ct',on);$$('.ctabs .tc').forEach(b=>b.textContent=tcat()||'');$$('.ctabs .tb').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.t===S.tab)));
   if(on){const q=(S.screen==='search'?(S.rq||''):S.q).trim().toLowerCase();
     const cnt=c=>q?catSearch(q,c,true).length:null;
-    const nA=cnt(undefined),nC=cnt(S.cat==='Produce'?'Produce':undefined);
+    const nA=cnt(undefined),tc=tcat(),nC=cnt(tc==='Produce'?'Produce':S.cat?undefined:'~'+tc);
     $$('.ctabs .tb').forEach(b=>{let n=b.querySelector('.ct');if(!n){n=document.createElement('span');n.className='ct';b.appendChild(n)}const v=b.dataset.t==='all'?nA:nC;n.textContent=v==null?'':v.toLocaleString()})}}
 function catImg(n,c){
   let it;try{it=catSearch(n.toLowerCase(),c==='Produce'?'Produce':undefined).find(x=>x.im)}catch(e){}
@@ -454,6 +468,7 @@ function shKb(on){$('#kb').classList.toggle('hide',!on);$('#shField').classList.
 function shReset(){S.q='';shUpdate();shKb(true)}
 function shSubmit(){
   const c=S.cat;if(c&&!S.q.trim()){shKb(false);go('catdrill');return}
+  S.icat=(!c&&S.cm==='tabs')?inferCat(S.q):null;if(S.icat)S.tab='all';
   S.fromSh=true;S.fromDrill=!!c;$('#resChip').hidden=!c;if(c)$('#resChip .cn').textContent=c;
   renderResults(S.q.trim()||'pasta sauce',effCat());$('#device').classList.remove('sg');$('#search .sfield .qt').textContent=S.q.trim()||'pasta sauce';go('search')}
 function shKey(k){
@@ -466,7 +481,7 @@ function shKey(k){
 }
 $('#nav').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b||S.phase!=='idle')return;const n=b.dataset.nav;
-  if(n==='pdp')go('pdp',{pid:'rao'});else if(n==='home')go('home',{top:true});else if(n==='Landing')go('searchhome');else if(n==='Search')go('search');else go('sub',{sub:n});
+  if(n==='pdp')go('pdp',{pid:'rao'});else if(n==='home')go('home',{top:true});else if(n==='Landing'){S.icat=null;go('searchhome')}else if(n==='Search'){S.icat=null;go('search')}else go('sub',{sub:n});
   log('Panel: moved to '+label());
 });
 $('#go').addEventListener('click',()=>{
