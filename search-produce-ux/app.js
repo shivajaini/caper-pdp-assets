@@ -260,7 +260,7 @@ function go(screen,o={}){
     if(screen==='searchhome'&&S.screen==='home'){morphIn();return}
     if(screen==='home'&&S.screen==='searchhome'){morphOut(o);return}
   }
-  if(screen==='home'){S.cat=null;S.icat=null;S.dd=null;S.fromDrill=false;S.tab='cat'}
+  if(screen==='home'){S.cat=null;S.catBack=null;S.icat=null;S.dd=null;S.fromDrill=false;S.tab='cat'}
   S.screen=screen; if(o.sub)S.sub=o.sub; if(o.pid){S.pid=o.pid;S.thumb=o.thumb!=null?o.thumb:(o.pid==='rao'||o.pid==='snack'?1:0)}
   S.lightbox=false;$('#lb').classList.remove('on');
   if(screen==='pdp'){renderPdp();show('pdp',!o.silent);$('#pdpScroll').scrollTop=o.scroll||0}
@@ -299,11 +299,12 @@ dev.addEventListener('click',e=>{
     if(S.screen==='search'&&S.fromDrill){S.fromDrill=false;go('catdrill')}
     else if(S.screen==='search'&&S.fromSh){S.fromSh=false;go('searchhome')}
     else if(S.screen==='searchhome'&&S.cat){shKb(false);go('catdrill')}
+    else if(S.screen==='searchhome'&&S.catBack){S.cat=S.catBack;S.catBack=null;shKb(false);go('catdrill')}
     else if(S.screen==='catdrill'){S.cat=null;go('searchhome')}
     else go('home',{top:false})
   }
   if(k==='resopen'){const q=S.rq||'';go('searchhome');S.q=q;shUpdate();shKb(true)}
-  if(k==='cdopen'){S.q='';go('searchhome');shKb(true)}
+  if(k==='cdopen'){S.q='';S.catBack=S.gs?S.cat:null;if(S.gs)S.cat=null;go('searchhome');shKb(true)}
   if(k==='cat'){S.cat=a.dataset.cat;S.tab='cat';go('catdrill')}
   if(k==='ddtoggle'){$('#dd').classList.toggle('open')}
   if(k==='ddpick'){S.dd=a.dataset.d||null;ddClose();renderResults(S.rq||'pasta sauce',resCat());$('#searchScroll').scrollTop=0}
@@ -405,6 +406,9 @@ function tick(){
   if(S.phase==='idle'&&cs.every(c=>c.ok))autoExit();
 }
 setInterval(tick,250);tick();
+$('#scseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#scseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.gs=b.dataset.g==='1';S.last=Date.now();
+  if(S.screen==='catdrill')renderDrill();
+  log('Search scope on category screens: '+(S.gs?'Global':'Category'))});
 $('#cmseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#cmseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.cm=b.dataset.m;S.tab=S.icat?'all':'cat';if(S.cm==='dropdown')S.dd=(S.screen==='search'&&S.fromDrill)?S.cat:null;ddClose();S.last=Date.now();ctabsSync();
   if(S.screen==='catdrill')renderDrill();else if(S.screen==='searchhome')shUpdate();else if(S.screen==='search'&&(S.fromDrill||S.cm==='dropdown')){renderResults(S.rq||'pasta sauce',resCat())}
   log('Category filter style: '+S.cm)});
@@ -475,7 +479,7 @@ const DRILL={
  'Bulk bins':[['Almonds'],['Cashews'],['Walnuts'],['Granola'],['Trail Mix'],['Oats'],['Rice'],['Quinoa'],['Lentils'],['Dried Mango'],['Raisins'],['Pasta']],
  'Bakery':[['Assorted Fresh Rolls','b_i28'],['Bagels','b_i18'],['Baguettes','b_i21'],['Bread','b_pl'],['Cakes','b_i1'],['Challah Bread','b_i8'],['Cheesecake','b_i9'],['Cinnamon Rolls','b_i6'],['Coffee Cake','b_i7'],['Cookies','b_i10'],['Croissants','b_i2'],['Danishes','b_i22'],['Dessert Bread & Loaves','b_i23'],['Donuts','b_i12'],['Dinner Rolls','b_i24'],['Eclairs','b_i25'],['Italian Bread','b_i26'],['Muffins','b_i3'],['Other Bakery Desserts','b_i27'],['Other Buns','b_i19'],['Other Pastries','b_i29'],['Pies','b_i30'],['Sandwich Rolls and Buns','b_i31'],['Scones','b_i32'],['Tarts','b_i33'],['Turnovers','b_i34'],['White Bread','b_i35']],
 };
-S.cat=null;S.icat=null;S.dd=null;S.fromDrill=false;S.cm='chips';S.tab='cat';
+S.cat=null;S.catBack=null;S.gs=false;S.icat=null;S.dd=null;S.fromDrill=false;S.cm='chips';S.tab='cat';
 const tcat=()=>S.cat||S.icat;
 const effCat=()=>{if(S.tab==='all')return undefined;if(S.cat)return S.cat;return S.icat?(S.icat==='Produce'?'Produce':'~'+S.icat):undefined};
 const DEPT_TOK={};
@@ -562,7 +566,9 @@ function renderDrill(){
   const list=DRILL[S.cat]||[];S.tab='cat';ctabsSync();
   $('#cdGrid').innerHTML=dCards(list,S.cat);
   $('#cdH').innerHTML='<span class="nb">No barcode?</span> Choose an item below or search to add it.';
-  $('#cdChip .cn').textContent=S.cat;$('#cdPh').textContent='Search in '+(S.cat||'').toLowerCase();
+  $('#cdChip .cn').textContent=S.cat;
+  const ph=$('#cdPh');$('#cdChip').style.display=S.gs?'none':'';
+  if(S.gs){ph.innerHTML=MQ;syncRoll(ph);ph.classList.add('rollph')}else{ph.classList.remove('rollph');ph.textContent='Search in '+(S.cat||'').toLowerCase()}
 }
 function shUpdate(){ctabsSync();const el=$('#shText');const ch=$('#shChip');ch.hidden=!S.cat;if(S.cat)ch.querySelector('.cn').textContent=S.cat;$('#shBody').style.visibility=S.cat?'hidden':'';if(S.q)el.textContent=S.q;else if(S.cat)el.textContent='Search in '+S.cat.toLowerCase();else{el.innerHTML=MQ;syncRoll(el)}el.classList.toggle('ph',!S.q);$('#shField').classList.toggle('typed',!!S.q);shSugg()}
 function shKb(on){$('#kb').classList.toggle('hide',!on);$('#shField').classList.toggle('active',on);shSugg()}
