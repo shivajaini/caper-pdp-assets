@@ -52,8 +52,55 @@ function catInit(){
     return {n,p,im,a,pr,q:itemQty(n),ws,hw,str:' '+ws.join(' ')+' ',seg:n.split(',').length,sec:SECOND.test(normS(n))};
   });
 }
+/* ---- PLU codes (standard IFPS produce PLUs, matched to catalog names; 9-prefix = organic) ---- */
+const PLU=[
+ [4011,'Bananas',/\bbananas?\b/,/pepper|green|plantain|chip/],
+ [4225,'Hass Avocados',/avocados?/],
+ [4053,'Lemons',/\blemons?\b/],
+ [4048,'Limes',/\blimes?\b/],
+ [4133,'Gala Apples',/\bgala\b/],
+ [4131,'Fuji Apples',/\bfuji\b/],
+ [4017,'Granny Smith Apples',/granny smith/],
+ [3283,'Honeycrisp Apples',/honeycrisp/],
+ [4093,'Yellow Onions',/yellow onion/],
+ [4082,'Red Onions',/red onion/],
+ [4068,'Green Onions',/green onion|scallion/],
+ [4072,'Russet Potatoes',/russet/],
+ [4816,'Sweet Potatoes',/sweet potato/],
+ [4087,'Roma Tomatoes',/\broma\b/],
+ [4664,'Tomatoes on the Vine',/on the vine/],
+ [4593,'English Cucumbers',/english cucumber/],
+ [4062,'Cucumbers',/\bcucumbers?\b/,/english|mini|pickl|kirby/],
+ [4065,'Green Bell Peppers',/green bell/],
+ [4088,'Red Bell Peppers',/red bell/],
+ [4060,'Broccoli',/broccoli/,/sprout/],
+ [4562,'Carrots',/carrots?/],
+ [4070,'Celery',/celery/,/root/],
+ [4061,'Iceberg Lettuce',/iceberg/],
+ [4640,'Romaine Lettuce',/romaine/],
+ [4608,'Garlic',/garlic/,/elephant/],
+ [4023,'Red Seedless Grapes',/red seedless/],
+ [4430,'Pineapples',/pineapple/],
+ [4319,'Cantaloupe',/cantaloupe/],
+ [4030,'Kiwi',/kiwi/],
+ [4889,'Cilantro',/cilantro/],
+ [4612,'Ginger',/ginger/,/apple/],
+ [4079,'Cauliflower',/cauliflower/],
+ [4067,'Zucchini',/zucchini/],
+ [4080,'Asparagus',/asparagus/]
+];
+const PLU_LABEL={};PLU.forEach(([c,l])=>{PLU_LABEL[c]=l;PLU_LABEL['9'+c]='Organic '+l});
+const isPluQ=q=>/^\s*9?\d{4}\s*$/.test(q);
+function pluOf(it){
+  if(it._plu!==undefined)return it._plu;
+  let r=null;
+  if(it.pr){const n=it.n.toLowerCase();
+    for(const [c,,inc,exc] of PLU){if(inc.test(n)&&!(exc&&exc.test(n))){r=/organic|\borg\b/.test(n)?'9'+c:''+c;break}}}
+  return it._plu=r;
+}
 function catSearch(q,cat,all){
   catInit();
+  if(isPluQ(q)){const code=q.trim(),hit=CATI.filter(it=>it.p>0&&pluOf(it)===code);if(hit.length)return hit.sort((a,b)=>(b.im?1:0)-(a.im?1:0))}
   const qt=normS(q).split(' ').filter(Boolean).map(stemW);if(!qt.length)return [];
   const qs=qt.join(' '),out=[];
   for(const it of CATI){
@@ -86,7 +133,7 @@ function catSearch(q,cat,all){
 const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const MAPHTML=t=>`<div class="mapc"><div class="mt">${PIN}${esc(t)}</div><img src="${IMG.s_map}" alt=""><span class="exp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.4" stroke-linecap="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></div>`;
 const CARTB='<span class="cartb" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6.84 2.68L5.57 2.49L5.4 2.46L2.29 2L2 3.93L5.16 4.4L7.36 17.24H21.54V15.29H9L8.66 13.29L20.58 11.71L22 4.99L6.84 2.69V2.68ZM7.98 21.95C8.88 21.95 9.6 21.22 9.6 20.33C9.6 19.44 8.87 18.71 7.98 18.71C7.09 18.71 6.36 19.44 6.36 20.33C6.36 21.22 7.09 21.95 7.98 21.95ZM19.92 21.95C20.82 21.95 21.54 21.22 21.54 20.33C21.54 19.44 20.81 18.71 19.92 18.71C19.03 18.71 18.3 19.44 18.3 20.33C18.3 21.22 19.03 21.95 19.92 21.95Z" fill-rule="evenodd" clip-rule="evenodd" fill="#fff"/></svg>Add to Cart</span>';
-const resCard=it=>`<button class="ic${it.pr?' pc':''}">${ADDI}<div class="im">${it.im?`<img src="${IMGBASE}${it.im}" alt="" onerror="this.outerHTML='<i class=gph150></i>'">`:'<i class="gph150"></i>'}${it.a?`<div class="tags"><span class="tg">${PIN}${esc(it.a)}</span></div>`:''}</div><div class="pr2">$${it.p.toFixed(2)}</div><div class="nm">${esc(it.n)}</div>${it.q?`<div class="sz">${esc(it.q)}</div>`:''}${it.pr?CARTB:''}</button>`;
+const resCard=it=>`<button class="ic${it.pr?' pc':''}">${ADDI}<div class="im">${it.im?`<img src="${IMGBASE}${it.im}" alt="" onerror="this.outerHTML='<i class=gph150></i>'">`:'<i class="gph150"></i>'}${it.a?`<div class="tags"><span class="tg">${PIN}${esc(it.a)}</span></div>`:''}</div><div class="pr2">$${it.p.toFixed(2)}</div><div class="nm">${esc(it.n)}</div>${it.q?`<div class="sz">${esc(it.q)}</div>`:''}${pluOf(it)?`<div class="plu">PLU ${pluOf(it)}</div>`:''}${it.pr?CARTB:''}</button>`;
 const RS={list:[],shown:0,q:''};
 S.rq=null;
 function resMore(n){
@@ -101,7 +148,7 @@ function renderResults(q,cat){
   if(!RS.list.length){g.innerHTML=`<div class="nores">No results for “${esc(q)}”</div>`;return}
   const withA=RS.list.find(i=>i.a);let h=0;for(const c of q)h=(h*31+c.charCodeAt(0))%97;
   const aisle=withA?withA.a:'Aisle '+(h%12+1);
-  const title=q.charAt(0).toUpperCase()+q.slice(1)+' - '+aisle;
+  const title=isPluQ(q)&&PLU_LABEL[q.trim()]?'PLU '+q.trim()+' ('+PLU_LABEL[q.trim()]+') - '+aisle:q.charAt(0).toUpperCase()+q.slice(1)+' - '+aisle;
   const tabsOn=S.cm==='tabs'&&((!!S.cat&&S.fromDrill)||!!S.icat);
   RS.map=S.cm==='dropdown'?(S.dd?'':MAPHTML(title)):tabsOn?(S.tab==='all'?MAPHTML(title):''):(S.fromDrill?'':MAPHTML(title));
   resMore(24);
@@ -407,6 +454,11 @@ function shSugg(){
   const on=!!q&&!$('#kb').classList.contains('hide');
   dev.classList.toggle('sg',on);if(!on)return;
   const find=(t,w)=>{let p=0;while((p=t.indexOf(w,p))>=0){if(p===0||t[p-1]===' ')return p;p++}return -1};
+  if(/^\d{1,5}$/.test(q)){
+    const pr=[];for(const k of Object.keys(PLU_LABEL)){if(k.startsWith(q))pr.push(k)}
+    pr.sort((a,b)=>(a[0]==='9')-(b[0]==='9')||a.localeCompare(b));
+    if(pr.length){$('#shSugg').innerHTML=pr.slice(0,4).map(k=>`<button class="sr" data-act="sugg" data-q="${k}"><span class="si"><i class="gph"></i></span><span class="st"><b>${k.slice(0,q.length)}</b>${k.slice(q.length)} <span class="pl">PLU \u00b7 ${esc(PLU_LABEL[k])}</span></span>${SSI}</button>`).join('');return}
+  }
   let hits=[];
   SUG.forEach(([t,k],i)=>{const at=find(t,q);if(at>=0)hits.push({t,k,at,i,n:q.length})});
   hits.sort((a,b)=>(a.at?1:0)-(b.at?1:0)||a.i-b.i);
