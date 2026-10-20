@@ -1,0 +1,161 @@
+<div class="wrap">
+  <div class="top">
+    <h1>Combined Search + Produce Add UX</h1>
+    
+  </div>
+
+  <div class="stagebox" id="stagebox">
+    <div id="frame">
+      <div id="device" aria-label="Caper cart screen prototype">
+
+        <!-- HOME -->
+        <section class="screen on" id="home">
+          <div class="abs card hdrmenu"><div class="hamb"><i></i><i></i><i></i></div><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-0d08e24c22.png" alt="Fresh Grocery" height="46"></div>
+          <button class="abs card hbtn" style="left:204px;top:27px;width:116px;height:96px" data-go="sub:Coupons"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-a9a5550216.png" alt="">Coupons</button>
+          <button class="abs hbtn sbar" id="sbar" data-go="searchhome"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-8fcc57bac4.png" alt=""><svg class="sico" width="32" height="32" viewBox="0 0 40 40" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M25.8274 29.3629C23.6917 30.8168 21.1118 31.6667 18.3333 31.6667C10.9695 31.6667 5 25.6971 5 18.3333C5 10.9695 10.9695 5 18.3333 5C25.6971 5 31.6667 10.9695 31.6667 18.3333C31.6667 21.1118 30.8168 23.6917 29.3629 25.8274L35.9344 32.3989L32.3989 35.9344L25.8274 29.3629ZM28.3333 18.3333C28.3333 23.8562 23.8562 28.3333 18.3333 28.3333C12.8105 28.3333 8.33333 23.8562 8.33333 18.3333C8.33333 12.8105 12.8105 8.33333 18.3333 8.33333C23.8562 8.33333 28.3333 12.8105 28.3333 18.3333Z" fill="#242529"/></svg><span class="rl"><i>Search for...</i><span class="rw"><b>item location</b><b>this week’s deals</b><b>dinner ideas</b><b>produce</b><b>bakery items</b><b>bulk items</b><b>item location</b></span></span></button>
+          <div class="abs card sav" id="sav"><div><b><span class="hl" style="font-size:35px;font-weight:700" id="savAmt">$0.00</span></b><span>Savings</span></div><div style="border:0"><b id="subAmt">$0.00</b><span>Subtotal</span></div></div>
+          <div class="abs rail"></div>
+          <div class="abs checkout"><svg width="40" height="36" viewBox="0 0 24 22" fill="#c9c8c3"><path d="M1 1h4l2.7 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21.5 6H6.2"/><circle cx="10" cy="19.5" r="1.8"/><circle cx="18" cy="19.5" r="1.8"/></svg>Checkout</div>
+          <div class="abs" style="left:1142px;top:408px;text-align:center;font-size:17px;color:#555"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-1b1d1c1d15.png" alt="" width="114"><div style="margin-top:12px">No items</div></div>
+          <div class="abs card list">
+            <div class="lhead"><h3>Your list</h3><span class="lchip">✓ 0 of 10</span><span style="margin-left:auto;font-size:26px;letter-spacing:2px">•••</span></div>
+            <div class="lrow"><span class="cb"></span><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-021df95a55.png" alt=""><div>Dave's Killer<br>Bread Organic…<br><span class="tag">Deal</span></div></div>
+            <div class="lrow" style="min-height:104px"><span class="cb"></span><div style="flex:1">apples</div><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.4"><circle cx="10" cy="10" r="7"/><path d="m15.5 15.5 6 6" stroke-linecap="round"/></svg></div>
+            <div class="lrow" style="min-height:104px"><span class="cb"></span><div style="flex:1">avocados<br><span class="tag">Deal</span></div><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.4"><circle cx="10" cy="10" r="7"/><path d="m15.5 15.5 6 6" stroke-linecap="round"/></svg></div>
+            <div class="lrow" style="min-height:112px"><span class="cb"></span><div style="flex:1">some kind of<br>protein chicken or…<br><span class="tag">Deal</span></div></div>
+          </div>
+          <div class="abs card deals"><h3>Deals in Aisle 7</h3><div class="grid" id="grid"></div></div>
+          <div class="abs foot"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#444"/><path d="M8 7v10M12 7v10M16 7v10" stroke="#fff" stroke-width="2"/></svg>Scale specs: 80 x 0.01 lb • Weight : 1.79 lb</div>
+        </section>
+
+        <!-- PDP -->
+        <section class="screen" id="pdp">
+          <div class="hdr"></div>
+          <button class="back" data-act="back"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M10 5l-7 7 7 7"/></svg>Back</button>
+                    <div class="pdpscroll" id="pdpScroll">
+            <div class="pcols">
+              <div>
+                <div class="stage" id="stage"></div>
+                <div class="thumbs" id="thumbs"></div>
+              </div>
+              <div id="pinfo"></div>
+            </div>
+            <hr>
+            <div class="pcols"><div class="ing"><h4>Ingredients</h4><div class="alg" id="alg"></div><div class="chips"><span>Organic</span><span>Gluten Free</span><span>Dairy Free</span></div></div>
+              <div><div class="ingtxt" id="ingtxt"></div>
+              <div class="nut"><div>Protein<b>10g</b></div><div>Fat<b>10g</b></div><div>Sugar<b>10g</b></div><div>Calories<b>10g</b></div></div></div></div>
+            <div id="pdpLower"></div>
+          </div>
+        </section>
+
+        <!-- SEARCH LANDING (Figma 1:679) -->
+        <section class="screen" id="searchhome">
+          <div class="shdr"></div>
+          <button class="back" data-act="back"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20.4866 11.3199L17.8467 8.68006L6.52679 20L17.8467 31.3199L20.4866 28.6801L13.6732 21.8667H33.3333V18.1333H13.6732L20.4866 11.3199Z" fill="#242529"/></svg>Back</button>
+          <div class="sfield" id="shField" data-act="kbopen" style="z-index:6"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M25.8274 29.3629C23.6917 30.8168 21.1118 31.6667 18.3333 31.6667C10.9695 31.6667 5 25.6971 5 18.3333C5 10.9695 10.9695 5 18.3333 5C25.6971 5 31.6667 10.9695 31.6667 18.3333C31.6667 21.1118 30.8168 23.6917 29.3629 25.8274L35.9344 32.3989L32.3989 35.9344L25.8274 29.3629ZM28.3333 18.3333C28.3333 23.8562 23.8562 28.3333 18.3333 28.3333C12.8105 28.3333 8.33333 23.8562 8.33333 18.3333C8.33333 12.8105 12.8105 8.33333 18.3333 8.33333C23.8562 8.33333 28.3333 12.8105 28.3333 18.3333Z" fill="#242529"/></svg><span class="cchip" id="shChip" hidden><span class="cn"></span><button class="cx" data-act="chipx" aria-label="Remove category"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.6362 23.3638 2.66667 16 2.66667C8.6362 2.66667 2.66667 8.6362 2.66667 16C2.66667 23.3638 8.6362 29.3333 16 29.3333ZM10.3432 12.2288L12.2288 10.3431L16 14.1144L19.7713 10.3431L21.6569 12.2288L17.8857 16L21.6569 19.7712L19.7713 21.6568L16 17.8856L12.2288 21.6569L10.3432 19.7712L14.1144 16L10.3432 12.2288Z" fill="#242529"/></svg></button></span><span class="shw"><i class="caret"></i><span id="shText" class="ph">Search for...item location</span></span><button class="clr2" data-act="shclear" aria-label="Clear search"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.6362 23.3638 2.66667 16 2.66667C8.6362 2.66667 2.66667 8.6362 2.66667 16C2.66667 23.3638 8.6362 29.3333 16 29.3333ZM10.3432 12.2288L12.2288 10.3431L16 14.1144L19.7713 10.3431L21.6569 12.2288L17.8857 16L21.6569 19.7712L19.7713 21.6568L16 17.8856L12.2288 21.6569L10.3432 19.7712L14.1144 16L10.3432 12.2288Z" fill="#242529"/></svg></button></div>
+          <div class="shbody" id="shBody">
+            <div class="addcard">
+              <h3 class="ah"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.12 3.57333L7.42667 3.32L7.2 3.28L3.05333 2.66667L2.66667 5.24L6.88 5.86667L9.81333 22.9867H28.72V20.3867H12L11.5467 17.72L27.44 15.6133L29.3333 6.65333L9.12 3.58667V3.57333ZM10.64 29.2667C11.84 29.2667 12.8 28.2933 12.8 27.1067C12.8 25.92 11.8267 24.9467 10.64 24.9467C9.45333 24.9467 8.48 25.92 8.48 27.1067C8.48 28.2933 9.45333 29.2667 10.64 29.2667ZM26.56 29.2667C27.76 29.2667 28.72 28.2933 28.72 27.1067C28.72 25.92 27.7467 24.9467 26.56 24.9467C25.3733 24.9467 24.4 25.92 24.4 27.1067C24.4 28.2933 25.3733 29.2667 26.56 29.2667Z" fill="#242529"/></svg><span>Add items without a barcode</span></h3>
+              <div class="cg">
+<button class="cat" data-act="cat" data-cat="Produce"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-faca2757e1.webp" alt="" style="left:177px;top:12px"><span class="cl" style="left:0;bottom:27px;width:187px">Produce</span></button>
+<button class="cat" data-act="cat" data-cat="Hot & Salad Bar"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-56963abb86.webp" alt="" style="left:177px;top:12px"><span class="cl" style="left:0;bottom:27px;width:167px;height:88px;justify-content:flex-start;bottom:13px">Hot &amp; Salad Bar</span></button>
+<button class="cat" data-act="cat" data-cat="Bakery"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-de2900b704.webp" alt="" style="left:167px;top:9px"><span class="cl" style="left:0;bottom:27px;width:187px">Bakery</span></button>
+<button class="cat" data-act="cat" data-cat="Bulk bins"><i class="dph" style="left:177px;top:12px;right:auto;width:80px;height:80px"></i><span class="cl" style="left:0;bottom:27px;width:187px">Bulk bins</span></button>
+              </div>
+            </div>
+            <h3 class="pst">Past searches</h3>
+            <div class="pgrid" id="pgrid">
+<button class="pt" data-act="pastsearch" data-q="olive oil"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-e6940e2d9b.webp" alt=""><span>olive oil</span></button>
+<button class="pt" data-act="pastsearch" data-q="pasta sauce"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-a785573dd4.webp" alt=""><span>pasta sauce</span></button>
+<button class="pt" data-act="pastsearch" data-q="pasta"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-f44ec290fb.webp" alt=""><span>pasta</span></button>
+<button class="pt" data-act="pastsearch" data-q="canned tomatoes"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-bffc0feb7e.webp" alt=""><span>canned tomatoes</span></button>
+<button class="pt" data-act="pastsearch" data-q="capers"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-37557e459d.webp" alt=""><span>capers</span></button>
+<button class="pt" data-act="pastsearch" data-q="olives"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-6e438c096b.webp" alt=""><span>olives</span></button>
+<button class="pt" data-act="pastsearch" data-q="vinegar"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-e7f7545c3d.webp" alt=""><span>vinegar</span></button>
+<button class="pt" data-act="pastsearch" data-q="breadcrumbs"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-505e257add.webp" alt=""><span>breadcrumbs</span></button>
+<button class="pt" data-act="pastsearch" data-q="parmesan cheese"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-f44ec290fb.webp" alt=""><span>parmesan cheese</span></button>
+            </div>
+          </div>
+          <div class="ctabs" role="tablist"><button class="tb" role="tab" data-act="ctab" data-t="all">All</button><button class="tb" role="tab" data-act="ctab" data-t="cat"><span class="tc"></span></button></div>
+          <div class="cdbody" id="shCards" hidden><div class="cdgrid" id="shGrid"></div></div>
+          <div class="scrim" id="shScrim" data-key="hide"></div>
+          <div class="sugg" id="shSugg"></div>
+          <div class="kb" id="kb">
+            <div class="kgroup"><div class="kalpha" id="kbA"></div><div class="knum" id="kbN"></div></div>
+            <button class="kdown" data-key="hide" aria-label="Hide keyboard"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M21.8667 26.3268L28.6801 19.5134L31.32 22.1533L20 33.4732L8.68011 22.1533L11.32 19.5134L18.1333 26.3268V6.66667H21.8667V26.3268Z" fill="#242529"/></svg></button>
+          </div>
+        </section>
+
+        <!-- CATEGORY DRILLDOWN (Figma Category Drilldown 3225:23382) -->
+        <section class="screen" id="catdrill">
+          <div class="shdr"></div>
+          <button class="back" data-act="back"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20.4866 11.3199L17.8467 8.68006L6.52679 20L17.8467 31.3199L20.4866 28.6801L13.6732 21.8667H33.3333V18.1333H13.6732L20.4866 11.3199Z" fill="#242529"/></svg>Back</button>
+          <div class="sfield" id="cdField" data-act="cdopen" style="z-index:6;cursor:text"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M25.8274 29.3629C23.6917 30.8168 21.1118 31.6667 18.3333 31.6667C10.9695 31.6667 5 25.6971 5 18.3333C5 10.9695 10.9695 5 18.3333 5C25.6971 5 31.6667 10.9695 31.6667 18.3333C31.6667 21.1118 30.8168 23.6917 29.3629 25.8274L35.9344 32.3989L32.3989 35.9344L25.8274 29.3629ZM28.3333 18.3333C28.3333 23.8562 23.8562 28.3333 18.3333 28.3333C12.8105 28.3333 8.33333 23.8562 8.33333 18.3333C8.33333 12.8105 12.8105 8.33333 18.3333 8.33333C23.8562 8.33333 28.3333 12.8105 28.3333 18.3333Z" fill="#242529"/></svg><span class="cchip" id="cdChip"><span class="cn"></span><button class="cx" data-act="chipx" aria-label="Remove category"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.6362 23.3638 2.66667 16 2.66667C8.6362 2.66667 2.66667 8.6362 2.66667 16C2.66667 23.3638 8.6362 29.3333 16 29.3333ZM10.3432 12.2288L12.2288 10.3431L16 14.1144L19.7713 10.3431L21.6569 12.2288L17.8857 16L21.6569 19.7712L19.7713 21.6568L16 17.8856L12.2288 21.6569L10.3432 19.7712L14.1144 16L10.3432 12.2288Z" fill="#242529"/></svg></button></span><span class="qt ph2" id="cdPh"></span></div>
+          <div class="ctabs" role="tablist"><button class="tb" role="tab" data-act="ctab" data-t="all">All</button><button class="tb" role="tab" data-act="ctab" data-t="cat"><span class="tc"></span></button></div>
+          <div class="cdbody" id="cdBody"><h2 class="cdh" id="cdH"></h2><div class="cdgrid" id="cdGrid"></div></div>
+        </section>
+
+        <!-- SEARCH RESULTS -->
+        <section class="screen" id="search">
+          <div class="shdr"></div>
+          <button class="back" data-act="back"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20.4866 11.3199L17.8467 8.68006L6.52679 20L17.8467 31.3199L20.4866 28.6801L13.6732 21.8667H33.3333V18.1333H13.6732L20.4866 11.3199Z" fill="#242529"/></svg>Back</button>
+          <div class="sfield" data-act="resopen" style="z-index:6;cursor:text"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M25.8274 29.3629C23.6917 30.8168 21.1118 31.6667 18.3333 31.6667C10.9695 31.6667 5 25.6971 5 18.3333C5 10.9695 10.9695 5 18.3333 5C25.6971 5 31.6667 10.9695 31.6667 18.3333C31.6667 21.1118 30.8168 23.6917 29.3629 25.8274L35.9344 32.3989L32.3989 35.9344L25.8274 29.3629ZM28.3333 18.3333C28.3333 23.8562 23.8562 28.3333 18.3333 28.3333C12.8105 28.3333 8.33333 23.8562 8.33333 18.3333C8.33333 12.8105 12.8105 8.33333 18.3333 8.33333C23.8562 8.33333 28.3333 12.8105 28.3333 18.3333Z" fill="#242529"/></svg><span class="cchip" hidden id="resChip"><span class="cn"></span><button class="cx" data-act="chipx" aria-label="Remove category"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.6362 23.3638 2.66667 16 2.66667C8.6362 2.66667 2.66667 8.6362 2.66667 16C2.66667 23.3638 8.6362 29.3333 16 29.3333ZM10.3432 12.2288L12.2288 10.3431L16 14.1144L19.7713 10.3431L21.6569 12.2288L17.8857 16L21.6569 19.7712L19.7713 21.6568L16 17.8856L12.2288 21.6569L10.3432 19.7712L14.1144 16L10.3432 12.2288Z" fill="#242529"/></svg></button></span><span class="qt">pasta sauce</span><span class="clr" data-act="rclear" role="button" aria-label="Clear search"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.6362 23.3638 2.66667 16 2.66667C8.6362 2.66667 2.66667 8.6362 2.66667 16C2.66667 23.3638 8.6362 29.3333 16 29.3333ZM10.3432 12.2288L12.2288 10.3431L16 14.1144L19.7713 10.3431L21.6569 12.2288L17.8857 16L21.6569 19.7712L19.7713 21.6568L16 17.8856L12.2288 21.6569L10.3432 19.7712L14.1144 16L10.3432 12.2288Z" fill="#242529"/></svg></span></div>
+          <div class="sscroll" id="searchScroll">
+            <div class="frow"><div class="ctabs" role="tablist"><button class="tb" role="tab" data-act="ctab" data-t="all">All</button><button class="tb" role="tab" data-act="ctab" data-t="cat"><span class="tc"></span></button></div><span class="chip">On sale</span><span class="chip">Dietary <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></span><span class="chip">Brands <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></span><span class="chip plain">More filters <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></span><span class="chip sort">Sort: Relevant <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></span></div>
+            <div class="sgrid" id="sgrid"></div>
+          </div>
+        </section>
+
+        <!-- SUB (Coupons stub) -->
+        <section class="screen" id="sub">
+          <div class="hdr"></div>
+          <button class="back" data-act="back"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M10 5l-7 7 7 7"/></svg>Back</button>
+                    <div class="subbody"><h2 id="subTitle">Coupons</h2><p>Placeholder screen. The same idle rules apply here, so the auto-return can be tested away from the PDP.</p></div>
+        </section>
+
+        <div id="lb" data-act="lbclose"><img id="lbimg" alt=""></div>
+
+        <button class="pill off" id="xpill" data-act="exit"><span class="xa">Exit to Home</span><span class="xb">Exiting to Home in <span id="cnt">10</span></span></button>
+
+        <!-- alert banner that becomes the curtain -->
+        <div id="banner">
+          <div class="bc">
+            <button class="bx" id="bx" aria-label="Stay on this page"><svg width="30" height="30" viewBox="0 0 24 24" stroke="#222" stroke-width="2.6" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+            <div class="bth" style="left:138px;--i:0"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-0be46865c7.png" alt=""></div>
+            <div class="bth" style="left:226px;--i:1"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-13b374c49d.png" alt=""></div>
+            <div class="bth" style="left:314px;--i:2"><img src="https://cdn.jsdelivr.net/gh/shivajaini/caper-pdp-assets@1d3e61e3ee3b4370a5ee24723ba1911cfbfe61f3/search-produce-ux/img-9943837e09.png" alt=""></div>
+            <div class="bth more" style="left:402px;--i:3">+10</div>
+            <div class="btxt"><b>New deals available on Home</b><span>Taking you there shortly.</span></div>
+          </div>
+                  </div>
+
+        <button id="toast" class="dark center" aria-label="Return to the page you were viewing"><span class="ti"><img id="toastImg" alt=""><span class="rb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></span></span><span><small><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg><span id="toastLbl">Return to see details of</span></small><b id="toastName"></b></span><span class="tx" role="button" aria-label="Dismiss"><svg width="26" height="26" viewBox="0 0 24 24" stroke="#fff" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></span></button>
+      </div>
+    </div>
+  </div>
+
+  <aside class="panel" aria-label="Auto-return rules">
+    <div>
+      <h2>Screen</h2>
+      <div class="row" id="nav">
+        <button class="btn" data-nav="pdp">PDP</button><button class="btn" data-nav="Coupons">Coupons</button><button class="btn" data-nav="Landing">Search</button><button class="btn" data-nav="Search">Results</button><button class="btn" data-nav="home">Home</button>
+      </div>
+    </div>
+    <div>
+      <h2>Idle timeout</h2>
+      <div class="seg" id="seg"><button aria-pressed="true" data-t="45">45s (spec)</button><button aria-pressed="false" data-t="15">15s</button><button aria-pressed="false" data-t="5">5s</button></div>
+    </div>
+    <div>
+      <h2>Category filter</h2>
+      <div class="seg" id="cmseg"><button aria-pressed="true" data-m="chips">Chips (default)</button><button aria-pressed="false" data-m="tabs">Tabs</button></div>
+    </div>
+    <div>
+      <h2>Simulate</h2>
+      <label class="sw" style="margin-bottom:10px"><span>Newer deals waiting on Home<small style="display:block;color:var(--muted)">Turns off after the user lands on Home</small></span><input type="checkbox" id="swDeals" checked></label>
+      <label class="sw" style="margin-bottom:10px"><span>Item scan or scale activity</span><input type="checkbox" id="swCart"></label>
+      <label class="sw" style="margin-bottom:10px"><span>Items in cart<small style="display:block;color:var(--muted)">Shrinks the search bar and shows totals on Home</small></span><input type="checkbox" id="swItems"></label>
+      <label class="sw"><span>Cart total and savings are $0.00<small style="display:block;color:var(--muted)">Totals stay hidden</small></span><input type="checkbox" id="swZero"></label>
+    </div>
+    <div class="row"><button class="btn primary" id="go">Start alert now</button><button class="btn" id="reset">Reset</button></div>  </aside>
+</div>
+
