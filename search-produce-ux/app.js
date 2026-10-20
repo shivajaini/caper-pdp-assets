@@ -60,6 +60,7 @@ function catSearch(q,cat,all){
     if(!(it.p>0))continue;
     if(cat==='Produce'&&!it.pr)continue;
     if(cat&&cat[0]==='~'&&!deptOK(it,cat.slice(1)))continue;
+    if(cat&&cat[0]==='@'&&!inDept(it,cat.slice(1)))continue;
     let sc=0;const last=it.hw[it.hw.length-1];let ok=true;
     for(const t of qt){
       if(it.ws.includes(t))sc+=10;
@@ -95,14 +96,14 @@ function resMore(n){
   RS.shown=end;g.insertAdjacentHTML('beforeend',h);
 }
 function renderResults(q,cat){
-  S.rq=q;RS.q=q;RS.list=catSearch(q,cat);RS.shown=0;
+  S.rq=q;RS.q=q;RS.list=catSearch(q,cat);RS.shown=0;ddSync();
   const g=$('#sgrid');g.innerHTML='';
   if(!RS.list.length){g.innerHTML=`<div class="nores">No results for “${esc(q)}”</div>`;return}
   const withA=RS.list.find(i=>i.a);let h=0;for(const c of q)h=(h*31+c.charCodeAt(0))%97;
   const aisle=withA?withA.a:'Aisle '+(h%12+1);
   const title=q.charAt(0).toUpperCase()+q.slice(1)+' - '+aisle;
   const tabsOn=S.cm==='tabs'&&((!!S.cat&&S.fromDrill)||!!S.icat);
-  RS.map=tabsOn?(S.tab==='all'?MAPHTML(title):''):(S.fromDrill?'':MAPHTML(title));
+  RS.map=S.cm==='dropdown'?(S.dd?'':MAPHTML(title)):tabsOn?(S.tab==='all'?MAPHTML(title):''):(S.fromDrill?'':MAPHTML(title));
   resMore(24);
 }
 $('#searchScroll').addEventListener('scroll',e=>{const el=e.target;if(RS.shown<RS.list.length&&el.scrollTop+el.clientHeight>el.scrollHeight-500)resMore(24)});
@@ -212,7 +213,7 @@ function go(screen,o={}){
     if(screen==='searchhome'&&S.screen==='home'){morphIn();return}
     if(screen==='home'&&S.screen==='searchhome'){morphOut(o);return}
   }
-  if(screen==='home'){S.cat=null;S.icat=null;S.fromDrill=false;S.tab='cat'}
+  if(screen==='home'){S.cat=null;S.icat=null;S.dd=null;S.fromDrill=false;S.tab='cat'}
   S.screen=screen; if(o.sub)S.sub=o.sub; if(o.pid){S.pid=o.pid;S.thumb=o.thumb!=null?o.thumb:(o.pid==='rao'||o.pid==='snack'?1:0)}
   S.lightbox=false;$('#lb').classList.remove('on');
   if(screen==='pdp'){renderPdp();show('pdp',!o.silent);$('#pdpScroll').scrollTop=o.scroll||0}
@@ -257,12 +258,14 @@ dev.addEventListener('click',e=>{
   if(k==='resopen'){const q=S.rq||'';go('searchhome');S.q=q;shUpdate();shKb(true)}
   if(k==='cdopen'){S.q='';go('searchhome');shKb(true)}
   if(k==='cat'){S.cat=a.dataset.cat;S.tab='cat';go('catdrill')}
+  if(k==='ddtoggle'){$('#dd').classList.toggle('open')}
+  if(k==='ddpick'){S.dd=a.dataset.d||null;ddClose();renderResults(S.rq||'pasta sauce',resCat());$('#searchScroll').scrollTop=0}
   if(k==='ctab'){S.tab=a.dataset.t;ctabsSync();if(S.screen==='catdrill'){renderDrill();$('#cdBody').scrollTop=0}else if(S.screen==='searchhome')shUpdate();else if(S.screen==='search'){renderResults(S.rq||'pasta sauce',effCat());$('#searchScroll').scrollTop=0}}
   if(k==='chipx'&&S.screen==='searchhome'){S.icat=null;S.cat=null;S.fromDrill=false;shUpdate();shKb(true)}
   else if(k==='chipx'){const onRes=S.screen==='search';S.cat=null;S.fromDrill=false;if(onRes){S.fromSh=true;$('#resChip').hidden=true;renderResults(S.rq);$('#searchScroll').scrollTop=0}else go('searchhome')}
-  if(k==='dcard'){S.icat=null;S.fromDrill=true;S.fromSh=false;const n=a.dataset.n;renderResults(n.toLowerCase(),a.dataset.c);$('#search .sfield .qt').textContent=n;$('#resChip').hidden=false;$('#resChip .cn').textContent=S.cat;go('search')}
+  if(k==='dcard'){S.icat=null;S.dd=S.cm==='dropdown'?a.dataset.c:null;S.fromDrill=true;S.fromSh=false;const n=a.dataset.n;renderResults(n.toLowerCase(),S.cm==='dropdown'?resCat():a.dataset.c);$('#search .sfield .qt').textContent=n;$('#resChip').hidden=false;$('#resChip .cn').textContent=S.cat;go('search')}
   if(k==='kbopen')shKb(true);
-  if(k==='rclear'){S.icat=null;S.fromSh=false;S.fromDrill=false;S.cat=null;S.tab='cat';go('searchhome')}
+  if(k==='rclear'){S.icat=null;S.dd=null;S.fromSh=false;S.fromDrill=false;S.cat=null;S.tab='cat';go('searchhome')}
   if(k==='sugg'){S.q=a.dataset.q;shUpdate();shSubmit()}
   if(k==='shclear'){S.q='';shUpdate();shKb(true)}
   if(k==='pastsearch'){S.q=a.dataset.q;shUpdate();shSubmit()}
@@ -276,7 +279,7 @@ $('#toast').addEventListener('click',e=>{
   if(e.target.closest('.tx')){hideToast();S.ret=null;log('Toast dismissed with X');return}
   if(!S.ret)return; const r=S.ret; hideToast(); S.ret=null;
   const isCat=r.screen==='searchhome'||r.screen==='catdrill'||r.screen==='search';
-  if(isCat){S.cat=r.cat;S.icat=r.icat||null;S.tab=r.tab;S.fromDrill=r.fromDrill;S.fromSh=r.fromSh}
+  if(isCat){S.cat=r.cat;S.icat=r.icat||null;S.dd=r.dd||null;S.tab=r.tab;S.fromDrill=r.fromDrill;S.fromSh=r.fromSh}
   go(r.screen,{pid:r.pid,thumb:r.thumb,sub:r.sub,scroll:r.scroll});
   if(r.screen==='searchhome'){S.q=r.q||'';shUpdate()}
   log('Toast tapped: returned to '+label());
@@ -302,7 +305,7 @@ const xp=$('#xpill');
 function clearPill(){xp.classList.remove('alert','gone')}
 async function autoExit(){
   const run=++S.run;
-  S.phase='alert';S.ret={screen:S.screen,icat:S.icat,cat:S.cat,tab:S.tab,fromDrill:S.fromDrill,fromSh:S.fromSh,q:S.q,pid:S.pid,thumb:S.thumb,sub:S.sub,scroll:(S.screen==='search'?$('#searchScroll'):$('#pdpScroll')).scrollTop};
+  S.phase='alert';S.ret={screen:S.screen,dd:S.dd,icat:S.icat,cat:S.cat,tab:S.tab,fromDrill:S.fromDrill,fromSh:S.fromSh,q:S.q,pid:S.pid,thumb:S.thumb,sub:S.sub,scroll:(S.screen==='search'?$('#searchScroll'):$('#pdpScroll')).scrollTop};
   log('Conditions met: alert banner slides in');
   bn.className='show';void bn.offsetWidth;bn.classList.add('in');dev.classList.add('push');setCount(10);
   await wait(250);if(run!==S.run)return;
@@ -355,8 +358,8 @@ function tick(){
   if(S.phase==='idle'&&cs.every(c=>c.ok))autoExit();
 }
 setInterval(tick,250);tick();
-$('#cmseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#cmseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.cm=b.dataset.m;S.tab=S.icat?'all':'cat';S.last=Date.now();ctabsSync();
-  if(S.screen==='catdrill')renderDrill();else if(S.screen==='searchhome')shUpdate();else if(S.screen==='search'&&S.fromDrill){renderResults(S.rq||'pasta sauce',effCat())}
+$('#cmseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#cmseg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.cm=b.dataset.m;S.tab=S.icat?'all':'cat';if(S.cm==='dropdown')S.dd=(S.screen==='search'&&S.fromDrill)?S.cat:null;ddClose();S.last=Date.now();ctabsSync();
+  if(S.screen==='catdrill')renderDrill();else if(S.screen==='searchhome')shUpdate();else if(S.screen==='search'&&(S.fromDrill||S.cm==='dropdown')){renderResults(S.rq||'pasta sauce',resCat())}
   log('Category filter style: '+S.cm)});
 $('#seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));S.timeout=+b.dataset.t;S.last=Date.now();log('Idle timeout set to '+S.timeout+'s')});
 $('#swDeals').addEventListener('change',e=>{S.deals=e.target.checked;if(S.deals){S.dismissed=false;log('New deals arrived on Home')}});
@@ -420,7 +423,7 @@ const DRILL={
  'Bulk bins':[['Almonds'],['Cashews'],['Walnuts'],['Granola'],['Trail Mix'],['Oats'],['Rice'],['Quinoa'],['Lentils'],['Dried Mango'],['Raisins'],['Pasta']],
  'Bakery':[['Assorted Fresh Rolls','b_i28'],['Bagels','b_i18'],['Baguettes','b_i21'],['Bread','b_pl'],['Cakes','b_i1'],['Challah Bread','b_i8'],['Cheesecake','b_i9'],['Cinnamon Rolls','b_i6'],['Coffee Cake','b_i7'],['Cookies','b_i10'],['Croissants','b_i2'],['Danishes','b_i22'],['Dessert Bread & Loaves','b_i23'],['Donuts','b_i12'],['Dinner Rolls','b_i24'],['Eclairs','b_i25'],['Italian Bread','b_i26'],['Muffins','b_i3'],['Other Bakery Desserts','b_i27'],['Other Buns','b_i19'],['Other Pastries','b_i29'],['Pies','b_i30'],['Sandwich Rolls and Buns','b_i31'],['Scones','b_i32'],['Tarts','b_i33'],['Turnovers','b_i34'],['White Bread','b_i35']],
 };
-S.cat=null;S.icat=null;S.fromDrill=false;S.cm='chips';S.tab='cat';
+S.cat=null;S.icat=null;S.dd=null;S.fromDrill=false;S.cm='chips';S.tab='cat';
 const tcat=()=>S.cat||S.icat;
 const effCat=()=>{if(S.tab==='all')return undefined;if(S.cat)return S.cat;return S.icat?(S.icat==='Produce'?'Produce':'~'+S.icat):undefined};
 const DEPT_TOK={};
@@ -435,6 +438,50 @@ function inferCat(q){
   try{if(catSearch(q.toLowerCase(),'Produce').length)return 'Produce'}catch(e){}
   return null;
 }
+/* ---- Dropdown department filter ---- */
+const DEPT_ORDER=['Produce','Bakery','Dairy & Eggs','Frozen','Drinks & Juices','Meat & Seafood','Snacks','Pantry','Hot & Salad Bar','Bulk bins'];
+const DEPT_RX=[
+ ['Frozen',/\b(frozen|ice cream|gelato|sorbet|sherbet|popsicles?|freezer)\b/],
+ ['Bakery',/\b(breads?|bagels?|muffins?|cakes?|cheesecakes?|cookies?|croissants?|donuts?|doughnuts?|pies?|rolls?|buns?|brownies?|scones?|pastry|pastries|cupcakes?|danish|baguettes?|tarts?|loaf|tortillas?|pita|biscuits?)\b/],
+ ['Drinks & Juices',/\b(juices?|smoothies?|soda|sparkling|water|tea|coffee|kombucha|lemonade|cola|drinks?|beverages?|seltzer|energy|latte|brew|punch)\b/],
+ ['Pantry',/\b(soup|broth|sauce|dressing|canned|peanut butter|almond butter|jam|jelly|syrup|flour|sugar|oil|vinegar|spices?|seasoning|pasta|rice|beans|pudding|honey)\b/],
+ ['Dairy & Eggs',/\b(milk|yogurt|yoghurt|cheese|butter|cream|eggs?|kefir|creamer|cottage)\b/],
+ ['Meat & Seafood',/\b(chicken|beef|pork|turkey|bacon|sausages?|ham|steaks?|salmon|shrimp|fish|tuna|lamb|meatballs?|hot dogs?|jerky|crab|tilapia)\b/],
+ ['Snacks',/\b(chips?|crackers?|bars?|popcorn|pretzels?|nuts?|granola|candy|chocolates?|gumm(y|ies)|snacks?|cereal|puffs|crisps|trail mix|dried)\b/]
+];
+function deptOf(it){
+  if(it._d)return it._d;
+  const n=normS(it.n);let d=null;
+  if(DEPT_RX[0][1].test(n))d='Frozen';
+  else if(it.pr)d='Produce';
+  else for(const [name,rx] of DEPT_RX){if(rx.test(n)){d=name;break}}
+  return it._d=d||'Pantry';
+}
+function inDept(it,d){return d==='Hot & Salad Bar'||d==='Bulk bins'?deptOK(it,d):deptOf(it)===d}
+const DDC={};
+function ddCounts(q){
+  if(DDC[q])return DDC[q];
+  const all=catSearch(q,undefined,true),c={};
+  for(const it of all){const d=deptOf(it);c[d]=(c[d]||0)+1;for(const x of ['Hot & Salad Bar','Bulk bins'])if(deptOK(it,x))c['~'+x]=(c['~'+x]||0)+1}
+  return DDC[q]={total:all.length,c};
+}
+const resCat=()=>S.cm==='dropdown'?(S.dd?'@'+S.dd:undefined):effCat();
+const DDCK='<svg class="ck" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#242529" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
+function ddSync(){
+  const dd=$('#dd');if(!dd)return;
+  const q=(S.rq||'').trim().toLowerCase();
+  const {total,c}=q?ddCounts(q):{total:0,c:{}};
+  const SPECIAL=d=>d==='Hot & Salad Bar'||d==='Bulk bins';
+  const opts=[[null,'All Departments',total]].concat(DEPT_ORDER.filter(d=>SPECIAL(d)?d===S.dd:c[d]>0).map(d=>[d,d,SPECIAL(d)?(c['~'+d]||0):(c[d]||0)]));
+  $('#ddLabel').textContent=S.dd||'All Departments';
+  dd.classList.toggle('sel',!!S.dd);
+  $('#ddmenu').innerHTML=opts.map(([v,n,k])=>`<button class="ddopt" role="option" data-act="ddpick" data-d="${v==null?'':esc(v)}" aria-selected="${(v||null)===(S.dd||null)}">${DDCK}<span class="nm">${esc(n)}</span><span class="ct">${k.toLocaleString()}</span></button>`).join('');
+}
+function ddClose(){const dd=$('#dd');if(dd)dd.classList.remove('open')}
+(function(){
+  $('#search .frow').insertAdjacentHTML('afterbegin','<div class="dd" id="dd"><button class="ddbtn" data-act="ddtoggle" aria-haspopup="listbox"><span id="ddLabel">All Departments</span><svg class="car" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></button><div class="ddmenu" id="ddmenu" role="listbox"></div></div>');
+  $('#device').addEventListener('click',e=>{if(!e.target.closest('.dd'))ddClose()});
+})();
 function ctabsSync(){const dv=$('#device');dv.dataset.cm=S.cm;const on=S.cm==='tabs'&&((!!S.cat&&(S.screen==='searchhome'||(S.screen==='search'&&S.fromDrill)))||(!!S.icat&&S.screen==='search'));dv.classList.toggle('ct',on);$$('.ctabs .tc').forEach(b=>b.textContent=tcat()||'');$$('.ctabs .tb').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.t===S.tab)));
   if(on){const q=(S.screen==='search'?(S.rq||''):S.q).trim().toLowerCase();
     const cnt=c=>q?catSearch(q,c,true).length:null;
@@ -470,8 +517,9 @@ function shReset(){S.q='';shUpdate();shKb(true)}
 function shSubmit(){
   const c=S.cat;if(c&&!S.q.trim()){shKb(false);go('catdrill');return}
   S.icat=(!c&&S.cm==='tabs')?inferCat(S.q):null;if(S.icat)S.tab='all';
+  S.dd=(S.cm==='dropdown'&&c)?c:null;
   S.fromSh=true;S.fromDrill=!!c;$('#resChip').hidden=!c;if(c)$('#resChip .cn').textContent=c;
-  renderResults(S.q.trim()||'pasta sauce',effCat());$('#device').classList.remove('sg');$('#search .sfield .qt').textContent=S.q.trim()||'pasta sauce';go('search')}
+  renderResults(S.q.trim()||'pasta sauce',resCat());$('#device').classList.remove('sg');$('#search .sfield .qt').textContent=S.q.trim()||'pasta sauce';go('search')}
 function shKey(k){
   if(k==='hide'){shKb(false);return}
   if(k==='go'){shSubmit();return}
@@ -482,7 +530,7 @@ function shKey(k){
 }
 $('#nav').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b||S.phase!=='idle')return;const n=b.dataset.nav;
-  if(n==='pdp')go('pdp',{pid:'rao'});else if(n==='home')go('home',{top:true});else if(n==='Landing'){S.icat=null;go('searchhome')}else if(n==='Search'){S.icat=null;go('search')}else go('sub',{sub:n});
+  if(n==='pdp')go('pdp',{pid:'rao'});else if(n==='home')go('home',{top:true});else if(n==='Landing'){S.icat=null;S.dd=null;go('searchhome')}else if(n==='Search'){S.icat=null;S.dd=null;go('search')}else go('sub',{sub:n});
   log('Panel: moved to '+label());
 });
 $('#go').addEventListener('click',()=>{
