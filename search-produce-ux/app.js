@@ -102,15 +102,17 @@ function catSearch(q,cat,all){
   catInit();
   if(isPluQ(q)){const code=q.trim(),hit=CATI.filter(it=>it.p>0&&pluOf(it)===code);if(hit.length)return hit.sort((a,b)=>(b.im?1:0)-(a.im?1:0))}
   const qt=normS(q).split(' ').filter(Boolean).map(stemW);if(!qt.length)return [];
-  const qs=qt.join(' '),out=[];
+  const qs=qt.join(' '),out=[],one=qt.length===1&&qt[0].length===1;
   for(const it of CATI){
     if(!(it.p>0))continue;
     if(cat==='Produce'&&!it.pr)continue;
     if(cat&&cat[0]==='~'&&!deptOK(it,cat.slice(1)))continue;
+    if((cat==='Bakery'||cat==='Hot & Salad Bar'||cat==='Bulk bins')&&!deptOK(it,cat))continue;
     if(cat&&cat[0]==='@'&&!inDept(it,cat.slice(1)))continue;
     let sc=0;const last=it.hw[it.hw.length-1];let ok=true;
     for(const t of qt){
-      if(it.ws.includes(t))sc+=10;
+      if(one){if(!it.hw[0].startsWith(t)){ok=false;break}sc+=10}
+      else if(it.ws.includes(t))sc+=10;
       else if(t.length>=2&&it.ws.some(w=>w.startsWith(t)))sc+=4;
       else{ok=false;break}
       if(it.hw.includes(t)){sc+=8;if(t===last)sc+=25}
@@ -557,7 +559,7 @@ function shCardsSync(){
   if(!q){g.className='cdgrid';g.innerHTML=effCat()?dCards(DRILL[S.cat]||[]):dCards(allDrill())}
   else{
     g.className='sgrid';
-    const r=catSearch(q.toLowerCase(),effCat()==='Produce'?'Produce':undefined).slice(0,24);
+    const r=catSearch(q.toLowerCase(),effCat()).slice(0,24);
     g.innerHTML=r.length?r.map(resCard).join(''):`<div class="nores" style="grid-column:1/-1">No results for “${esc(q)}”</div>`;
   }
   box.classList.toggle('nokb',$('#kb').classList.contains('hide'));box.scrollTop=0;
