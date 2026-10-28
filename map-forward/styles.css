@@ -1,0 +1,189 @@
+:root {
+    --bg: #242529;
+    --card-bg: #f6f7f8;
+    --text: #242529;
+    --muted: #70747a;
+    /* Aisle image is laid out at 1778x964 (Figma frame: 430x964) */
+    --img-w: 1778px;
+    --img-h: 964px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: #111; overscroll-behavior: none; }
+  body { display: flex; align-items: center; justify-content: center; font-family: -apple-system, "Instacart Sans Text", "Helvetica Neue", Arial, sans-serif; }
+
+  /* Phone frame: full-screen on real phones, 430x964 card on desktop */
+  .app {
+    position: relative; width: 430px; height: 964px; max-width: 100vw; max-height: 100vh;
+    overflow: hidden; overflow: clip; border-radius: 36px; background: #e5f4ff;
+  }
+  @media (max-width: 430px) { .app { width: 100vw; height: 100dvh; border-radius: 0; } }
+
+  /* Shelf view: slides up over the map screen */
+  .screen {
+    position: absolute; inset: 0; background: var(--bg); overflow: hidden; overflow: clip; border-radius: inherit;
+    touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; z-index: 5;
+    transform: translateY(100%); visibility: hidden; transition: transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s .35s;
+  }
+  .app.shelf-open .screen { transform: none; visibility: visible; transition: transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s; }
+  .screen.dragging { cursor: grabbing; }
+
+  /* Map screen */
+  .map-screen { position: absolute; inset: 0; display: flex; flex-direction: column; background: #e5f4ff; color: #242529; }
+  .nav { background: #007858; flex: none; color: #fff; }
+  .status { height: 44px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; }
+  .status .dev { display: flex; gap: 5px; align-items: center; }
+  .status img { height: 18px; display: block; }
+  .store { display: flex; align-items: center; gap: 10px; padding: 4px 16px; font-size: 18px; font-weight: 700; }
+  .ico { width: 32px; height: 32px; display: block; flex: none; }
+  .searchrow { padding: 8px 16px 16px; }
+  .search { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 28px; padding: 12px 14px; color: #70747a; font-size: 16px; white-space: nowrap; overflow: hidden; }
+  .map { height: 311px; margin-bottom: -30px; flex: none; overflow: hidden; }
+  .map svg { width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; font-family: inherit; }
+  .map svg.dragging { cursor: grabbing; }
+  .map .lbl { font-size: 9.763px; font-weight: 600; fill: #242529; text-anchor: middle; pointer-events: none; }
+  .map .pulse { transform-box: fill-box; transform-origin: center; animation: mapPulse 1.8s ease-out infinite; }
+  @keyframes mapPulse { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(3.4); opacity: 0; } }
+  .map .pin, .map .ptr { transition: opacity .5s; }
+  .sheet { position: relative; z-index: 2; flex: 1; min-height: 0; background: #fff; border-radius: 24px 24px 0 0; box-shadow: 0 2px 20px rgba(0,0,0,.09); padding: 12px 20px 0; display: flex; flex-direction: column; gap: 12px; overflow: hidden; align-items: stretch; }
+  .panels { position: relative; flex: 1; min-height: 0; }
+  .panel { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 12px; opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s .2s; }
+  .app:not(.state-detail) .panel-list, .app.state-detail .panel-detail { opacity: 1; visibility: visible; transition: opacity .3s .1s, visibility 0s; }
+  .handle { width: 36px; height: 4px; border-radius: 2px; background: #c7c8cd; align-self: center; flex: none; }
+  .loc { display: flex; align-items: center; justify-content: space-between; height: 37px; flex: none; }
+  .loc .where { display: flex; align-items: center; gap: 3px; font-size: 20px; font-weight: 700; }
+  .loc button { border: 0; background: none; padding: 4px; cursor: pointer; }
+  .dest { display: flex; align-items: center; gap: 14px; padding: 12px; background: #f6f7f8; border-radius: 16px; flex: none; }
+  .dest .box { width: 18px; height: 18px; border: 1px solid #242529; border-radius: 4px; background: #fff; flex: none; }
+  .dest .photo { width: 72px; height: 82px; border-radius: 8px; object-fit: cover; flex: none; }
+  .dest .details { flex: 1; min-width: 0; }
+  .dest .name { margin: 0 0 4px; font-size: 16px; line-height: 22px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .dest .sub { margin: 0; font-size: 15px; color: #70747a; }
+  .dest .price { text-align: right; flex: none; }
+  .dest .price b { display: block; font-size: 18px; line-height: 23px; }
+  .dest .price span { font-size: 15px; font-weight: 600; color: #007858; white-space: nowrap; }
+  .actions { display: flex; gap: 12px; flex: none; }
+  .cta { flex: 1; height: 48px; border-radius: 999px; border: 1px solid #d8d9db; background: #007858; color: #fff; font-size: 16px; line-height: 24px; font-weight: 600; font-family: inherit; cursor: pointer; padding: 0 14px; }
+  .cta:active { filter: brightness(.9); }
+  .divider { width: 100%; height: 1px; flex: none; display: block; }
+  .often { position: relative; height: 326px; margin: 0 -20px; flex: none; overflow: hidden; }
+  .often img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; max-width: none; }
+
+  /* Pannable layer: image + highlight live together so the highlight stays pinned to the product */
+  .pan {
+    position: absolute; left: 0; top: 0; width: var(--img-w); height: var(--img-h);
+    will-change: transform; transform: translate3d(-262px, 0, 0);
+  }
+  .pan img.aisle { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+
+  .highlight {
+    position: absolute; left: 400px; top: 116px; width: 182px; height: 138px;
+    border: 3px solid #fff; border-radius: 24px; pointer-events: none;
+    /* soft dim everywhere except the highlighted region */
+    box-shadow: 0 0 0 4000px rgba(0,0,0,0.0);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.45); }
+    50% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+  }
+
+  .close {
+    position: absolute; top: 16px; left: 16px; width: 56px; height: 56px; padding: 0; border: 0; background: none; cursor: pointer;
+    z-index: 3;
+  }
+  .close .dot { position: absolute; inset: 0; width: 56px; height: 56px; }
+  .close .x { position: absolute; left: 12px; top: 12px; width: 32px; height: 32px; }
+
+  .card {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 284px; padding: 12px; display: flex; gap: 14px; align-items: center;
+    background: var(--card-bg); border-radius: 16px; z-index: 2; box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  }
+  .card .photo { width: 72px; height: 82px; border-radius: 8px; object-fit: cover; flex: none; background: #fff; }
+  .card .title { margin: 0 0 4px; font-size: 16px; line-height: 22px; font-weight: 600; color: var(--text);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card .meta { margin: 0; font-size: 15px; color: var(--muted); }
+
+  /* Card <-> highlight link */
+  .link { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; opacity: 0; transition: opacity .25s; }
+  .link.on { opacity: 1; }
+  .link line { stroke: #fff; stroke-width: 2; stroke-dasharray: 2 6; stroke-linecap: round; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .link circle { fill: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  .card::after { /* tail pointing up toward the highlight */
+    content: ""; position: absolute; top: -8px; left: var(--tail-x, 50%); width: 18px; height: 18px; margin-left: -9px;
+    background: var(--card-bg); border-radius: 3px; transform: rotate(45deg); opacity: 0; transition: opacity .25s;
+  }
+  .card.linked::after { opacity: 1; }
+
+  /* Direction tabs on the card: shown when the highlight is off-screen */
+  .tab {
+    position: absolute; top: 50%; width: 44px; height: 44px; margin-top: -22px; border: 0; padding: 0; border-radius: 50%;
+    background: var(--card-bg); box-shadow: 0 4px 12px rgba(0,0,0,.25); color: var(--text); font-size: 26px; line-height: 1;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .tab.left { left: -22px; } .tab.right { right: -22px; }
+  .tab.show { opacity: 1; pointer-events: auto; }
+  .tab.left.show { animation: nudgeL 1.2s ease-in-out infinite; }
+  .tab.right.show { animation: nudgeR 1.2s ease-in-out infinite; }
+  @keyframes nudgeL { 50% { transform: translateX(-5px); } }
+  @keyframes nudgeR { 50% { transform: translateX(5px); } }
+  .hint { margin: 4px 0 0; font-size: 13px; color: var(--muted); display: none; }
+  .card.away .hint { display: block; }
+  .card.away .meta { display: none; }
+
+  /* Mini shelf strip: whole shelf length, with you / product / current view */
+  .strip {
+    position: absolute; top: 20px; left: 84px; right: 16px; height: 48px; border-radius: 24px; z-index: 3;
+    background: rgba(0,0,0,.6); pointer-events: none; padding: 0 22px;
+  }
+  .strip .track { position: absolute; left: 22px; right: 22px; top: 0; bottom: 0; }
+  .strip .rail { position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; border-radius: 2px; background: rgba(255,255,255,.28); }
+  .strip .view { position: absolute; top: 50%; height: 24px; margin-top: -12px; border: 2px solid #fff; border-radius: 8px; background: rgba(255,255,255,.14); }
+  .strip .pin { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; }
+  .strip .pin.product { background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.25); }
+  .strip .pin.you { background: #1a73e8; border: 2px solid #fff; }
+  .strip .pin.you::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid #1a73e8; animation: ping 2s ease-out infinite; }
+  @keyframes ping { from { transform: scale(.6); opacity: .9; } to { transform: scale(1.6); opacity: 0; } }
+  .strip .lbl { position: absolute; top: calc(100% + 4px); font-size: 11px; font-weight: 600; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.7); transform: translateX(-50%); white-space: nowrap; }
+
+  .card.arrived .hint { display: block; color: #0a8f3c; font-weight: 600; }
+  .card.arrived .meta { display: none; }
+  .arrived .highlight { border-color: #43b02a; box-shadow: 0 0 0 3px rgba(67,176,42,.35); animation: none; }
+
+  /* List view (sheet) */
+  .lhead { display: flex; align-items: center; justify-content: space-between; height: 60px; flex: none; }
+  .lt { font-size: 20px; font-weight: 700; }
+  .chip { display: flex; align-items: center; background: #242529; color: #f6f7f8; border-radius: 999px; padding: 4px 8px 4px 4px; font-size: 16px; font-weight: 600; line-height: 24px; }
+  .chip .ico24 { margin: 4px; }
+  .ico24 { width: 24px; height: 24px; display: block; flex: none; }
+  .lsections { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 8px; padding-bottom: 24px; }
+  .lsections::-webkit-scrollbar { display: none; }
+  .lh { margin: 0; font-size: 12px; line-height: 14px; font-weight: 600; }
+  .lrow { display: flex; align-items: center; gap: 12px; min-height: 66px; padding: 10px 0; border-bottom: 1px solid #e8e9eb; }
+  .lrow .box { width: 18px; height: 18px; border: 1px solid #242529; border-radius: 4px; background: #fff; flex: none; }
+  .pbox { width: 44px; height: 44px; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; flex: none; }
+  .pbox img { width: 38px; height: 38px; object-fit: cover; display: block; }
+  .pbox img.contain { object-fit: contain; }
+  .pbox img.oil { width: 64px; height: 48px; max-width: none; margin-left: -13px; margin-top: -5px; object-fit: cover; }
+  .lc { flex: 1; min-width: 0; }
+  .ln { margin: 0; font-size: 16px; line-height: 22px; font-weight: 600; }
+  .ls { margin: 2px 0 0; font-size: 13px; line-height: 17px; font-weight: 600; color: #56595e; }
+  .navbtn { width: 32px; height: 32px; border: 0; border-radius: 999px; background: none; padding: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex: none; }
+  .navbtn:active { background: #e9fbe9; }
+  /* map: route + halo only in the navigation state */
+  #routeG { opacity: 0; transition: opacity .4s; }
+  .app.state-detail #routeG { opacity: 1; }
+  .map .halo { opacity: 0; transition: opacity .5s; }
+  .app.state-detail .map .halo { opacity: 1; }
+
+  /* Finger-tap pointer: replaces the mouse cursor over the phone so it reads as a touch prototype */
+  @media (hover: hover) and (pointer: fine) { .app, .app * { cursor: none !important; } }
+  .finger { position: absolute; left: 0; top: 0; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; z-index: 50; pointer-events: none;
+    background: rgba(36,37,41,.28); border: 2px solid rgba(255,255,255,.85); box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    opacity: 0; translate: -100px -100px; scale: 1; transition: opacity .15s, background .12s, scale .12s; }
+  .finger.on { opacity: 1; }
+  .finger.down { scale: .72; background: rgba(36,37,41,.5); }
+  .tap-ripple { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; z-index: 49; pointer-events: none;
+    border: 2px solid rgba(255,255,255,.9); background: rgba(255,255,255,.25); animation: tapRipple .5s ease-out forwards; }
+  @keyframes tapRipple { from { transform: scale(.7); opacity: .9; } to { transform: scale(2); opacity: 0; } }

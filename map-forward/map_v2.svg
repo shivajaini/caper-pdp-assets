@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="68.2775" height="106.562" viewBox="0 0 68.2775 106.562" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Vector 2">
+<path d="M43.7541 29.287L50.9876 0L60.1619 1.94071L53.634 27.8756L68.2775 73.3939L33.3448 106.562H0V97.741H31.4041L56.4569 73.3939L43.7541 29.287Z" fill="#E8E9EB"/>
+<mask id="stroke0_0_134" fill="white">
+<path d="M43.7541 29.287L50.9876 0L60.1619 1.94071L53.634 27.8756L68.2775 73.3939L33.3448 106.562H0V97.741H31.4041L56.4569 73.3939L43.7541 29.287Z"/>
+</mask>
+<path d="M50.9876 0L43.7541 29.287L56.4569 73.3939L31.4041 97.741H0V106.562H33.3448L68.2775 73.3939L53.634 27.8756L60.1619 1.94071L50.9876 0Z" stroke-width="0.950832" stroke="#E8E9EB" mask="url(#stroke0_0_134)"/>
+</g>
+</svg>
